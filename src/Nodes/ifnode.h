@@ -1,25 +1,25 @@
+#ifndef IFNODE_H
+#define IFNODE_H
 #include "AbstactNode.h"
 
-#ifndef NODE_H
-#define NODE_H
+#include <QObject>
 
-
-class Node : AbstractNode
+class IfNode : public AbstractNode
 {
 private:
     NodeType m_type;
     AbstractNode * ptrToTrue;
+    AbstractNode * ptrToFalse;
 public:
-    Node(const NodeType& type);
-    virtual ~Node() {}
-
+    IfNode(const NodeType& type);
+    virtual ~IfNode() {};
 
     // AbstractNode interface
     void execute() override;
-    void connect(AbstractNode * to, bool totrue) override;
+    void connect(AbstractNode *to, bool totrue) override;
     void disconnect(bool totrue) override;
     bool isConnectTo(AbstractNode *to) const override;
     NodeType type() const override;
 };
 
-#endif // NODE_H
+#endif // IFNODE_H

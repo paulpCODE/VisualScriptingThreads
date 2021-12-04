@@ -19,6 +19,7 @@ set(PROJECT_SOURCES
         src/main.cpp
         src/Nodes/AbstactNode.h
         src/Nodes/node.h src/Nodes/node.cpp
+        src/Nodes/ifnode.h src/Nodes/ifnode.cpp
         qrc/qml.qrc
 )
 

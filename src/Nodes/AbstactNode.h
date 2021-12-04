@@ -8,20 +8,17 @@ enum class NodeType {
     GlobalAssignConst,
     InputGlobal,
     PrintGlobal,
-    GlobalEqualGlobal,
-    GlobalLessGlobal
+    IfGlobalEqualGlobal,
+    IfGlobalLessGlobal
 };
 
 class AbstractNode : public QObject {
-protected:
-    NodeType type;
-    AbstractNode * totrue;
-
 public:
     virtual void execute() = 0;
-    virtual bool connect(const AbstractNode * const to, bool totrue = true) = 0;
-    virtual bool disconnect(bool totrue = true) = 0;
+    virtual void connect(AbstractNode * to, bool totrue = true) = 0;
+    virtual void disconnect(bool totrue = true) = 0;
     virtual bool isConnectTo(AbstractNode * to) const = 0;
+    virtual NodeType type() const = 0;
 };
 
 #endif // ABSTACTNODE_H

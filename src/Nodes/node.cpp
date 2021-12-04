@@ -1,27 +1,50 @@
 #include "node.h"
 
 
-Node::Node(const NodeType &type, AbstractNode *connect)
+Node::Node(const NodeType &type)
 {
-
+    if(type == NodeType::IfGlobalEqualGlobal || type == NodeType::IfGlobalLessGlobal) {
+        qDebug("Cant create Node with type for IfNode");
+        return;
+    }
+    m_type = type;
+    ptrToTrue = nullptr;
 }
 
 void Node::execute()
 {
-
+// #TODO
 }
 
-bool Node::connect(const AbstractNode * const to, bool totrue)
+void Node::connect(AbstractNode * to, bool totrue)
 {
+    if(ptrToTrue == to) {
+        qDebug("Already connected");
+        return;
+    }
 
+    ptrToTrue = to;
 }
 
-bool Node::disconnect(bool totrue)
+void Node::disconnect(bool totrue)
 {
+    if(!ptrToTrue) {
+        qDebug("Already null");
+        return;
+    }
 
+    ptrToTrue = nullptr;
 }
 
 bool Node::isConnectTo(AbstractNode *to) const
 {
+    if(ptrToTrue == to) {
+        return true;
+    }
+    return false;
+}
 
+NodeType Node::type() const
+{
+    return m_type;
 }
