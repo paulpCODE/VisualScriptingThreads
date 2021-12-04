@@ -1,0 +1,4 @@
+#ifndef ABSTACTNODE_H
+#define ABSTACTNODE_H
+
+#endif // ABSTACTNODE_H
