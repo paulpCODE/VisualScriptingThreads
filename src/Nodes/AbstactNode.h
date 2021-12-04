@@ -3,7 +3,7 @@
 #ifndef ABSTACTNODE_H
 #define ABSTACTNODE_H
 
-enum class NodeT {
+enum class NodeType {
     GlobalAssignGlobal,
     GlobalAssignConst,
     InputGlobal,
@@ -14,7 +14,7 @@ enum class NodeT {
 
 class AbstractNode : public QObject {
 protected:
-    NodeT type;
+    NodeType type;
     AbstractNode * totrue;
 
 public:

@@ -14,9 +14,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
+include_directories("./src/Nodes")
 set(PROJECT_SOURCES
-        cpp/main.cpp
-        headers/AbstactNode.h
+        src/main.cpp
+        src/Nodes/AbstactNode.h
+        src/Nodes/node.h src/Nodes/node.cpp
         qrc/qml.qrc
 )
 
