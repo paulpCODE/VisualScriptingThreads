@@ -14,14 +14,25 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
+
 include_directories("./src/ID")
 include_directories("./src/Nodes")
+include_directories("./src/CoreAppLogic")
+include_directories("./src/GlobalVariables")
+include_directories("./src/Threads")
 set(PROJECT_SOURCES
         src/main.cpp
         src/ID/iddistributor.h src/ID/iddistributor.cpp
         src/Nodes/connection.h src/Nodes/connection.cpp
         src/Nodes/nodedata.h src/Nodes/nodedata.cpp
         src/Nodes/nodesgraph.h src/Nodes/nodesgraph.cpp
+        src/CoreAppLogic/visualscriptingthreadsapp.h src/CoreAppLogic/visualscriptingthreadsapp.cpp
+        src/CoreAppLogic/gigamanager.h src/CoreAppLogic/gigamanager.cpp
+        src/CoreAppLogic/applogic.h src/CoreAppLogic/applogic.cpp
+        src/GlobalVariables/globalvariablescontainer.h src/GlobalVariables/globalvariablescontainer.cpp
+        src/GlobalVariables/globalvariable.h src/GlobalVariables/globalvariable.cpp
+        src/Threads/threadmanager.h src/Threads/threadmanager.cpp
+        src/Threads/threadworker.h src/Threads/threadworker.cpp
         qrc/qml.qrc
 )
 
@@ -47,7 +58,6 @@ else()
         )
     endif()
 endif()
-
 target_compile_definitions(VisualScriptingThreads
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(VisualScriptingThreads
