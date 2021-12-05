@@ -14,9 +14,24 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
+<<<<<<< Updated upstream
 set(PROJECT_SOURCES
         cpp/main.cpp
         headers/AbstactNode.h
+=======
+include_directories("./src/Nodes")
+include_directories("./src/CoreAppLogic")
+include_directories("./src/GlobalVariables")
+set(PROJECT_SOURCES
+        src/main.cpp
+        src/Nodes/AbstactNode.h
+        src/Nodes/node.h src/Nodes/node.cpp
+        src/CoreAppLogic/visualscriptingthreadsapp.h src/CoreAppLogic/visualscriptingthreadsapp.cpp
+        src/CoreAppLogic/gigamanager.h src/CoreAppLogic/gigamanager.cpp
+        src/CoreAppLogic/applogic.h src/CoreAppLogic/applogic.cpp
+        src/GlobalVariables/globalvariablescontainer.h src/GlobalVariables/globalvariablescontainer.cpp
+        src/GlobalVariables/globalvariable.h src/GlobalVariables/globalvariable.cpp
+>>>>>>> Stashed changes
         qrc/qml.qrc
 )
 
@@ -42,7 +57,6 @@ else()
         )
     endif()
 endif()
-
 target_compile_definitions(VisualScriptingThreads
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)
 target_link_libraries(VisualScriptingThreads
