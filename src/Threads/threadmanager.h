@@ -10,14 +10,16 @@ class ThreadManager: public QObject
     //#TODO
 
     //add to threadId NodesGraph instance by it's id
-
+    // id distributor
 
 public:
     ThreadManager();
 
+
 public slots:
     //add thread (from qml QFUNCTION?)
     void addThread(int threadsToAdd);
+    void popBackThread();
     //expose number of threads in qml (from qml QFUNCTION?)
     int threadCount() const;
 
