@@ -1,8 +1,10 @@
 #include "globalvariable.h"
 #include <QDebug>
 
-GlobalVariable::GlobalVariable(QObject *parent) : QObject(parent)
+GlobalVariable::GlobalVariable(const QString &name,int value, QObject *parent) : QObject(parent)
 {
+    m_name = name;
+    m_value = value;
     mutex = new QMutex();
 }
 

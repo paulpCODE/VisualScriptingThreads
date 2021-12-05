@@ -10,7 +10,7 @@ class GlobalVariable : public QObject
     Q_PROPERTY(QString name READ name WRITE setName NOTIFY nameChanged)
     Q_PROPERTY(int value READ value WRITE setValue NOTIFY valueChanged)
 public:
-    explicit GlobalVariable(QObject *parent = nullptr);
+    explicit GlobalVariable(const QString &name,int value, QObject *parent = nullptr);
 
     const QString &name() const;
     void setName(const QString &newName);

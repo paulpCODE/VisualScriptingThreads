@@ -12,8 +12,8 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
-    qmlRegisterUncreatableType<GlobalVariablesContainer>("vstApp",1,0,"GlobalVariablesContainer",
-                                                         "Type cannot be created in QML");
+    //qmlRegisterUncreatableType<GlobalVariablesContainer>("vstApp",1,0,"GlobalVariablesContainer",
+ //                                                        "Type cannot be created in QML");
     qmlRegisterType<GlobalVariable>("vstApp", 1,0, "GlobalVariable");
 
 
@@ -26,7 +26,7 @@ int main(int argc, char *argv[])
 
 
     context->setContextProperty("globalVariablesContainer",
-                                qobject_cast <QObject*>(vstApp.gigaManager->globalVariablesContainer));
+                                vstApp.gigaManager->globalVariablesContainer);
 
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
