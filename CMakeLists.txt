@@ -14,11 +14,6 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
-<<<<<<< Updated upstream
-set(PROJECT_SOURCES
-        cpp/main.cpp
-        headers/AbstactNode.h
-=======
 include_directories("./src/Nodes")
 include_directories("./src/CoreAppLogic")
 include_directories("./src/GlobalVariables")
@@ -31,7 +26,6 @@ set(PROJECT_SOURCES
         src/CoreAppLogic/applogic.h src/CoreAppLogic/applogic.cpp
         src/GlobalVariables/globalvariablescontainer.h src/GlobalVariables/globalvariablescontainer.cpp
         src/GlobalVariables/globalvariable.h src/GlobalVariables/globalvariable.cpp
->>>>>>> Stashed changes
         qrc/qml.qrc
 )
 
