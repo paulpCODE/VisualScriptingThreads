@@ -26,6 +26,7 @@ private:
     QPair<QString, QString> m_data;
 public:
     NodeData(const unsigned int id, const NodeType& type);
+    NodeData(const NodeData& other);
     ~NodeData();
 
     NodeType GetType() const;

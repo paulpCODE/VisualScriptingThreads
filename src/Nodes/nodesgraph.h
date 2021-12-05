@@ -24,6 +24,17 @@ public:
     ~NodesGraph();
 
     void execute(const GlobalVariablesContainer * const gvcptr);
+    /*
+    target - new NodesGraph instace(copy of other)
+    other - Copied object
+
+    Use construction
+    NodesGraph instance(copyTarget.GetId()
+    instance.deepCopy(copyTarget)
+    to copy and give new instance of class NodesGraph.
+    If ids of two objects not equal -> return empty targer without data
+    */
+    void deepCopy(const NodesGraph& copyTarget);
     Q_INVOKABLE const unsigned int createNode(const NodeType& type);
     Q_INVOKABLE void deleteNode(unsigned int id);
     Q_INVOKABLE void connectNodes(unsigned int idfrom, unsigned int idto, bool totrue = true);

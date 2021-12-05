@@ -3,6 +3,9 @@
 Connection::Connection(const ConnectionType& type) : m_type(type), m_idTrue(-1), m_idFalse(-1)
 {}
 
+Connection::Connection(const Connection &other) : m_type(other.m_type), m_idTrue(other.m_idTrue), m_idFalse(other.m_idFalse)
+{}
+
 void Connection::makeConnection(const unsigned int id, const bool toTrue)
 {
     if(m_type == ConnectionType::ONESIDED) {

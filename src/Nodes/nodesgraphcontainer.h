@@ -15,7 +15,7 @@ class NodesGraphContainer : public QObject
 private:
     const unsigned int GRAPHSLIMIT;
 
-    IdDistributor * ID;
+    IdDistributor * ID;// #TODO rework
     const GlobalVariablesContainer * m_gvcptr;
 
     QList<NodesGraph*> m_graphsList;

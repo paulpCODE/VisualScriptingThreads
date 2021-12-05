@@ -15,6 +15,21 @@ void NodesGraph::execute(const GlobalVariablesContainer * const gvcptr)
     // #TODO
 }
 
+void NodesGraph::deepCopy(const NodesGraph& copyTarget)
+{
+    if(this->GetId() != copyTarget.GetId()) {
+        qDebug("IDS OF GRAPHS NOT EQUAL IN deepCopy METHOD");
+        return;
+    }
+    //to copy: IdDistributor, m_nodes
+    *(this->ID) = *(copyTarget.ID); // maybe not GOOD, because * return rvalue?
+    this->m_nodes.clear();
+    for(auto &i : copyTarget.m_nodes) {
+        NodeData * nd = new NodeData(*i);
+        this->m_nodes.insert(nd->GetId(), nd);
+    }
+}
+
 const unsigned int NodesGraph::createNode(const NodeType &type)
 {
     unsigned int idForNode = ID->getFreeId();
