@@ -26,6 +26,7 @@ set(PROJECT_SOURCES
         src/Nodes/connection.h src/Nodes/connection.cpp
         src/Nodes/nodedata.h src/Nodes/nodedata.cpp
         src/Nodes/nodesgraph.h src/Nodes/nodesgraph.cpp
+        src/Nodes/nodesgraphcontainer.h src/Nodes/nodesgraphcontainer.cpp
         src/CoreAppLogic/visualscriptingthreadsapp.h src/CoreAppLogic/visualscriptingthreadsapp.cpp
         src/CoreAppLogic/gigamanager.h src/CoreAppLogic/gigamanager.cpp
         src/CoreAppLogic/applogic.h src/CoreAppLogic/applogic.cpp

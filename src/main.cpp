@@ -2,6 +2,7 @@
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include "visualscriptingthreadsapp.h"
+#include "nodesgraphcontainer.h"
 
 int main(int argc, char *argv[])
 {
@@ -14,6 +15,9 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<GlobalVariablesContainer>("vstApp",1,0,"GlobalVariablesContainer",
                                                          "Type cannot be created in QML");
     qmlRegisterType<GlobalVariable>("vstApp", 1,0, "GlobalVariable");
+    qmlRegisterUncreatableType<NodesGraphContainer>("vstApp",1,0,"NodesGraphContainer",
+                                                         "Type cannot be created in QML");
+    qmlRegisterType<NodesGraph>("vstApp", 1,0, "NodesGraph");
 
 
     VisualScriptingThreadsApp vstApp ;

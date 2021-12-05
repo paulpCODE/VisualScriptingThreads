@@ -1,7 +1,9 @@
-#include <QVector>
-
 #ifndef IDDISTRIBUTOR_H
 #define IDDISTRIBUTOR_H
+
+#include <QVector>
+
+
 
 
 class IdDistributor

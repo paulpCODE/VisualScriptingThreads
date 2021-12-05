@@ -1,6 +1,6 @@
 #include "nodesgraph.h"
 
-NodesGraph::NodesGraph() : NODESLIMIT(100)
+NodesGraph::NodesGraph(const unsigned int id) : NODESLIMIT(100), m_id(id)
 {
     ID = new IdDistributor(NODESLIMIT);
 }
@@ -10,14 +10,18 @@ NodesGraph::~NodesGraph()
     delete ID;
 }
 
-void NodesGraph::execute()
+void NodesGraph::execute(const GlobalVariablesContainer * const gvcptr)
 {
     // #TODO
 }
 
-int NodesGraph::createNode(const NodeType &type)
+const unsigned int NodesGraph::createNode(const NodeType &type)
 {
     unsigned int idForNode = ID->getFreeId();
+    if(idForNode == 0) {
+        qDebug("NODES LIMIT!");
+        return idForNode;
+    }
     m_nodes.insert(idForNode, new NodeData(idForNode, type));
 
     return idForNode;
@@ -56,4 +60,18 @@ NodeType NodesGraph::GetType(unsigned int id) const
     }
     qDebug("DONT EXIST NODE TO GET TYPE. RETURN INCORRECT.");
     return NodeType::GlobalAssignConst;
+}
+
+const unsigned int NodesGraph::GetId() const
+{
+    return m_id;
+}
+
+void NodesGraph::SetNodeData(const unsigned int id, const QString &leftOperand, const QString &rightOperand)
+{
+    if(m_nodes.contains(id)) {
+        m_nodes.take(id)->SetData(leftOperand, rightOperand);
+        return;
+    }
+    qDebug("DONT EXIST NODE TO SET DATA");
 }

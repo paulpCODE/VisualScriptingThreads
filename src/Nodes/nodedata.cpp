@@ -29,3 +29,8 @@ unsigned int NodeData::GetId() const
 {
     return m_id;
 }
+
+void NodeData::SetData(const QString &leftOperand, const QString &rightOperand)
+{
+    m_data = qMakePair(leftOperand, rightOperand);
+}
