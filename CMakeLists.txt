@@ -17,6 +17,7 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 include_directories("./src/Nodes")
 include_directories("./src/CoreAppLogic")
 include_directories("./src/GlobalVariables")
+include_directories("./src/Threads")
 set(PROJECT_SOURCES
         src/main.cpp
         src/CoreAppLogic/visualscriptingthreadsapp.h src/CoreAppLogic/visualscriptingthreadsapp.cpp
@@ -24,6 +25,8 @@ set(PROJECT_SOURCES
         src/CoreAppLogic/applogic.h src/CoreAppLogic/applogic.cpp
         src/GlobalVariables/globalvariablescontainer.h src/GlobalVariables/globalvariablescontainer.cpp
         src/GlobalVariables/globalvariable.h src/GlobalVariables/globalvariable.cpp
+        src/Threads/threadmanager.h src/Threads/threadmanager.cpp
+        src/Threads/threadworker.h src/Threads/threadworker.cpp
         qrc/qml.qrc
 )
 

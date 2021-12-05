@@ -3,8 +3,8 @@
 
 GlobalVariable::GlobalVariable(const QString &name,int value, QObject *parent) : QObject(parent)
 {
-    m_name = name;
-    m_value = value;
+    setName(name);
+    setValue(value);
     mutex = new QMutex();
 }
 

@@ -10,7 +10,32 @@ GlobalVariablesContainer::GlobalVariablesContainer(QObject *parent) : QObject(pa
 
 QQmlListProperty<GlobalVariable> GlobalVariablesContainer::globalVariables()
 {
-    return QQmlListProperty<GlobalVariable>(this,& m_globalVariables);
+    return QQmlListProperty<GlobalVariable>(this,&m_globalVariables);
+}
+
+void GlobalVariablesContainer::createGlobalVariable(const QString& newName,int newValue)
+{
+    for(const auto &i: m_globalVariables){
+        if(i->name() == newName){
+            qDebug()<<"Variable "<<newName<<"already exists \n";
+            return;
+        }
+    }
+    m_globalVariables.append(new GlobalVariable(newName,newValue));
+}
+
+void GlobalVariablesContainer::deleteGlobalVariable(const QString &variableNameToDelete)
+{
+    QMutableListIterator<GlobalVariable*> i(m_globalVariables);
+    while (i.hasNext()) {
+        if (i.next()->name() == variableNameToDelete)
+            i.next()->deleteLater();
+            i.remove();
+        return;
+    }
+    qDebug()<<"Variable "<<variableNameToDelete<<"don't exists \n";
+
+
 }
 
 
