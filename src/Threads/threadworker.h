@@ -3,6 +3,8 @@
 
 #include <QObject>
 
+#include"nodesgraph.h"
+
 class ThreadWorker : public QObject
 {
     Q_OBJECT
@@ -10,7 +12,7 @@ public:
     //NodesGraph seup after constructor? or by params don't know
     explicit ThreadWorker(QObject *parent = nullptr);
 
-    //NodesGraph graphinstance
+    NodesGraph graphinstance;
     //NodeData* currentGraphNode   id or pointer?
 signals:
 

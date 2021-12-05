@@ -17,6 +17,13 @@ void ThreadManager::addThread(int threadsToAdd)
     }
 }
 
+void ThreadManager::popBackThread()
+{
+    if(m_threads.size()!=0){
+        m_threads.pop_back();
+    }
+}
+
 int ThreadManager::threadCount() const
 {
     return m_threads.size();

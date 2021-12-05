@@ -38,3 +38,16 @@ void GlobalVariable::setValue(int newValue)
     m_value = newValue;
     emit valueChanged();
 }
+
+int GlobalVariable::usageCounter() const
+{
+    return m_usageCounter;
+}
+
+void GlobalVariable::setUsageCounter(int newUsageCounter)
+{
+    if (m_usageCounter == newUsageCounter)
+        return;
+    m_usageCounter = newUsageCounter;
+    emit usageCounterChanged();
+}
