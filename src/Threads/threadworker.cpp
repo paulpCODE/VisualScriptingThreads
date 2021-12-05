@@ -5,7 +5,7 @@ ThreadWorker::ThreadWorker(QObject *parent) : QObject(parent)
 
 }
 
-void ThreadWorker::executeCurrentNodeFunction()
+void ThreadWorker::executeCurrentNodesGraph()
 {
     //graphinstance->execute current node function
     //change curent node

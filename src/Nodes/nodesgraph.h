@@ -1,9 +1,8 @@
+#ifndef NODESGRAPH_H
+#define NODESGRAPH_H
 #include <QMap>
 #include "nodedata.h"
 #include "iddistributor.h"
-#ifndef NODESGRAPH_H
-#define NODESGRAPH_H
-
 #include "globalvariablescontainer.h"
 #include <QObject>
 

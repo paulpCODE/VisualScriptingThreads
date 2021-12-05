@@ -7,7 +7,7 @@ class ThreadWorker : public QObject
 {
     Q_OBJECT
 public:
-    //NodesGraph graphinstance in constructor
+    //NodesGraph seup after constructor? or by params don't know
     explicit ThreadWorker(QObject *parent = nullptr);
 
     //NodesGraph graphinstance
@@ -16,7 +16,10 @@ signals:
 
 public slots:
     // main responsibility of class
-    void executeCurrentNodeFunction();
+    // inside it move to next node
+    void executeCurrentNodesGraph();
+    //
+
 };
 
 #endif // THREADWORKER_H
