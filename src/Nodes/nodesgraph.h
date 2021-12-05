@@ -1,10 +1,11 @@
+#ifndef NODESGRAPH_H
+#define NODESGRAPH_H
+
 #include <QMap>
 #include "nodedata.h"
 #include "iddistributor.h"
 #include <QObject>
 
-#ifndef NODESGRAPH_H
-#define NODESGRAPH_H
 
 
 class NodesGraph : QObject

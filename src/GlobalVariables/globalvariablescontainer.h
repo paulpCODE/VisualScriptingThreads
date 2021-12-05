@@ -15,9 +15,11 @@ public:
 
     QQmlListProperty<GlobalVariable> globalVariables();
 
+    //for test purposes. delete this later
     void timerEvent(QTimerEvent *) {
            m_globalVariables[1]->setName(m_globalVariables[1]->name() + QStringLiteral("C++"));
        }
+    //
 
 public slots:
     // FROM QMl
