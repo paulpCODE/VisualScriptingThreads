@@ -14,12 +14,13 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Quick REQUIRED)
 find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Quick REQUIRED)
 
+include_directories("./src/ID")
 include_directories("./src/Nodes")
 set(PROJECT_SOURCES
         src/main.cpp
-        src/Nodes/AbstactNode.h
-        src/Nodes/node.h src/Nodes/node.cpp
-        src/Nodes/ifnode.h src/Nodes/ifnode.cpp
+        src/ID/iddistributor.h src/ID/iddistributor.cpp
+        src/Nodes/connection.h src/Nodes/connection.cpp
+        src/Nodes/nodedata.h src/Nodes/nodedata.cpp
         src/Nodes/nodesgraph.h src/Nodes/nodesgraph.cpp
         qrc/qml.qrc
 )

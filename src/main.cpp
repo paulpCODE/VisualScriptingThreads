@@ -1,6 +1,5 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-#include "node.h"
 
 int main(int argc, char *argv[])
 {

@@ -1,5 +1,7 @@
 #include <QMap>
-#include <AbstactNode.h>
+#include "nodedata.h"
+#include "iddistributor.h"
+#include <QObject>
 
 #ifndef NODESGRAPH_H
 #define NODESGRAPH_H
@@ -9,17 +11,20 @@ class NodesGraph : QObject
 {
     Q_OBJECT
 private:
-    QMap<unsigned char, AbstractNode*> m_nodes;
+    const unsigned int NODESLIMIT;
+    IdDistributor * ID;
+
+    QMap<unsigned int, NodeData *> m_nodes;
 public:
     NodesGraph();
+    ~NodesGraph();
 
     void execute();
-    Q_INVOKABLE void createNode(const NodeType& type);
-    Q_INVOKABLE void changeType(unsigned char id, NodeType& type);
-    Q_INVOKABLE void deleteNode(unsigned char id);
-    Q_INVOKABLE void connectNodes(unsigned char idfrom, unsigned char idto, bool totrue = true);
-    Q_INVOKABLE void disconnectNode(unsigned char id, bool totrue = true);
-    Q_INVOKABLE NodeType GetType(unsigned char id) const;
+    Q_INVOKABLE int createNode(const NodeType& type);
+    Q_INVOKABLE void deleteNode(unsigned int id);
+    Q_INVOKABLE void connectNodes(unsigned int idfrom, unsigned int idto, bool totrue = true);
+    Q_INVOKABLE void disconnectNode(unsigned int id, bool totrue = true);
+    Q_INVOKABLE NodeType GetType(unsigned int id) const;
 };
 
 #endif // NODESGRAPH_H
