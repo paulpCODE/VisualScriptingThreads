@@ -18,7 +18,7 @@ public:
     void execute() override;
     void connect(AbstractNode *to, bool totrue) override;
     void disconnect(bool totrue) override;
-    bool isConnectTo(AbstractNode *to) const override;
+    bool isConnectTo(AbstractNode *to, bool totrue) const override;
     NodeType type() const override;
 };
 

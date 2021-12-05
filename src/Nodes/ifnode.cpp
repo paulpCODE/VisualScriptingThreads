@@ -57,9 +57,12 @@ void IfNode::disconnect(bool totrue)
     ptrToFalse = nullptr;
 }
 
-bool IfNode::isConnectTo(AbstractNode *to) const
+bool IfNode::isConnectTo(AbstractNode *to, bool totrue) const
 {
-    if(ptrToTrue == to || ptrToFalse == to) {
+    if(totrue && ptrToTrue == to) {
+        return true;
+    }
+    if(!totrue && ptrToFalse == to) {
         return true;
     }
     return false;

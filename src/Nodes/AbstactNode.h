@@ -12,12 +12,12 @@ enum class NodeType {
     IfGlobalLessGlobal
 };
 
-class AbstractNode : public QObject {
+class AbstractNode {
 public:
     virtual void execute() = 0;
     virtual void connect(AbstractNode * to, bool totrue = true) = 0;
     virtual void disconnect(bool totrue = true) = 0;
-    virtual bool isConnectTo(AbstractNode * to) const = 0;
+    virtual bool isConnectTo(AbstractNode * to, bool totrue = true) const = 0;
     virtual NodeType type() const = 0;
 };
 
