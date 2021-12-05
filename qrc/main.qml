@@ -13,10 +13,19 @@ Window {
             spacing: 5
 
             delegate: Item {
-                height: 30
+                height: 100
                 width: parent.width
 
-                Text { text: name }
+                Text {
+                    id: nameText
+                    text: model.name
+                }
+                Text {
+                    anchors.left: nameText.right
+                    id: nameText2
+                    text: value
+                }
+
 
                 MouseArea {
                     anchors.fill: parent
