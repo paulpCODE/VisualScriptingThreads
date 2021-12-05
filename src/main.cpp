@@ -1,11 +1,6 @@
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
-<<<<<<< Updated upstream:cpp/main.cpp
-
-=======
 #include <QQmlContext>
-#include "node.h"
->>>>>>> Stashed changes:src/main.cpp
 
 #include "visualscriptingthreadsapp.h"
 

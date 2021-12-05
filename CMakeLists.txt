@@ -19,8 +19,6 @@ include_directories("./src/CoreAppLogic")
 include_directories("./src/GlobalVariables")
 set(PROJECT_SOURCES
         src/main.cpp
-        src/Nodes/AbstactNode.h
-        src/Nodes/node.h src/Nodes/node.cpp
         src/CoreAppLogic/visualscriptingthreadsapp.h src/CoreAppLogic/visualscriptingthreadsapp.cpp
         src/CoreAppLogic/gigamanager.h src/CoreAppLogic/gigamanager.cpp
         src/CoreAppLogic/applogic.h src/CoreAppLogic/applogic.cpp
