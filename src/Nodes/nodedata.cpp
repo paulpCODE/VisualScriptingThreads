@@ -40,3 +40,8 @@ void NodeData::SetData(const QString &leftOperand, const QString &rightOperand)
 {
     m_data = qMakePair(leftOperand, rightOperand);
 }
+
+const QPair<QString, QString> &NodeData::GetData() const
+{
+    return m_data;
+}

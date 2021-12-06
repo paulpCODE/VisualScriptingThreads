@@ -1,6 +1,6 @@
 #include "nodesgraph.h"
 
-NodesGraph::NodesGraph(const unsigned int id) : NODESLIMIT(100), m_id(id)
+NodesGraph::NodesGraph(const unsigned int id) : NODESLIMIT(100), m_id(id), m_startNodeId(0)
 {
     ID = new IdDistributor(NODESLIMIT);
 }
@@ -10,9 +10,42 @@ NodesGraph::~NodesGraph()
     delete ID;
 }
 
-void NodesGraph::execute(const GlobalVariablesContainer * const gvcptr)
+void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
 {
-    // #TODO
+    static bool startNodeFixed = false;
+    static unsigned int executableId = 0;
+    if(m_startNodeId == 0) {
+        qDebug("NOTHING TO EXECUTE");
+        return;
+    }
+    if(!startNodeFixed) {
+        if(!m_nodes.contains(m_startNodeId)) {
+            qDebug("DONT EXIST START NODE TO EXECUTE");
+            return;
+        }
+        executableId = m_startNodeId;
+        startNodeFixed = true;
+    }
+
+    const NodeData executableNode(*m_nodes.take(executableId));
+    switch (executableNode.GetType()) {
+    case NodeType::GlobalAssignGlobal:
+        break;
+    case NodeType::GlobalAssignConst:
+        break;
+    case NodeType::InputGlobal:
+        break;
+    case NodeType::PrintGlobal:
+        break;
+    case NodeType::IfGlobalEqualGlobal:
+        break;
+    case NodeType::IfGlobalLessGlobal:
+        break;
+    }
+
+
+
+
 }
 
 void NodesGraph::deepCopy(const NodesGraph& copyTarget)
@@ -89,4 +122,9 @@ void NodesGraph::SetNodeData(const unsigned int id, const QString &leftOperand, 
         return;
     }
     qDebug("DONT EXIST NODE TO SET DATA");
+}
+
+void NodesGraph::SetStartNodeId(const unsigned int id)
+{
+    m_startNodeId = id;
 }

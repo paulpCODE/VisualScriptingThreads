@@ -1,6 +1,6 @@
 #include "nodesgraphcontainer.h"
 
-NodesGraphContainer::NodesGraphContainer(const GlobalVariablesContainer * const gvcptr) : GRAPHSLIMIT(100)
+NodesGraphContainer::NodesGraphContainer(GlobalVariablesContainer * const gvcptr) : GRAPHSLIMIT(100)
 {
     m_gvcptr = gvcptr;
 }
@@ -14,6 +14,17 @@ NodesGraphContainer::~NodesGraphContainer()
 QQmlListProperty<NodesGraph> NodesGraphContainer::graphsList()
 {
     return QQmlListProperty<NodesGraph>(this, &m_graphsList);
+}
+
+void NodesGraphContainer::executeGraph(const unsigned int id)
+{
+    for(auto &i : m_graphsList) {
+        if(i->GetId() == id) {
+            i->execute(m_gvcptr);
+            return;
+        }
+    }
+    qDebug("DONT EXIST GRAPH TO EXECUTE");
 }
 
 const unsigned int NodesGraphContainer::addGraph()

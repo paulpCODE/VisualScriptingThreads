@@ -1,6 +1,6 @@
 #include "connection.h"
 
-Connection::Connection(const ConnectionType& type) : m_type(type), m_idTrue(-1), m_idFalse(-1)
+Connection::Connection(const ConnectionType& type) : m_type(type), m_idTrue(0), m_idFalse(0)
 {}
 
 Connection::Connection(const Connection &other) : m_type(other.m_type), m_idTrue(other.m_idTrue), m_idFalse(other.m_idFalse)
@@ -33,7 +33,7 @@ void Connection::deleteConnection(const unsigned int id, const bool toTrue)
     m_idFalse = -1;
 }
 
-int Connection::GetConnectedNodeId(const bool toTrue) const
+unsigned int Connection::GetConnectedNodeId(const bool toTrue) const
 {
     if(m_type == ConnectionType::ONESIDED) {
         return m_idTrue;

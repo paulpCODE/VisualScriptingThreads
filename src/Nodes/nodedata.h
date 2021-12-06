@@ -33,6 +33,7 @@ public:
     Connection* GetConnection() const;
     unsigned int GetId() const;
     void SetData(const QString& leftOperand, const QString& rightOperand);
+    const QPair<QString,QString>& GetData() const;
 };
 
 #endif // NODEDATA_H
