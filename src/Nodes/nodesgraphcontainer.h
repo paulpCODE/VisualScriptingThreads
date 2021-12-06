@@ -16,15 +16,16 @@ private:
     const unsigned int GRAPHSLIMIT;
 
     IdDistributor * ID;// #TODO rework
-    const GlobalVariablesContainer * m_gvcptr;
+    GlobalVariablesContainer * m_gvcptr;
 
     QList<NodesGraph*> m_graphsList;
 public:
-    NodesGraphContainer(const GlobalVariablesContainer * const gvcptr);
+    NodesGraphContainer(GlobalVariablesContainer * const gvcptr);
     ~NodesGraphContainer(); //set m_gvcptr to nullptr(no delete)
 
     QQmlListProperty<NodesGraph> graphsList();
     const QList<NodesGraph*> *GraphsList() const;
+    void executeGraph(const unsigned int id);
 public slots:
     const unsigned int addGraph();
     void deleteGraph(const unsigned int id);

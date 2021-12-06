@@ -14,8 +14,10 @@ class NodesGraph : public QObject
     Q_OBJECT
 private:
     const unsigned int NODESLIMIT;
-
     const unsigned int m_id;
+
+    unsigned int m_startNodeId;
+
     IdDistributor * ID;
 
     QMap<unsigned int, NodeData*> m_nodes;
@@ -23,7 +25,7 @@ public:
     NodesGraph(const unsigned int id);
     ~NodesGraph();
 
-    void execute(const GlobalVariablesContainer * const gvcptr);
+    void execute(GlobalVariablesContainer * const gvcptr);
     /*
     target - new NodesGraph instace(copy of other)
     other - Copied object
@@ -42,6 +44,7 @@ public:
     Q_INVOKABLE NodeType GetType(unsigned int id) const;
     Q_INVOKABLE const unsigned int GetId() const;
     Q_INVOKABLE void SetNodeData(const unsigned int id, const QString& leftOperand, const QString& rightOperand);
+    Q_INVOKABLE void SetStartNodeId(const unsigned int id);
 };
 
 #endif // NODESGRAPH_H
