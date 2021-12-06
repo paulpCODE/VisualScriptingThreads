@@ -27,25 +27,49 @@ void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
         startNodeFixed = true;
     }
 
+    bool totrue = true;
     const NodeData executableNode(*m_nodes.take(executableId));
+    const QString leftOperand = executableNode.GetData().first;
+    const QString rightOperand = executableNode.GetData().second;
     switch (executableNode.GetType()) {
     case NodeType::GlobalAssignGlobal:
+        //mutex lock
+        gvcptr->globalVariableByName(leftOperand)->setValue(gvcptr->globalVariableByName(rightOperand)->value());
         break;
     case NodeType::GlobalAssignConst:
+        //mutex lock
+        gvcptr->globalVariableByName(leftOperand)->setValue(rightOperand.toInt());
         break;
     case NodeType::InputGlobal:
+        // #TODO
         break;
     case NodeType::PrintGlobal:
+        //mutex lock
+        qDebug() << gvcptr->globalVariableByName(leftOperand) << ": " << gvcptr->globalVariableByName(leftOperand)->value();
         break;
     case NodeType::IfGlobalEqualGlobal:
+        //mutex lock
+        if(gvcptr->globalVariableByName(leftOperand)->value() != rightOperand.toInt()) {
+            totrue = false;
+        }
         break;
     case NodeType::IfGlobalLessGlobal:
+        //mutex lock
+        if(gvcptr->globalVariableByName(leftOperand)->value() >= rightOperand.toInt()) {
+            totrue = false;
+        }
         break;
     }
 
+    if(executableNode.GetConnection()->GetConnectedNodeId(totrue) == 0) {
+        startNodeFixed = false;
+        executableId = 0;
+        return;
+    }
 
+    executableId = executableNode.GetConnection()->GetConnectedNodeId(totrue);
 
-
+    execute(gvcptr);
 }
 
 void NodesGraph::deepCopy(const NodesGraph& copyTarget)
