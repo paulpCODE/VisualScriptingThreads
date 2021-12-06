@@ -27,11 +27,20 @@ Window {
                 }
 
 
+
                 MouseArea {
                     anchors.fill: parent
                     onClicked: model.name += "1";
                 }
+
             }
             model: globalVariablesContainer.globalVariables
         }
+    Rectangle{
+        anchors:{top:parent.top;left:view1.right; bottom:parent.bottom}
+        Text {
+            id: texttt
+            text: globalVariablesContainer.globalVariables.name
+        }
+    }
 }

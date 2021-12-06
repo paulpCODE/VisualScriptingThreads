@@ -5,6 +5,7 @@
 #include <QVector>
 #include <QThread>
 #include "threadworker.h"
+#include "nodesgraphcontainer.h"
 class ThreadManager: public QObject
 {
     //#TODO
@@ -13,8 +14,7 @@ class ThreadManager: public QObject
     // id distributor
 
 public:
-    ThreadManager();
-
+    ThreadManager( NodesGraphContainer * nodesGraphContainer );
 
 public slots:
     //add thread (from qml QFUNCTION?)
@@ -27,6 +27,7 @@ private:
     QVector<QThread*> m_threads;
     QVector<ThreadWorker*> m_threadWorkers;
 
+    NodesGraphContainer * m_nodesGraphContainer;
 };
 
 #endif // THREADMANAGER_H

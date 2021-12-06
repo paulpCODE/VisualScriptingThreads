@@ -94,4 +94,16 @@ void GlobalVariablesContainer::decreaseUsageCounter(const QString &name)
 
 }
 
+GlobalVariable *GlobalVariablesContainer::globalVariableByName(const QString &name)
+{
+    for(int i =0;i<m_globalVariables.size();i++){
+        if(m_globalVariables[i]->name() == name){
+
+            return m_globalVariables[i];
+        }
+    }
+    qDebug()<<"Variable"<<name<<"do not exists \n";
+    return nullptr;
+}
+
 

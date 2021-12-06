@@ -1,9 +1,8 @@
 #ifndef GIGAMANAGER_H
 #define GIGAMANAGER_H
 #include "globalvariablescontainer.h"
-
-class NodesGraphContainer;
-class ThreadManager;
+#include "threadmanager.h"
+#include "nodesgraphcontainer.h"
 
 class GigaManager
 {

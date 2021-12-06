@@ -24,7 +24,7 @@ public:
     ~NodesGraphContainer(); //set m_gvcptr to nullptr(no delete)
 
     QQmlListProperty<NodesGraph> graphsList();
-
+    const QList<NodesGraph*> *GraphsList() const;
 public slots:
     const unsigned int addGraph();
     void deleteGraph(const unsigned int id);

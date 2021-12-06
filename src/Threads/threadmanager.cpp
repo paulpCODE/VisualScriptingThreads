@@ -1,7 +1,8 @@
 #include "threadmanager.h"
 #include <QDebug>
 
-ThreadManager::ThreadManager()
+ThreadManager::ThreadManager(NodesGraphContainer *  nodesGraphContainer)
+    :m_nodesGraphContainer(nodesGraphContainer)
 {
 
 }
@@ -35,6 +36,15 @@ void ThreadManager::asignNodesGraphToThread(int nodesGraphId, int threadId)
     //NodesGraphContainer::asign( |Lvalue| newThreadWorker->graphInstance ,
     //                              |Rvalue|NodesGraphContainer.GetGraph(nodesGraphId) )
     // need deep copy
+    newThreadWorker->graphInstance->deepCopy(
+                 *m_nodesGraphContainer->GetGraph(nodesGraphId));
+
+    //TEST
+        if(newThreadWorker->graphInstance == m_nodesGraphContainer->GetGraph(nodesGraphId) ){
+            qDebug()<<"fake copy constructor not working properly \n" ;
+        }
+    //TEST
+
     m_threadWorkers.push_back(newThreadWorker);
 
 }

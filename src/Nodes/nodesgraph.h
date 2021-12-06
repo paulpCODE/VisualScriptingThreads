@@ -32,7 +32,7 @@ public:
     NodesGraph instance(copyTarget.GetId()
     instance.deepCopy(copyTarget)
     to copy and give new instance of class NodesGraph.
-    If ids of two objects not equal -> return empty targer without data
+    If ids of two objects not equal -> return empty target without data
     */
     void deepCopy(const NodesGraph& copyTarget);
     Q_INVOKABLE const unsigned int createNode(const NodeType& type);

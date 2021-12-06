@@ -3,9 +3,9 @@
 
 GigaManager::GigaManager()
 {
-    //nodesGraphContainer = new NodesGraphContainer();
     globalVariablesContainer = new GlobalVariablesContainer();
-    //threadManager = new ThreadManager();
+    nodesGraphContainer = new NodesGraphContainer(globalVariablesContainer);
+    threadManager = new ThreadManager(nodesGraphContainer);
 }
 
 GigaManager::~GigaManager(){

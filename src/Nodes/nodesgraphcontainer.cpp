@@ -16,6 +16,13 @@ QQmlListProperty<NodesGraph> NodesGraphContainer::graphsList()
     return QQmlListProperty<NodesGraph>(this, &m_graphsList);
 }
 
+const QList<NodesGraph *> *NodesGraphContainer::GraphsList() const
+{
+    return &m_graphsList;
+}
+
+
+
 const unsigned int NodesGraphContainer::addGraph()
 {
     unsigned int idForGraph = ID->getFreeId();

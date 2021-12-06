@@ -31,6 +31,7 @@ public slots:
     void increaseUsageCounter(const QString& name);
     // call when global variable is no more used in node
     void decreaseUsageCounter(const QString& name);
+    GlobalVariable* globalVariableByName(const QString& name);
 private:
 
    QList<GlobalVariable *> m_globalVariables;
