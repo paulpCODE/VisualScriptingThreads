@@ -10,6 +10,12 @@ NodeData::NodeData(const unsigned int id, const NodeType& type) : m_id(id), m_ty
     }
 }
 
+NodeData::NodeData(const NodeData &other) : m_id(other.m_id), m_type(other.m_type)
+{
+    m_data = other.m_data;
+    m_connection = new Connection(*other.m_connection);
+}
+
 NodeData::~NodeData()
 {
     delete m_connection;

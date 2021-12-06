@@ -14,6 +14,7 @@ private:
     int m_idFalse;
 public:
     Connection(const ConnectionType& type);
+    Connection(const Connection& other);
 
     void makeConnection(const unsigned int id, const bool toTrue = true);
     void deleteConnection(const unsigned int id, const bool toTrue = true);

@@ -3,6 +3,15 @@
 IdDistributor::IdDistributor(const unsigned int idLimit) : ID_LIMIT(idLimit)
 {}
 
+IdDistributor &IdDistributor::operator=(const IdDistributor &right)
+{
+    this->m_ids.clear();
+    for(int i = 0; i < right.m_ids.size(); i++) {
+        this->m_ids.push_back(right.m_ids[i]);
+    }
+    return *this;
+}
+
 unsigned int IdDistributor::getFreeId()
 {
     if(m_ids.isEmpty()) {

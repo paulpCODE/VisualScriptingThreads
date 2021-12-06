@@ -14,6 +14,7 @@ private:
     QVector<bool> m_ids;
 public:
     IdDistributor(const unsigned int idLimit);
+    IdDistributor& operator=(const IdDistributor& right);
 
     unsigned int getFreeId();
     void deleteID(unsigned int idToDelete);
