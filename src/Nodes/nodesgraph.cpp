@@ -111,8 +111,9 @@ void NodesGraph::deleteNode(unsigned int id)
                 i->GetConnection()->deleteConnection(i->GetId(), false);
             }
         }
-        ID->deleteID(id);
+        ID->releaseID(id);
         m_nodes.remove(id);
+        return;
     }
     qDebug("DONT EXIST NODE TO DELETE");
 }
@@ -121,6 +122,7 @@ void NodesGraph::connectNodes(unsigned int idfrom, unsigned int idto, bool totru
 {
     if(m_nodes.contains(idfrom) && m_nodes.contains(idto)) {
         m_nodes.take(idfrom)->GetConnection()->makeConnection(idto, totrue);
+        return;
     }
     qDebug("DONT EXIST NODE TO CONNECT");
 }
@@ -129,6 +131,7 @@ void NodesGraph::disconnectNode(unsigned int id, bool totrue)
 {
     if(m_nodes.contains(id)) {
         m_nodes.take(id)->GetConnection()->deleteConnection(id, totrue);
+        return;
     }
     qDebug("DONT EXIST NODE TO DISCONNECT");
 }

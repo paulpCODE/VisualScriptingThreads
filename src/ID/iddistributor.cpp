@@ -34,7 +34,7 @@ unsigned int IdDistributor::getFreeId()
 
 }
 
-void IdDistributor::deleteID(unsigned int idToDelete)
+void IdDistributor::releaseID(unsigned int idToDelete)
 {
     unsigned int idIndex = idToDelete - 1;
     if(idIndex >= m_ids.size()) {

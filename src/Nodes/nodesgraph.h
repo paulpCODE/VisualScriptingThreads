@@ -25,10 +25,16 @@ public:
     NodesGraph(const unsigned int id);
     ~NodesGraph();
 
+    /*
+    #gvcptr - Global Variables Container Pointer.
+
+    Executes all graph automatically.
+    This function calls in NodesGraphsContainer in method executeGraph.
+    */
     void execute(GlobalVariablesContainer * const gvcptr);
     /*
-    target - new NodesGraph instace(copy of other)
-    other - Copied object
+    #target - new NodesGraph instace(copy of other)
+    #other - Copied object
 
     Use construction
     NodesGraph instance(copyTarget.GetId()
@@ -37,13 +43,38 @@ public:
     If ids of two objects not equal -> return empty target without data
     */
     void deepCopy(const NodesGraph& copyTarget);
+    /*
+    #type - type of Node(NodeType enum in NodeData)
+    #RETURNS ID OF NEW CREATED NODE.
+    */
     Q_INVOKABLE const unsigned int createNode(const NodeType& type);
     Q_INVOKABLE void deleteNode(unsigned int id);
+    /*
+    #idfrom - id of Node with out execution pin.
+    #idto - id of Node with in execution pin.
+    #totrue - if node have ONESIDED connection type -> value of totrue dont have matter.
+              if node have DOUBLESIDED connection type -> connect true or false execution pin. Depends on value of totrue.
+    */
     Q_INVOKABLE void connectNodes(unsigned int idfrom, unsigned int idto, bool totrue = true);
+    /*
+    #id - id of Node with out execution pin.
+    #totrue - if node have ONESIDED connection type -> value of totrue dont have matter.
+              if node have DOUBLESIDED connection type -> disconnect true or false execution pin. Depends on value of totrue.
+    */
     Q_INVOKABLE void disconnectNode(unsigned int id, bool totrue = true);
     Q_INVOKABLE NodeType GetType(unsigned int id) const;
     Q_INVOKABLE const unsigned int GetId() const;
+    /*
+    #id - Node id.
+    #leftOperand - left side before operation(+ - = etc).
+    #rightOperand - right side after operation(+ - = etc).
+    */
     Q_INVOKABLE void SetNodeData(const unsigned int id, const QString& leftOperand, const QString& rightOperand);
+    /*
+    #id - Node id.
+
+    Sets start node id. From this node will start the graph execution process(execution() function)
+    */
     Q_INVOKABLE void SetStartNodeId(const unsigned int id);
 };
 
