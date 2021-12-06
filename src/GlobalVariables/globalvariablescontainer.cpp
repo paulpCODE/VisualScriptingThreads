@@ -6,7 +6,7 @@ GlobalVariablesContainer::GlobalVariablesContainer(QObject *parent) : QObject(pa
     m_globalVariables.append(new GlobalVariable(QStringLiteral("a"),1));
     m_globalVariables.append(new GlobalVariable(QStringLiteral("b"),1));
     m_globalVariables.append(new GlobalVariable(QStringLiteral("c"),3));
-    startTimer(5000);
+   // startTimer(5000);
     //for test purposes. delete this later
 }
 
