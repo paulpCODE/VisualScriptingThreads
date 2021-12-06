@@ -31,7 +31,7 @@ int ThreadManager::threadCount() const
 
 void ThreadManager::asignNodesGraphToThread(int nodesGraphId, int threadId)
 {
-    ThreadWorker *newThreadWorker = new ThreadWorker();
+    ThreadWorker *newThreadWorker = new ThreadWorker(nodesGraphId);
     //NodesGraphContainer::asign( |Lvalue| newThreadWorker->graphInstance ,
     //                              |Rvalue|NodesGraphContainer.GetGraph(nodesGraphId) )
     // need deep copy

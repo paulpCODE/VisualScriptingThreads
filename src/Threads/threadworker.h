@@ -10,9 +10,9 @@ class ThreadWorker : public QObject
     Q_OBJECT
 public:
     //NodesGraph seup after constructor? or by params don't know
-    explicit ThreadWorker(QObject *parent = nullptr);
+    explicit ThreadWorker(int graphInstanceId);
 
-    NodesGraph graphinstance;
+    NodesGraph *graphInstance;
     //NodeData* currentGraphNode   id or pointer?
 signals:
 

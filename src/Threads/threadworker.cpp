@@ -1,6 +1,7 @@
 #include "threadworker.h"
 
-ThreadWorker::ThreadWorker(QObject *parent) : QObject(parent)
+ThreadWorker::ThreadWorker(int graphInstanceId) :
+    graphInstance(new NodesGraph(graphInstanceId))
 {
 
 }
