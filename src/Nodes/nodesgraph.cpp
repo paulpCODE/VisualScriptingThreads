@@ -12,64 +12,64 @@ NodesGraph::~NodesGraph()
 
 void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
 {
-    static bool startNodeFixed = false;
-    static unsigned int executableId = 0;
+    unsigned int executableId = 0;
+    bool totrue = true;
+
     if(m_startNodeId == 0) {
         qDebug("NOTHING TO EXECUTE");
         return;
     }
-    if(!startNodeFixed) {
-        if(!m_nodes.contains(m_startNodeId)) {
-            qDebug("DONT EXIST START NODE TO EXECUTE");
-            return;
-        }
-        executableId = m_startNodeId;
-        startNodeFixed = true;
-    }
-
-    bool totrue = true;
-    const NodeData executableNode(*m_nodes.take(executableId));
-    const QString leftOperand = executableNode.GetData().first;
-    const QString rightOperand = executableNode.GetData().second;
-    switch (executableNode.GetType()) {
-    case NodeType::GlobalAssignGlobal:
-        //mutex lock
-        gvcptr->globalVariableByName(leftOperand)->setValue(gvcptr->globalVariableByName(rightOperand)->value());
-        break;
-    case NodeType::GlobalAssignConst:
-        //mutex lock
-        gvcptr->globalVariableByName(leftOperand)->setValue(rightOperand.toInt());
-        break;
-    case NodeType::InputGlobal:
-        // #TODO
-        break;
-    case NodeType::PrintGlobal:
-        //mutex lock
-        qDebug() << gvcptr->globalVariableByName(leftOperand) << ": " << gvcptr->globalVariableByName(leftOperand)->value();
-        break;
-    case NodeType::IfGlobalEqualGlobal:
-        //mutex lock
-        if(gvcptr->globalVariableByName(leftOperand)->value() != rightOperand.toInt()) {
-            totrue = false;
-        }
-        break;
-    case NodeType::IfGlobalLessGlobal:
-        //mutex lock
-        if(gvcptr->globalVariableByName(leftOperand)->value() >= rightOperand.toInt()) {
-            totrue = false;
-        }
-        break;
-    }
-
-    if(executableNode.GetConnection()->GetConnectedNodeId(totrue) == 0) {
-        startNodeFixed = false;
-        executableId = 0;
+    if(!m_nodes.contains(m_startNodeId)) {
+        qDebug("DONT EXIST START NODE TO EXECUTE");
         return;
     }
 
-    executableId = executableNode.GetConnection()->GetConnectedNodeId(totrue);
+    executableId = m_startNodeId;
 
-    execute(gvcptr);
+    while (true) {
+        const NodeData executableNode(*m_nodes.take(executableId));
+        const QString leftOperand = executableNode.GetData().first;
+        const QString rightOperand = executableNode.GetData().second;
+        switch (executableNode.GetType()) {
+        case NodeType::GlobalAssignGlobal:
+            //mutex lock
+            gvcptr->globalVariableByName(leftOperand)->setValue(gvcptr->globalVariableByName(rightOperand)->value());
+            break;
+        case NodeType::GlobalAssignConst:
+            //mutex lock
+            gvcptr->globalVariableByName(leftOperand)->setValue(rightOperand.toInt());
+            break;
+        case NodeType::InputGlobal:
+            // #TODO
+            break;
+        case NodeType::PrintGlobal:
+            //mutex lock
+            qDebug() << gvcptr->globalVariableByName(leftOperand) << ": " << gvcptr->globalVariableByName(leftOperand)->value();
+            break;
+        case NodeType::IfGlobalEqualGlobal:
+            //mutex lock
+            if(gvcptr->globalVariableByName(leftOperand)->value() == rightOperand.toInt()) {
+                totrue = true;
+            } else {
+                totrue = false;
+            }
+            break;
+        case NodeType::IfGlobalLessGlobal:
+            //mutex lock
+            if(gvcptr->globalVariableByName(leftOperand)->value() < rightOperand.toInt()) {
+                totrue = true;
+            } else  {
+                totrue = false;
+            }
+            break;
+        }
+        if(executableNode.GetConnection()->GetConnectedNodeId(totrue) == 0) {
+            qDebug("EXECUTED");
+            return;
+        }
+
+        executableId = executableNode.GetConnection()->GetConnectedNodeId(totrue);
+    }
 }
 
 void NodesGraph::deepCopy(const NodesGraph& copyTarget)
@@ -103,6 +103,14 @@ void NodesGraph::deleteNode(unsigned int id)
 {
     // #TODO Отсоединить ноду, которая присоединина к этой
     if(m_nodes.contains(id)) {
+        for(auto &i : m_nodes) {
+            if(i->GetConnection()->GetConnectedNodeId() == id) {
+                i->GetConnection()->deleteConnection(i->GetId());
+            }
+            if(i->GetConnection()->GetConnectedNodeId(false) == id) {
+                i->GetConnection()->deleteConnection(i->GetId(), false);
+            }
+        }
         ID->deleteID(id);
         m_nodes.remove(id);
     }

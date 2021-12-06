@@ -22,15 +22,15 @@ void Connection::makeConnection(const unsigned int id, const bool toTrue)
 void Connection::deleteConnection(const unsigned int id, const bool toTrue)
 {
     if(m_type == ConnectionType::ONESIDED) {
-        m_idTrue = -1;
+        m_idTrue = 0;
         return;
     }
 
     if(toTrue) {
-        m_idTrue = -1;
+        m_idTrue = 0;
         return;
     }
-    m_idFalse = -1;
+    m_idFalse = 0;
 }
 
 unsigned int Connection::GetConnectedNodeId(const bool toTrue) const
