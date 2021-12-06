@@ -39,5 +39,5 @@ private:
 
     int m_usageCounter;
 };
-
+Q_DECLARE_METATYPE(GlobalVariable);
 #endif // GLOBALVARIABLE_H

@@ -12,12 +12,16 @@ int main(int argc, char *argv[])
 
     QGuiApplication app(argc, argv);
 
+    qRegisterMetaType<GlobalVariable>();
+    qRegisterMetaType<GlobalVariable*>("const GlobalVariable*");
+
     qmlRegisterUncreatableType<GlobalVariablesContainer>("vstApp",1,0,"GlobalVariablesContainer",
                                                          "Type cannot be created in QML");
     qmlRegisterType<GlobalVariable>("vstApp", 1,0, "GlobalVariable");
     qmlRegisterUncreatableType<NodesGraphContainer>("vstApp",1,0,"NodesGraphContainer",
                                                          "Type cannot be created in QML");
     qmlRegisterType<NodesGraph>("vstApp", 1,0, "NodesGraph");
+
 
 
     VisualScriptingThreadsApp vstApp ;
@@ -28,7 +32,8 @@ int main(int argc, char *argv[])
 
     engine.rootContext()->setContextProperty("globalVariablesContainer",
                                 vstApp.gigaManager->globalVariablesContainer);
-
+    engine.rootContext()->setContextProperty("nodesGraphContainer",
+                                vstApp.gigaManager->nodesGraphContainer);
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

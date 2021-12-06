@@ -40,7 +40,12 @@ Window {
         anchors:{top:parent.top;left:view1.right; bottom:parent.bottom}
         Text {
             id: texttt
-            text: globalVariablesContainer.globalVariables.name
+            text: {
+
+                var globalVarByName = globalVariablesContainer.globalVariableByName("a")
+                //globalVarByName.
+
+            }
         }
     }
 }
