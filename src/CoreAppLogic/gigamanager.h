@@ -14,6 +14,7 @@ public:
     ThreadManager *threadManager;
 
 
+
 };
 
 #endif // GIGAMANAGER_H

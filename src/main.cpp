@@ -14,6 +14,9 @@ int main(int argc, char *argv[])
 
     qRegisterMetaType<GlobalVariable>();
     qRegisterMetaType<GlobalVariable*>("const GlobalVariable*");
+    qRegisterMetaType<NodesGraph>();
+    qRegisterMetaType<NodesGraph*>("const NodesGraph*");
+
 
     qmlRegisterUncreatableType<GlobalVariablesContainer>("vstApp",1,0,"GlobalVariablesContainer",
                                                          "Type cannot be created in QML");

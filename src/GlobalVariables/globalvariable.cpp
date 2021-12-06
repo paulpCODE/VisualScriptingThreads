@@ -39,6 +39,10 @@ void GlobalVariable::setValue(int newValue)
     emit valueChanged();
 }
 
+QString GlobalVariable::convertToQString(){
+    return QString(m_name + " : " +  QString::number(m_value));
+}
+
 int GlobalVariable::usageCounter() const
 {
     return m_usageCounter;

@@ -14,37 +14,30 @@ Window {
         width: parent.width / 2
         spacing: 5
 
-        delegate: Item {
-            height: 100
+        delegate: Rectangle {
+            border.color: "black"
+            border.width: 1
+            height: 30
             width: parent.width
-
             Text {
                 id: nameText
-                text: model.name
+                anchors.centerIn: parent
+                text: modelData
             }
-            Text {
-                anchors.left: nameText.right
-                id: nameText2
-                text: value
-            }
-
-
-
-            MouseArea {
-                anchors.fill: parent
-                onClicked: model.name += "1";
-            }
-
         }
-        model: globalVariablesContainer.globalVariables
+        model: globalVariablesContainer.qstringlistGlobalVariableModel
     }
-    Rectangle{
+    Control{
+        background: Rectangle{
+            border.color: "black"
+            border.width: 3
+        }
+
         id: infoRect
-        property string receivedName:" "
-        property string receivedValue:" "
+        padding: 10
+        property string receivedName:""
+        property string receivedValue:""
         property alias ttext: varName.text
-        border.color: "black"
-        border.width: 3
         x:400
         //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
         width: 200
@@ -52,6 +45,8 @@ Window {
 
         Text {
             id: varName
+            anchors.left: parent.left
+            anchors.leftMargin: 10
             text:"Var name: " + infoRect.receivedName
         }
         Text {
@@ -61,10 +56,14 @@ Window {
             text: "Var value: " + infoRect.receivedValue
         }
     }
-    Rectangle{
-        border.color: "blue"
-        border.width: 3
-        x:400
+    Control{
+        background: Rectangle{
+            border.color: "black"
+            border.width: 3
+        }
+        padding: 10
+
+        x: 400
         y: 100
         //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
         width: 200
@@ -72,24 +71,87 @@ Window {
 
         Text {
             id: tex
-
-            text: "Enter inputVariable Name "
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            text: "Enter Variable Name "
         }
         TextField{
             id: textInput
-           // property alias inputVarName:
+            // property alias inputVarName:
+            anchors.left: parent.left
+            anchors.leftMargin: 10
             anchors.top: tex.bottom
             anchors.topMargin: 10
             placeholderText: "input Name"
             onEditingFinished: {
                 var cppGlobalVariable = globalVariablesContainer.globalVariableByName(text)
                 if(cppGlobalVariable !== null){
-                     infoRect.receivedName = cppGlobalVariable.name
-                     infoRect.receivedValue = cppGlobalVariable.value
+                    infoRect.receivedName = cppGlobalVariable.name
+                    infoRect.receivedValue = cppGlobalVariable.value
+                }
+            }
+        }
+
+    }
+    Control{
+        id: newVariableRect
+        background: Rectangle{
+            border.color: "black"
+            border.width: 3
+        }
+        padding: 10
+        x:400
+        y: 200
+        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
+        width: 200
+        height: 150
+
+        property string receivedNewName:""
+        property string receivedNewValue:""
+
+        Text {
+            id: title
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            text: "Input data to create new variable "
+        }
+        TextField{
+            id: newName
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            // property alias inputVarName:
+            anchors.top: title.bottom
+            anchors.topMargin: 10
+            placeholderText: "new Name"
+            onEditingFinished: {
+                newVariableRect.receivedNewName = newName.text
+            }
+        }
+        TextField{
+            id: newValue
+            // property alias inputVarName:
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.top: newName.bottom
+            anchors.topMargin: 10
+            placeholderText: "new Value"
+            validator: IntValidator {bottom: 0; top: 2147483647}
+            onEditingFinished: {
+                newVariableRect.receivedNewValue = newValue.text
+            }
+        }
+        Button{
+            anchors.left: parent.left
+            anchors.leftMargin: 10
+            anchors.top: newValue.bottom
+            anchors.topMargin: 10
+            text: "create new var"
+            onClicked:{
+                if(newVariableRect.receivedNewName!==""){
+                    globalVariablesContainer.changeGlobalVariable("a",newVariableRect.receivedNewName,newVariableRect.receivedNewValue)
                 }
             }
         }
     }
-
 }
 

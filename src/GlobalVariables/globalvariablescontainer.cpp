@@ -2,18 +2,23 @@
 
 GlobalVariablesContainer::GlobalVariablesContainer(QObject *parent) : QObject(parent)
 {
-    //for test purposes. delete this later
-    m_globalVariables.append(new GlobalVariable(QStringLiteral("a"),1));
-    m_globalVariables.append(new GlobalVariable(QStringLiteral("b"),1));
-    m_globalVariables.append(new GlobalVariable(QStringLiteral("c"),3));
-   // startTimer(5000);
-    //for test purposes. delete this later
+    //for test purposes. change this later
+
+
+
+    createGlobalVariable(QStringLiteral("a"),1);
+    createGlobalVariable(QStringLiteral("b"),1);
+    createGlobalVariable(QStringLiteral("c"),3);
+
+ //for test purposes. change this later
+    updateQstringlistGlobalVariableModel();
+
+    connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateQstringlistGlobalVariableModel);
+    connect(this,&GlobalVariablesContainer::qstringlistGlobalVariableModelChanged,[&](){qDebug()<<qstringlistGlobalVariableModel();});
+
 }
 
-QQmlListProperty<GlobalVariable> GlobalVariablesContainer::globalVariables()
-{
-    return QQmlListProperty<GlobalVariable>(this,&m_globalVariables);
-}
+
 
 void GlobalVariablesContainer::createGlobalVariable(const QString& newName,int newValue)
 {
@@ -24,6 +29,7 @@ void GlobalVariablesContainer::createGlobalVariable(const QString& newName,int n
         }
     }
     m_globalVariables.append(new GlobalVariable(newName,newValue));
+    emit globalVariablesDataChanged();
 }
 
 void GlobalVariablesContainer::deleteGlobalVariable(const QString &variableNameToDelete)
@@ -37,6 +43,7 @@ void GlobalVariablesContainer::deleteGlobalVariable(const QString &variableNameT
             }
             i.next()->deleteLater();
             i.remove();
+            emit globalVariablesDataChanged();
         return;
     }
     qDebug()<<"Variable "<<variableNameToDelete<<"don't exists \n";
@@ -46,11 +53,12 @@ void GlobalVariablesContainer::deleteGlobalVariable(const QString &variableNameT
 
 void GlobalVariablesContainer::changeGlobalVariable(const QString &oldName, const QString &newName, int newValue)
 {
-
-    for(const auto &i: m_globalVariables){
-        if(i->name() == newName){
-            qDebug()<<"Variable with desired new name {"<<newName<<"}already exists \n";
-            return;
+    if(oldName!= newName){
+        for(const auto &i: m_globalVariables){
+            if(i->name() == newName){
+                qDebug()<<"Variable with desired new name {"<<newName<<"}already exists \n";
+                return;
+            }
         }
     }
     for(const auto &i: m_globalVariables){
@@ -64,6 +72,7 @@ void GlobalVariablesContainer::changeGlobalVariable(const QString &oldName, cons
             // changing variable
             i->setName(newName);
             i->setValue(newValue);
+            emit globalVariablesDataChanged();
             return;
         }
     }
@@ -106,4 +115,27 @@ GlobalVariable *GlobalVariablesContainer::globalVariableByName(const QString &na
     return nullptr;
 }
 
+void GlobalVariablesContainer::updateQstringlistGlobalVariableModel()
+{
+    QStringList newList;
+    for(const auto &i: m_globalVariables){
+        newList.push_back(i->convertToQString());
+    }
+    m_qstringlistGlobalVariableModel = newList;
+    emit qstringlistGlobalVariableModelChanged();
+}
 
+
+
+const QStringList &GlobalVariablesContainer::qstringlistGlobalVariableModel() const
+{
+    return m_qstringlistGlobalVariableModel;
+}
+
+void GlobalVariablesContainer::setQstringlistGlobalVariableModel(const QStringList &newQstringlistGlobalVariableModel)
+{
+    if (m_qstringlistGlobalVariableModel == newQstringlistGlobalVariableModel)
+        return;
+    m_qstringlistGlobalVariableModel = newQstringlistGlobalVariableModel;
+    emit qstringlistGlobalVariableModelChanged();
+}

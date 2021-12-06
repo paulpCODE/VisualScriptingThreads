@@ -11,7 +11,6 @@
 class NodesGraphContainer : public QObject
 {
     Q_OBJECT
-    Q_PROPERTY(QQmlListProperty<NodesGraph> graphsList READ graphsList CONSTANT)
 private:
     const unsigned int GRAPHSLIMIT;
 
@@ -23,7 +22,6 @@ public:
     NodesGraphContainer(GlobalVariablesContainer * const gvcptr);
     ~NodesGraphContainer(); //set m_gvcptr to nullptr(no delete)
 
-    QQmlListProperty<NodesGraph> graphsList();
     const QList<NodesGraph*> *GraphsList() const;
     void executeGraph(const unsigned int id);
 public slots:

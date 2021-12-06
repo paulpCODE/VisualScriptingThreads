@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QMutex>
-
+#include <QString>
 class GlobalVariable : public QObject
 {
     Q_OBJECT
@@ -18,7 +18,7 @@ public:
 
     int value() const;
     void setValue(int newValue);
-
+    QString convertToQString();
 signals:
 
     void nameChanged();
