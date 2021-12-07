@@ -26,6 +26,10 @@ public slots:
     // call when global variable is no more used in node
     void decreaseUsageCounter(const QString& name);
     GlobalVariable* globalVariableByName(const QString& name);
+    //by index from qstringlistmodel
+    GlobalVariable* globalVariablebyIndex(int index);
+    //Get Variable Name By index from qstringlistmodel
+    QString globalVariableNameByIndex(int index);
     void updateQstringlistGlobalVariableModel();
 signals:
     void qstringlistGlobalVariableModelChanged();

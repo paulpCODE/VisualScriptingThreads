@@ -8,7 +8,7 @@ NodeData::NodeData(const unsigned int id, const NodeEnums::NodeType& type) : m_i
     else {
         m_connection = new Connection(ConnectionType::ONESIDED);
     }
-    m_data = qMakePair("notSetted","notSetted");
+    m_data = qMakePair("","");
     qDebug() << "NODE " << id << " CREATED";
 }
 

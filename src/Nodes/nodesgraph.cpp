@@ -112,10 +112,17 @@ void NodesGraph::deleteNode(unsigned int id)
             }
         }
         ID->releaseID(id);
+
+
+
         m_nodes.remove(id);
         return;
     }
     qDebug("DONT EXIST NODE TO DELETE");
+
+
+
+
 }
 
 void NodesGraph::connectNodes(unsigned int idfrom, unsigned int idto, bool totrue)

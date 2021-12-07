@@ -10,7 +10,7 @@ GlobalVariablesContainer::GlobalVariablesContainer(QObject *parent) : QObject(pa
     createGlobalVariable(QStringLiteral("b"),1);
     createGlobalVariable(QStringLiteral("c"),3);
 
- //for test purposes. change this later
+    //for test purposes. change this later
     updateQstringlistGlobalVariableModel();
 
     connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateQstringlistGlobalVariableModel);
@@ -38,22 +38,22 @@ void GlobalVariablesContainer::deleteGlobalVariable(const QString &variableNameT
     QList<GlobalVariable*>::iterator it = m_globalVariables.begin();
     while (it != m_globalVariables.end())
     {
-      if ((*it)->name()== variableNameToDelete )
-      {
-          if((*it)->usageCounter()>0)
-          {
-              qDebug()<<"Variable "<<variableNameToDelete<<"is used somewhere. Can't be deleted now \n";
-              return;
-          }
-          else{
-              qDebug()<<"Variable "<< (*it)->name()<<"deleted \n";
-              it = m_globalVariables.erase(it);
-              emit globalVariablesDataChanged();
-              return;
-          }
-      }
-      else
-        ++it;
+        if ((*it)->name()== variableNameToDelete )
+        {
+            if((*it)->usageCounter()>0)
+            {
+                qDebug()<<"Variable "<<variableNameToDelete<<"is used somewhere. Can't be deleted now \n";
+                return;
+            }
+            else{
+                qDebug()<<"Variable "<< (*it)->name()<<"deleted \n";
+                it = m_globalVariables.erase(it);
+                emit globalVariablesDataChanged();
+                return;
+            }
+        }
+        else
+            ++it;
     }
     qDebug()<<"Variable "<<variableNameToDelete<<"don't exists \n";
 
@@ -63,14 +63,14 @@ void GlobalVariablesContainer::deleteGlobalVariable(const QString &variableNameT
 
 void GlobalVariablesContainer::changeGlobalVariable(const QString &oldName, const QString &newName, int newValue)
 {
-//    if(oldName!= newName){
-//        for(const auto &i: m_globalVariables){
-//            if(i->name() == newName){
-//                qDebug()<<"Variable with desired new name {"<<newName<<"}already exists \n";
-//                return;
-//            }
-//        }
-//    }
+    //    if(oldName!= newName){
+    //        for(const auto &i: m_globalVariables){
+    //            if(i->name() == newName){
+    //                qDebug()<<"Variable with desired new name {"<<newName<<"}already exists \n";
+    //                return;
+    //            }
+    //        }
+    //    }
     for(const auto &i: m_globalVariables){
         //if can find variable with old name
         if(i->name() == oldName){
@@ -86,7 +86,7 @@ void GlobalVariablesContainer::changeGlobalVariable(const QString &oldName, cons
             return;
         }
     }
-      qDebug()<<"Variable with old name{"+ oldName + "}don't exist  \n";
+    qDebug()<<"Variable with old name{"+ oldName + "}don't exist  \n";
 }
 
 void GlobalVariablesContainer::increaseUsageCounter(const QString &name)
@@ -124,6 +124,46 @@ GlobalVariable *GlobalVariablesContainer::globalVariableByName(const QString &na
     qDebug()<<"Variable"<<name<<"do not exists \n";
     return nullptr;
 }
+
+GlobalVariable *GlobalVariablesContainer::globalVariablebyIndex(int index)
+{
+    if (index > m_qstringlistGlobalVariableModel.size()){
+        qDebug()<<"index"<<index<<"out of range \n";
+        return nullptr;
+    }
+    QString temp = m_qstringlistGlobalVariableModel[index];
+    temp.replace(QString(" "), QString(""));
+    QStringList myStringList = temp.split(':');
+
+    if(myStringList.last() == QString::number(m_globalVariables[index]->value())){
+        return m_globalVariables[index];
+    }
+
+    qDebug()<<"Global variable by index"<<index<<"do not exists \n";
+    return nullptr;
+}
+
+QString GlobalVariablesContainer::globalVariableNameByIndex(int index)
+{
+
+    if (index > m_qstringlistGlobalVariableModel.size()){
+        qDebug()<<"index"<<index<<"out of range \n";
+        return nullptr;
+    }
+    auto tempName = m_globalVariables[index]->name();
+
+    QString temp = m_qstringlistGlobalVariableModel[index];
+    temp.replace(QString(" "), QString(""));
+    QStringList myStringList = temp.split(':');
+
+    if(myStringList.last() == QString::number(m_globalVariables[index]->value())){
+        return tempName;
+    }
+
+    qDebug()<<"Global variable by index"<<index<<"do not exists \n";
+    return nullptr;
+}
+
 
 void GlobalVariablesContainer::updateQstringlistGlobalVariableModel()
 {
