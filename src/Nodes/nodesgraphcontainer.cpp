@@ -3,6 +3,9 @@
 NodesGraphContainer::NodesGraphContainer(GlobalVariablesContainer * const gvcptr) : GRAPHSLIMIT(100)
 {
     m_gvcptr = gvcptr;
+
+    connect(this,&NodesGraphContainer::usingNewGlobalVariable,m_gvcptr,&GlobalVariablesContainer::increaseUsageCounter);
+    connect(this,&NodesGraphContainer::noLongerUsingGlobalVariable,m_gvcptr,&GlobalVariablesContainer::decreaseUsageCounter);
 }
 
 NodesGraphContainer::~NodesGraphContainer()

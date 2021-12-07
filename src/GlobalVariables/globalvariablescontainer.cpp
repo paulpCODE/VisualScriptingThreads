@@ -34,39 +34,49 @@ void GlobalVariablesContainer::createGlobalVariable(const QString& newName,int n
 
 void GlobalVariablesContainer::deleteGlobalVariable(const QString &variableNameToDelete)
 {
-    QMutableListIterator<GlobalVariable*> i(m_globalVariables);
-    while (i.hasNext()) {
-        if (i.next()->name() == variableNameToDelete )
-            if(i.next()->usageCounter()>0){
-                qDebug()<<"Variable "<<variableNameToDelete<<"is used somewhere. Can't be deleted now \n";
-                return;
-            }
-            i.next()->deleteLater();
-            i.remove();
-            emit globalVariablesDataChanged();
-        return;
+
+    QList<GlobalVariable*>::iterator it = m_globalVariables.begin();
+    while (it != m_globalVariables.end())
+    {
+      if ((*it)->name()== variableNameToDelete )
+      {
+          if((*it)->usageCounter()>0)
+          {
+              qDebug()<<"Variable "<<variableNameToDelete<<"is used somewhere. Can't be deleted now \n";
+              return;
+          }
+          else{
+              qDebug()<<"Variable "<< (*it)->name()<<"deleted \n";
+              it = m_globalVariables.erase(it);
+              emit globalVariablesDataChanged();
+              return;
+          }
+      }
+      else
+        ++it;
     }
     qDebug()<<"Variable "<<variableNameToDelete<<"don't exists \n";
+
 
 
 }
 
 void GlobalVariablesContainer::changeGlobalVariable(const QString &oldName, const QString &newName, int newValue)
 {
-    if(oldName!= newName){
-        for(const auto &i: m_globalVariables){
-            if(i->name() == newName){
-                qDebug()<<"Variable with desired new name {"<<newName<<"}already exists \n";
-                return;
-            }
-        }
-    }
+//    if(oldName!= newName){
+//        for(const auto &i: m_globalVariables){
+//            if(i->name() == newName){
+//                qDebug()<<"Variable with desired new name {"<<newName<<"}already exists \n";
+//                return;
+//            }
+//        }
+//    }
     for(const auto &i: m_globalVariables){
         //if can find variable with old name
         if(i->name() == oldName){
             // if used somewhere - return
             if(i->usageCounter()>0){
-                qDebug()<<"Variable "<<oldName<<"is used somewhere. Can't be changed now \n";
+                qDebug()<<"Variable "<<oldName<<"was used somewhere. Can't be changed now \n";
                 return;
             }
             // changing variable
@@ -76,7 +86,7 @@ void GlobalVariablesContainer::changeGlobalVariable(const QString &oldName, cons
             return;
         }
     }
-      qDebug()<<"something wrong in changeGlobalVariable() old name{" + oldName + "} new name {" + newName +"}   \n";
+      qDebug()<<"Variable with old name{"+ oldName + "}don't exist  \n";
 }
 
 void GlobalVariablesContainer::increaseUsageCounter(const QString &name)

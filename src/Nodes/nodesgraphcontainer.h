@@ -28,6 +28,9 @@ public:
     Q_INVOKABLE const unsigned int addGraph();
     Q_INVOKABLE void deleteGraph(const unsigned int id);
     Q_INVOKABLE NodesGraph* GetGraph(const unsigned int id) const;
+signals:
+    void noLongerUsingGlobalVariable(const QString & variableName);
+    void usingNewGlobalVariable(const QString & variableName);
 };
 
 #endif // NODESGRAPHCONTAINER_H

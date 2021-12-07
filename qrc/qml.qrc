@@ -5,5 +5,7 @@
         <file>Node.qml</file>
         <file>NodeMenu.qml</file>
         <file>js/NodesGraphFunctions.js</file>
+        <file>GlobalVariablesMenu.qml</file>
+        <file>GlobalVariablesSettings.qml</file>
     </qresource>
 </RCC>

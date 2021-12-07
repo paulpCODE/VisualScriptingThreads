@@ -1,47 +1,32 @@
-import QtQuick 2.0
+import QtQuick 2.12
 import QtQuick.Controls 2.15
-import "js/NodesGraphFunctions.js" as NGFunc
-
 Item {
     id:mainitem
-    property alias currentIndex: nodechoice.currentIndex
+    property alias currentIndex: choice.currentIndex
+    property int itemWidth: 80
+    property int itemheight: 30
 
     ComboBox {
-        id: nodechoice
-        width: 80
-        height: 30
+        id: choice
+        width: itemWidth
+        height: itemheight
         anchors.top: parent.top
         anchors.left: parent.left
-        model: ["V1 = V2", "V = C", "INPUT V", "PRINT V", "IF V == C", "IF V < C"]
         delegate: ItemDelegate {
-               width: nodechoice.width
+               width: choice.width
                contentItem: Text {
                    text: modelData
                    elide: Text.ElideRight
                    verticalAlignment: Text.AlignVCenter
                    horizontalAlignment: Text.AlignHCenter
                }
-        }
+           }
         contentItem: Text {
-
-
-               text: nodechoice.displayText
-
+               text: choice.displayText
                verticalAlignment: Text.AlignVCenter
                horizontalAlignment: Text.AlignHCenter
                elide: Text.ElideRight
            }
-
+        model: globalVariablesContainer.qstringlistGlobalVariableModel
     }
-    Button {
-        height: 30
-        width: 30
-        anchors.left: nodechoice.right
-        anchors.rightMargin: 5
-        text: "+"
-        onClicked: {
-            NGFunc.createNode()
-        }
-    }
-
 }
