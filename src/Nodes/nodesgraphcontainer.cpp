@@ -3,6 +3,7 @@
 NodesGraphContainer::NodesGraphContainer(GlobalVariablesContainer * const gvcptr) : GRAPHSLIMIT(100)
 {
     m_gvcptr = gvcptr;
+    ID = new IdDistributor(GRAPHSLIMIT);
 }
 
 NodesGraphContainer::~NodesGraphContainer()
@@ -34,7 +35,7 @@ const unsigned int NodesGraphContainer::addGraph()
         qDebug("GRAPHS LIMIT!");
         return idForGraph;
     }
-    m_graphsList.append(new NodesGraph(idForGraph));
+    m_graphsList.push_back(new NodesGraph(idForGraph));
     return idForGraph;
 }
 
@@ -59,4 +60,34 @@ NodesGraph* NodesGraphContainer::GetGraph(const unsigned int id) const
     }
     qDebug("DONT EXIST GRAPH. RETURN INCORRECT.");
     return m_graphsList.first();
+}
+
+const unsigned int NodesGraphContainer::createNode(const unsigned int graphid, const NodeEnums::NodeType &type)
+{
+    return GetGraph(graphid)->createNode(type);
+}
+
+void NodesGraphContainer::deleteNode(const unsigned int graphid, unsigned int id)
+{
+    GetGraph(graphid)->deleteNode(id);
+}
+
+void NodesGraphContainer::connectNodes(const unsigned int graphid, unsigned int idfrom, unsigned int idto, bool totrue)
+{
+    GetGraph(graphid)->connectNodes(idfrom, idto, totrue);
+}
+
+void NodesGraphContainer::disconnectNode(const unsigned int graphid, unsigned int id, bool totrue)
+{
+    GetGraph(graphid)->disconnectNode(id, totrue);
+}
+
+void NodesGraphContainer::SetNodeData(const unsigned int graphid, const unsigned int id, const QString &leftOperand, const QString &rightOperand)
+{
+    GetGraph(graphid)->SetNodeData(id, leftOperand, rightOperand);
+}
+
+void NodesGraphContainer::SetStartNodeId(const unsigned int graphid, const unsigned int id)
+{
+    GetGraph(graphid)->SetStartNodeId(id);
 }

@@ -8,6 +8,7 @@ NodeData::NodeData(const unsigned int id, const NodeEnums::NodeType& type) : m_i
     else {
         m_connection = new Connection(ConnectionType::ONESIDED);
     }
+    qDebug() << "NODE " << id << " CREATED";
 }
 
 NodeData::NodeData(const NodeData &other) : m_id(other.m_id), m_type(other.m_type)

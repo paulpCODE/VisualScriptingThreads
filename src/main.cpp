@@ -16,6 +16,7 @@ int main(int argc, char *argv[])
     qRegisterMetaType<GlobalVariable*>("const GlobalVariable*");
     qRegisterMetaType<NodesGraph>();
     qRegisterMetaType<NodesGraph*>("const NodesGraph*");
+    qRegisterMetaType<NodeEnums::NodeType>("NodeEnums::NodeType");
 
 
     qmlRegisterUncreatableType<GlobalVariablesContainer>("vstApp",1,0,"GlobalVariablesContainer",
@@ -25,11 +26,11 @@ int main(int argc, char *argv[])
                                                          "Type cannot be created in QML");
     qmlRegisterType<NodesGraph>("vstApp", 1,0, "NodesGraph");
 
-    //qRegisterMetaType<NodeEnums::NodeType>("NodeEnums::NodeType");
 
 
 
     VisualScriptingThreadsApp vstApp;
+    vstApp.gigaManager->nodesGraphContainer->addGraph();
 
 
     QQmlApplicationEngine engine;
@@ -39,6 +40,8 @@ int main(int argc, char *argv[])
                                 vstApp.gigaManager->globalVariablesContainer);
     engine.rootContext()->setContextProperty("nodesGraphContainer",
                                 vstApp.gigaManager->nodesGraphContainer);
+    engine.rootContext()->setContextProperty("nodeEnums",
+                                new NodeEnums());
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

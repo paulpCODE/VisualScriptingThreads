@@ -3,6 +3,7 @@ import QtQuick.Window 2.15
 import vstApp 1.0
 import QtQuick.Controls 2.12
 Window {
+    id: mainwindow
     width: 640
     height: 480
     visible: true
@@ -153,9 +154,27 @@ Window {
         }
     }
     NodeMenu {
+        id: nodemenu
         anchors.top: parent.top
         anchors.left: parent.left
         anchors.margins: 5
+    }
+
+//    Component.onCompleted: {
+//        var component = Qt.createComponent("GraphEditor.qml")
+//        if(component.status === Component.Ready)
+//            var objcomp1 = component.createObject(mainwindow, {x: 100, y:100})
+//        var component2 = Qt.createComponent("GraphEditor.qml")
+//        if(component2.status === Component.Ready)
+//            var objcomp2 = component.createObject(mainwindow, {x: 300, y:300})
+
+//        objcomp1.a = "ALPHA"
+//    }
+
+    Node {
+        x:100
+        y:100
+        operationText: "="
     }
 }
 

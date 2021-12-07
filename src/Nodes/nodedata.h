@@ -5,6 +5,7 @@
 #include <QPair>
 #include <QString>
 #include <QObject>
+#include <QDebug>
 
 class NodeEnums : public QObject {
     Q_GADGET
