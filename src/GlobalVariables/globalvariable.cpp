@@ -5,6 +5,7 @@ GlobalVariable::GlobalVariable(const QString &name,int value, QObject *parent) :
 {
     setName(name);
     setValue(value);
+    setUsageCounter(0);
     mutex = new QMutex();
 }
 

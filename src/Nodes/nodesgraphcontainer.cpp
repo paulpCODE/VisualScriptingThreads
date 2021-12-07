@@ -4,6 +4,9 @@ NodesGraphContainer::NodesGraphContainer(GlobalVariablesContainer * const gvcptr
 {
     m_gvcptr = gvcptr;
     ID = new IdDistributor(GRAPHSLIMIT);
+
+    connect(this,&NodesGraphContainer::usingNewGlobalVariable,m_gvcptr,&GlobalVariablesContainer::increaseUsageCounter);
+    connect(this,&NodesGraphContainer::noLongerUsingGlobalVariable,m_gvcptr,&GlobalVariablesContainer::decreaseUsageCounter);
 }
 
 NodesGraphContainer::~NodesGraphContainer()
