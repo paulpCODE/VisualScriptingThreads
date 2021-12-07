@@ -48,7 +48,7 @@ void NodesGraphContainer::deleteGraph(const unsigned int id)
     while (i.hasNext()) {
         if (i.next()->GetId() == id)
             i.next()->deleteLater();
-            i.remove();
+        i.remove();
         return;
     }
     qDebug("DONT EXIST GRAPH TO DELETE");
@@ -87,7 +87,53 @@ void NodesGraphContainer::disconnectNode(const unsigned int graphid, unsigned in
 
 void NodesGraphContainer::SetNodeData(const unsigned int graphid, const unsigned int id, const QString &leftOperand, const QString &rightOperand)
 {
+    NodeEnums::NodeType currentNodeType =  GetGraph(graphid)->GetType(id);
+    // left operand is global var
+    if (currentNodeType == NodeEnums::NodeType::InputGlobal ||
+            currentNodeType == NodeEnums::NodeType::GlobalAssignConst||
+            currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal)
+    {
+        auto oldLeft = GetNodeOperandsData(graphid,id).first;
+        auto oldRight = GetNodeOperandsData(graphid,id).second;
+        // if exist such left variable
+        if(m_gvcptr->globalVariableByName(leftOperand)!=nullptr)
+        {
+            // notify that old var no longer using
+            if (oldLeft != "" && oldLeft != leftOperand)
+            {
+               emit noLongerUsingGlobalVariable(oldLeft);
+            }
+            // notify that now we are using leftOperand
+            emit usingNewGlobalVariable(leftOperand);
+
+             // if exist such right variable and GlobalAssignGlobal
+           if(currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal &&
+                   (m_gvcptr->globalVariableByName(rightOperand)!=nullptr))
+           {
+               // notify that old var no longer using
+               if (oldRight != "" && oldRight != rightOperand)
+               {
+                  emit noLongerUsingGlobalVariable(oldRight);
+               }
+               // notify that now we are using rightOperand
+               emit usingNewGlobalVariable(rightOperand);
+           }
+           else if(currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal &&
+                      (m_gvcptr->globalVariableByName(rightOperand)==nullptr)){
+                qDebug("RIGHT OPERAND VARIABLE DON'T EXIST. RETURN INCORRECT.");
+           }
+        }
+        else{
+            qDebug("LEFT OPERAND VARIABLE DON'T EXIST. RETURN INCORRECT.");
+            return;
+        }
+    }
     GetGraph(graphid)->SetNodeData(id, leftOperand, rightOperand);
+}
+
+QPair<QString,QString> NodesGraphContainer::GetNodeOperandsData(const unsigned int graphid, const unsigned int id)
+{
+     return GetGraph(graphid)->GetNodeOperandsData(id);
 }
 
 void NodesGraphContainer::SetStartNodeId(const unsigned int graphid, const unsigned int id)

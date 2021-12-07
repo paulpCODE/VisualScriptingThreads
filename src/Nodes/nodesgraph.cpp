@@ -159,6 +159,15 @@ void NodesGraph::SetNodeData(const unsigned int id, const QString &leftOperand, 
     qDebug("DONT EXIST NODE TO SET DATA");
 }
 
+QPair<QString, QString> NodesGraph::GetNodeOperandsData(const unsigned int id) const
+{
+    if(m_nodes.contains(id)) {
+        return m_nodes[id]->GetData();
+    }
+    qDebug("DONT EXIST NODE TO GET DATA");
+    return qMakePair("empty","empty");
+}
+
 void NodesGraph::SetStartNodeId(const unsigned int id)
 {
     m_startNodeId = id;

@@ -5,6 +5,7 @@
 #include "iddistributor.h"
 #include "globalvariablescontainer.h"
 #include <QObject>
+#include <QPair>
 
 
 
@@ -72,12 +73,18 @@ public:
     #rightOperand - right side after operation(+ - = etc).
     */
     void SetNodeData(const unsigned int id, const QString& leftOperand, const QString& rightOperand);
+
+    QPair<QString,QString> GetNodeOperandsData(const unsigned int id) const;
+
+
     /*
     #id - Node id.
 
     Sets start node id. From this node will start the graph execution process(execution() function)
     */
     void SetStartNodeId(const unsigned int id);
+
+
 };
 
 #endif // NODESGRAPH_H
