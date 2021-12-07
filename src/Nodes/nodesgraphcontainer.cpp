@@ -7,12 +7,22 @@ NodesGraphContainer::NodesGraphContainer(GlobalVariablesContainer * const gvcptr
 
     connect(this,&NodesGraphContainer::usingNewGlobalVariable,m_gvcptr,&GlobalVariablesContainer::increaseUsageCounter);
     connect(this,&NodesGraphContainer::noLongerUsingGlobalVariable,m_gvcptr,&GlobalVariablesContainer::decreaseUsageCounter);
+    connect(this,&NodesGraphContainer::nodesGraphContainerDataChanged,this,&NodesGraphContainer::updateQstringListNodesGraphContainerModel);
 }
 
 NodesGraphContainer::~NodesGraphContainer()
 {
     m_gvcptr = nullptr;
     delete ID;
+}
+
+void NodesGraphContainer::updateQstringListNodesGraphContainerModel()
+{
+    QStringList newList;
+    for(const auto &i: m_graphsList){
+        newList.push_back(i->convertToQString());
+    }
+    setQstringListNodesGraphContainerModel(newList);
 }
 
 const QList<NodesGraph *> *NodesGraphContainer::GraphsList() const
@@ -39,19 +49,25 @@ const unsigned int NodesGraphContainer::addGraph()
         return idForGraph;
     }
     m_graphsList.push_back(new NodesGraph(idForGraph));
+    emit nodesGraphContainerDataChanged();
     return idForGraph;
 }
 
 void NodesGraphContainer::deleteGraph(const unsigned int id)
-{
-    QMutableListIterator<NodesGraph*> i(m_graphsList);
-    while (i.hasNext()) {
-        if (i.next()->GetId() == id)
-            i.next()->deleteLater();
-        i.remove();
-        return;
+{ 
+    QList<NodesGraph*>::iterator it = m_graphsList.begin();
+    while (it != m_graphsList.end())
+    {
+        if ((*it)->GetId() == id  )
+        {
+            it = m_graphsList.erase(it);
+            emit nodesGraphContainerDataChanged();
+            return;
+        }
+        else
+            ++it;
     }
-    qDebug("DONT EXIST GRAPH TO DELETE");
+        qDebug("DONT EXIST GRAPH TO DELETE");
 }
 
 NodesGraph* NodesGraphContainer::GetGraph(const unsigned int id) const
@@ -113,27 +129,27 @@ void NodesGraphContainer::SetNodeData(const unsigned int graphid, const unsigned
             // notify that old var no longer using
             if (oldLeft != "" && oldLeft != leftOperand)
             {
-               emit noLongerUsingGlobalVariable(oldLeft);
+                emit noLongerUsingGlobalVariable(oldLeft);
             }
             // notify that now we are using leftOperand
             emit usingNewGlobalVariable(leftOperand);
 
-             // if exist such right variable and GlobalAssignGlobal
-           if(currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal &&
-                   (m_gvcptr->globalVariableByName(rightOperand)!=nullptr))
-           {
-               // notify that old var no longer using
-               if (oldRight != "" && oldRight != rightOperand)
-               {
-                  emit noLongerUsingGlobalVariable(oldRight);
-               }
-               // notify that now we are using rightOperand
-               emit usingNewGlobalVariable(rightOperand);
-           }
-           else if(currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal &&
-                      (m_gvcptr->globalVariableByName(rightOperand)==nullptr)){
+            // if exist such right variable and GlobalAssignGlobal
+            if(currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal &&
+                    (m_gvcptr->globalVariableByName(rightOperand)!=nullptr))
+            {
+                // notify that old var no longer using
+                if (oldRight != "" && oldRight != rightOperand)
+                {
+                    emit noLongerUsingGlobalVariable(oldRight);
+                }
+                // notify that now we are using rightOperand
+                emit usingNewGlobalVariable(rightOperand);
+            }
+            else if(currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal &&
+                    (m_gvcptr->globalVariableByName(rightOperand)==nullptr)){
                 qDebug("RIGHT OPERAND VARIABLE DON'T EXIST. RETURN INCORRECT.");
-           }
+            }
         }
         else{
             qDebug("LEFT OPERAND VARIABLE DON'T EXIST. RETURN INCORRECT.");
@@ -145,10 +161,34 @@ void NodesGraphContainer::SetNodeData(const unsigned int graphid, const unsigned
 
 QPair<QString,QString> NodesGraphContainer::GetNodeOperandsData(const unsigned int graphid, const unsigned int id)
 {
-     return GetGraph(graphid)->GetNodeOperandsData(id);
+    return GetGraph(graphid)->GetNodeOperandsData(id);
 }
 
 void NodesGraphContainer::SetStartNodeId(const unsigned int graphid, const unsigned int id)
 {
     GetGraph(graphid)->SetStartNodeId(id);
+}
+
+void NodesGraphContainer::renameGraphById(const unsigned int graphid, const QString &newName)
+{
+    GetGraph(graphid)->setGraphName(newName);
+    emit nodesGraphContainerDataChanged();
+}
+
+int NodesGraphContainer::getGraphIdByModelIndex(const unsigned int modelIndex) const
+{
+    return m_graphsList[modelIndex]->GetId();
+}
+
+const QStringList &NodesGraphContainer::qstringListNodesGraphContainerModel() const
+{
+    return m_qstringListNodesGraphContainerModel;
+}
+
+void NodesGraphContainer::setQstringListNodesGraphContainerModel(const QStringList &newQstringListNodesGraphContainerModel)
+{
+    if (m_qstringListNodesGraphContainerModel == newQstringListNodesGraphContainerModel)
+        return;
+    m_qstringListNodesGraphContainerModel = newQstringListNodesGraphContainerModel;
+    emit qstringListNodesGraphContainerModelChanged();
 }

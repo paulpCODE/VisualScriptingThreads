@@ -175,7 +175,25 @@ QPair<QString, QString> NodesGraph::GetNodeOperandsData(const unsigned int id) c
     return qMakePair("empty","empty");
 }
 
+QString NodesGraph::convertToQString()
+{
+     return QString(m_graphName + "|id : " +  QString::number(m_id));
+}
+
 void NodesGraph::SetStartNodeId(const unsigned int id)
 {
     m_startNodeId = id;
+}
+
+const QString &NodesGraph::graphName() const
+{
+    return m_graphName;
+}
+
+void NodesGraph::setGraphName(const QString &newGraphName)
+{
+    if (m_graphName == newGraphName)
+        return;
+    m_graphName = newGraphName;
+    emit graphNameChanged();
 }

@@ -13,6 +13,7 @@
 class NodesGraph : public QObject
 {
     Q_OBJECT
+    Q_PROPERTY(QString graphName READ graphName WRITE setGraphName NOTIFY graphNameChanged)
 private:
     const unsigned int NODESLIMIT;
     const unsigned int m_id;
@@ -22,6 +23,8 @@ private:
     IdDistributor * ID;
 
     QMap<unsigned int, NodeData*> m_nodes;
+    QString m_graphName;
+
 public:
     NodesGraph(const unsigned int id);
     ~NodesGraph();
@@ -76,6 +79,7 @@ public:
 
     QPair<QString,QString> GetNodeOperandsData(const unsigned int id) const;
 
+    QString convertToQString();
 
     /*
     #id - Node id.
@@ -85,6 +89,10 @@ public:
     void SetStartNodeId(const unsigned int id);
 
 
+    const QString &graphName() const;
+    void setGraphName(const QString &newGraphName);
+signals:
+    void graphNameChanged();
 };
 
 #endif // NODESGRAPH_H

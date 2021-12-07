@@ -14,7 +14,6 @@ GlobalVariablesContainer::GlobalVariablesContainer(QObject *parent) : QObject(pa
     updateQstringlistGlobalVariableModel();
 
     connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateQstringlistGlobalVariableModel);
-    connect(this,&GlobalVariablesContainer::qstringlistGlobalVariableModelChanged,[&](){qDebug()<<qstringlistGlobalVariableModel();});
 
 }
 
