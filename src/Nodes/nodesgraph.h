@@ -87,12 +87,14 @@ public:
     Sets start node id. From this node will start the graph execution process(execution() function)
     */
     void SetStartNodeId(const unsigned int id);
+    const unsigned int GetConnectedNodeId(const unsigned int id, bool totrue = true);
 
 
     const QString &graphName() const;
     void setGraphName(const QString &newGraphName);
 signals:
     void graphNameChanged();
+
 };
 
 #endif // NODESGRAPH_H

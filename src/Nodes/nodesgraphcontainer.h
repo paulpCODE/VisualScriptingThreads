@@ -50,6 +50,7 @@ public:
     const QStringList &qstringListNodesGraphContainerModel() const;
     void setQstringListNodesGraphContainerModel(const QStringList &newQstringListNodesGraphContainerModel);
 
+    Q_INVOKABLE const unsigned int getConnectedNodeId(const unsigned int graphid, const unsigned int id, bool totrue = true) const;
 signals:
     void noLongerUsingGlobalVariable(const QString & variableName);
     void usingNewGlobalVariable(const QString & variableName);

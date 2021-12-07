@@ -197,3 +197,11 @@ void NodesGraph::setGraphName(const QString &newGraphName)
     m_graphName = newGraphName;
     emit graphNameChanged();
 }
+const unsigned int NodesGraph::GetConnectedNodeId(const unsigned int id, bool totrue)
+{
+    if(m_nodes.contains(id)) {
+        return m_nodes[id]->GetConnection()->GetConnectedNodeId(totrue);
+    }
+    qDebug("DONT EXIST NODE TO RETURN ID");
+    return 0;
+}

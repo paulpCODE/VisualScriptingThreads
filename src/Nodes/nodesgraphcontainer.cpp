@@ -192,3 +192,8 @@ void NodesGraphContainer::setQstringListNodesGraphContainerModel(const QStringLi
     m_qstringListNodesGraphContainerModel = newQstringListNodesGraphContainerModel;
     emit qstringListNodesGraphContainerModelChanged();
 }
+
+const unsigned int NodesGraphContainer::getConnectedNodeId(const unsigned int graphid, const unsigned int id, bool totrue) const
+{
+    return GetGraph(graphid)->GetConnectedNodeId(id, totrue);
+}

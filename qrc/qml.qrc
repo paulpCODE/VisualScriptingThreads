@@ -7,5 +7,8 @@
         <file>js/NodesGraphFunctions.js</file>
         <file>GlobalVariablesMenu.qml</file>
         <file>GlobalVariablesSettings.qml</file>
+        <file>Image/pin.png</file>
+        <file>ExecutionPinEditor.qml</file>
+        <file>NodeTopPannel.qml</file>
     </qresource>
 </RCC>

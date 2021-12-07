@@ -13,7 +13,7 @@ Window {
         id:toggleVariablesSettings
         anchors.right: parent.right
         anchors.top: parent.top
-
+        z: grapheditor.z + 5
         onPressed: {
             globalVariablesSettings.visible==true?globalVariablesSettings.visible=false:globalVariablesSettings.visible=true
         }
@@ -21,11 +21,16 @@ Window {
     }
     GlobalVariablesSettings{
         id:globalVariablesSettings
-
+        z: grapheditor.z + 5
         anchors.right: parent.right
         anchors.top: toggleVariablesSettings.bottom
         anchors.bottom:parent.bottom
         visible: false
+    }
+
+    GraphEditor {
+        id: grapheditor
+        anchors.fill: parent
     }
 
     NodeMenu {
@@ -51,12 +56,6 @@ Window {
         x:100
         y:100
         operationText: "="
-    }
-
-    GlobalVariablesMenu{
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.margins: 50
     }
 
 }

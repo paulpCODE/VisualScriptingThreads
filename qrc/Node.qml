@@ -25,6 +25,75 @@ Item {
         height: 80
         border.width: 1
 
+        NodeTopPannel {
+            id:nodetoppanel
+            height: 20
+            anchors.top: parent.top
+            anchors.left: parent.left
+            anchors.right: parent.right
+            nodeidText: nodeindex
+            MouseArea {
+                id: mousearea
+                anchors.fill: parent
+                drag.axis: Drag.XAndYAxis
+                drag.target: mainitem
+                drag.minimumX: 0
+                drag.maximumX: mainitem.parent.width
+                drag.minimumY: 0
+                drag.maximumY: mainitem.parent.height
+            }
+        }
+
+        ExecutionPinEditor {
+            id: truepin
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 2
+            width: 74
+            height: 20
+            anchors.left: {
+                if(!isifnode) {
+                    return parent.left
+                }
+            }
+            anchors.leftMargin: {
+                if(!isifnode) {
+                    return parent.width / 2 - 10
+                }
+            }
+            anchors.right: {
+                if(isifnode) {
+                    return parent.right
+                }
+            }
+            anchors.rightMargin: {
+                if(isifnode) {
+                    return 2
+                }
+            }
+        }
+        ExecutionPinEditor {
+            id: pintofalse
+            reverce: true
+            width: 74
+            height: 20
+
+            anchors.bottom: parent.bottom
+            anchors.bottomMargin: 2
+            anchors.left: parent.left
+            anchors.leftMargin: 56
+            visible: {
+                if(isifnode) {
+                    return true
+                }
+                return false
+            }
+        }
+
+
+
+
+
+
 
         ComboBox {
             id: cb1
