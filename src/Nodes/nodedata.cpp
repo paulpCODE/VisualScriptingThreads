@@ -1,8 +1,8 @@
 #include "nodedata.h"
 
-NodeData::NodeData(const unsigned int id, const NodeType& type) : m_id(id), m_type(type)
+NodeData::NodeData(const unsigned int id, const NodeEnums::NodeType& type) : m_id(id), m_type(type)
 {
-    if(type == NodeType::IfGlobalEqualGlobal || type == NodeType::IfGlobalLessGlobal) {
+    if(type == NodeEnums::NodeType::IfGlobalEqualGlobal || type == NodeEnums::NodeType::IfGlobalLessGlobal) {
         m_connection = new Connection(ConnectionType::DOUBLESIDED);
     }
     else {
@@ -21,7 +21,7 @@ NodeData::~NodeData()
     delete m_connection;
 }
 
-NodeType NodeData::GetType() const
+NodeEnums::NodeType NodeData::GetType() const
 {
     return m_type;
 }

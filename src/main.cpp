@@ -22,9 +22,11 @@ int main(int argc, char *argv[])
                                                          "Type cannot be created in QML");
     qmlRegisterType<NodesGraph>("vstApp", 1,0, "NodesGraph");
 
+    //qRegisterMetaType<NodeEnums::NodeType>("NodeEnums::NodeType");
 
 
-    VisualScriptingThreadsApp vstApp ;
+
+    VisualScriptingThreadsApp vstApp;
 
 
     QQmlApplicationEngine engine;

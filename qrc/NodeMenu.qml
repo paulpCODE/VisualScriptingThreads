@@ -1,31 +1,28 @@
 import QtQuick 2.0
 import QtQuick.Controls 2.15
+import "js/NodesGraphFunctions.js" as NGFunc
 
 Item {
     id:mainitem
+    property alias currentIndex: nodechoice.currentIndex
 
-    Rectangle {
-        anchors.fill: parent
-        color: "#dddec3"
-
-        Rectangle {
-            anchors.top: parent.top
-            width: parent.width
-            color:"#c6c7af"
-
-            Text {
-                text: qsTr("V1 = V2")
-                anchors.left: parent.left
-                anchors.leftMargin: 5
-            }
-
-            Button {
-                text: "+"
-                font.pixelSize: 15
-                width: 20
-                height: 20
-                anchors.right: parent.right
-            }
+    ComboBox {
+        id: nodechoice
+        width: 80
+        height: 30
+        anchors.top: parent.top
+        anchors.left: parent.left
+        model: ["V1 = V2", "V = C", "INPUT V", "PRINT V", "IF V == C", "IF V < C"]
+    }
+    Button {
+        height: 30
+        width: 30
+        anchors.left: nodechoice.right
+        anchors.rightMargin: 5
+        text: "+"
+        onClicked: {
+            NGFunc.createNode()
         }
     }
+
 }

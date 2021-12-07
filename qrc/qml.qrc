@@ -4,6 +4,6 @@
         <file>GraphEditor.qml</file>
         <file>Node.qml</file>
         <file>NodeMenu.qml</file>
-        <file>NodeAdd.qml</file>
+        <file>js/NodesGraphFunctions.js</file>
     </qresource>
 </RCC>

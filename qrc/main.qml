@@ -48,4 +48,13 @@ Window {
             }
         }
     }
+
+    NodeMenu {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.margins: 5
+    }
+
+    Component.onCompleted: {
+    }
 }

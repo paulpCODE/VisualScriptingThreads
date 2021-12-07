@@ -31,22 +31,22 @@ void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
         const QString leftOperand = executableNode.GetData().first;
         const QString rightOperand = executableNode.GetData().second;
         switch (executableNode.GetType()) {
-        case NodeType::GlobalAssignGlobal:
+        case NodeEnums::NodeType::GlobalAssignGlobal:
             //mutex lock
             gvcptr->globalVariableByName(leftOperand)->setValue(gvcptr->globalVariableByName(rightOperand)->value());
             break;
-        case NodeType::GlobalAssignConst:
+        case NodeEnums::NodeType::GlobalAssignConst:
             //mutex lock
             gvcptr->globalVariableByName(leftOperand)->setValue(rightOperand.toInt());
             break;
-        case NodeType::InputGlobal:
+        case NodeEnums::NodeType::InputGlobal:
             // #TODO
             break;
-        case NodeType::PrintGlobal:
+        case NodeEnums::NodeType::PrintGlobal:
             //mutex lock
             qDebug() << gvcptr->globalVariableByName(leftOperand) << ": " << gvcptr->globalVariableByName(leftOperand)->value();
             break;
-        case NodeType::IfGlobalEqualGlobal:
+        case NodeEnums::NodeType::IfGlobalEqualGlobal:
             //mutex lock
             if(gvcptr->globalVariableByName(leftOperand)->value() == rightOperand.toInt()) {
                 totrue = true;
@@ -54,7 +54,7 @@ void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
                 totrue = false;
             }
             break;
-        case NodeType::IfGlobalLessGlobal:
+        case NodeEnums::NodeType::IfGlobalLessGlobal:
             //mutex lock
             if(gvcptr->globalVariableByName(leftOperand)->value() < rightOperand.toInt()) {
                 totrue = true;
@@ -87,7 +87,7 @@ void NodesGraph::deepCopy(const NodesGraph& copyTarget)
     }
 }
 
-const unsigned int NodesGraph::createNode(const NodeType &type)
+const unsigned int NodesGraph::createNode(const NodeEnums::NodeType &type)
 {
     unsigned int idForNode = ID->getFreeId();
     if(idForNode == 0) {
@@ -136,13 +136,13 @@ void NodesGraph::disconnectNode(unsigned int id, bool totrue)
     qDebug("DONT EXIST NODE TO DISCONNECT");
 }
 
-NodeType NodesGraph::GetType(unsigned int id) const
+NodeEnums::NodeType NodesGraph::GetType(unsigned int id) const
 {
     if(m_nodes.contains(id)) {
         return m_nodes[id]->GetType();
     }
     qDebug("DONT EXIST NODE TO GET TYPE. RETURN INCORRECT.");
-    return NodeType::GlobalAssignConst;
+    return NodeEnums::NodeType::GlobalAssignConst;
 }
 
 const unsigned int NodesGraph::GetId() const
