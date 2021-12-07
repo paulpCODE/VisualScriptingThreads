@@ -3,35 +3,74 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import vstApp 1.0
 Item {
-    ListView{
-        id: listOfVariables
+    height: 600
+    width: 300
+    Rectangle {
+        id:listOfVariablesHeader
+        anchors.left: parent.left
         anchors.top: parent.top
-        anchors.bottom: parent.bottom
-        anchors.right: functionsArea.left
-        width: parent.width- functionsArea.width
-        model: globalVariablesContainer.qstringlistGlobalVariableModel
-        delegate:  Rectangle{
-            width: listOfVariables.width
-            height: 15
-            border.width: 1
-            border.color: "black"
-            Text {
+        color: "#C0C0C0"
+        border.color: "black"
+        border.width: 1
+        height: 30
+        width: listOfVariables.width
+        Text {
+            id: headerText
 
-                id: ttext
-                text: modelData
-                elide: Text.ElideRight
-                verticalAlignment: Text.AlignVCenter
-                horizontalAlignment: Text.AlignHCenter
-            }
-
+            anchors.centerIn: parent
+            text: "Variables"
         }
     }
+    ListView{
+        id: listOfVariables
+        anchors.top: listOfVariablesHeader.bottom
+        anchors.right: functionsArea.left
+        width: parent.width - functionsArea.width
+        height: functionsArea.height
+        flickableDirection: Flickable.VerticalFlick
+        clip: true
+        model: globalVariablesContainer.qstringlistGlobalVariableModel
 
+        delegate:  Rectangle {
+            border.color: "black"
+            border.width: 1
+            height: 30
+            width: parent.width
+            Text {
+                id: nameText
+                anchors.centerIn: parent
+                text: modelData
+            }
+        }
+        ScrollBar.vertical: ScrollBar {
+               active: true
+               }
+
+
+    }
+
+    Rectangle{
+        id:functionsAreaHeader
+        anchors.top: parent.top
+        anchors.right: parent.right
+        color: "#C0C0C0"
+        border.color: "black"
+        border.width: 1
+
+        height: 30
+        width: functionsArea.width
+        Text {
+            id: functionsAreaHeaderText
+
+            anchors.centerIn: parent
+            text: "Options"
+        }
+    }
 
     Flickable {
         id:functionsArea
         clip: true
-        anchors.top: parent.top
+        anchors.top: functionsAreaHeader.bottom
         anchors.bottom: parent.bottom
         anchors.right: parent.right
         width: 200
