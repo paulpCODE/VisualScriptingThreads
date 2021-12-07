@@ -72,6 +72,18 @@ const unsigned int NodesGraphContainer::createNode(const unsigned int graphid, c
 
 void NodesGraphContainer::deleteNode(const unsigned int graphid, unsigned int id)
 {
+    auto currentNodeType =  GetGraph(graphid)->GetType(id);
+    if (currentNodeType == NodeEnums::NodeType::InputGlobal ||
+            currentNodeType == NodeEnums::NodeType::GlobalAssignConst||
+            currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal)
+    {
+        auto oldLeft = GetNodeOperandsData(graphid,id).first;
+        auto oldRight = GetNodeOperandsData(graphid,id).second;
+        emit noLongerUsingGlobalVariable(oldLeft);
+        if( currentNodeType == NodeEnums::NodeType::GlobalAssignGlobal){
+            emit noLongerUsingGlobalVariable(oldRight);
+        }
+    }
     GetGraph(graphid)->deleteNode(id);
 }
 
