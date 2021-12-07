@@ -1,5 +1,9 @@
 <RCC>
     <qresource prefix="/">
         <file>main.qml</file>
+        <file>GraphEditor.qml</file>
+        <file>Node.qml</file>
+        <file>NodeMenu.qml</file>
+        <file>js/NodesGraphFunctions.js</file>
     </qresource>
 </RCC>

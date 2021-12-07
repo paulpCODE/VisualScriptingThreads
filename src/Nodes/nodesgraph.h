@@ -47,7 +47,7 @@ public:
     #type - type of Node(NodeType enum in NodeData)
     #RETURNS ID OF NEW CREATED NODE.
     */
-    Q_INVOKABLE const unsigned int createNode(const NodeType& type);
+    Q_INVOKABLE const unsigned int createNode(const NodeEnums::NodeType& type);
     Q_INVOKABLE void deleteNode(unsigned int id);
     /*
     #idfrom - id of Node with out execution pin.
@@ -62,7 +62,7 @@ public:
               if node have DOUBLESIDED connection type -> disconnect true or false execution pin. Depends on value of totrue.
     */
     Q_INVOKABLE void disconnectNode(unsigned int id, bool totrue = true);
-    Q_INVOKABLE NodeType GetType(unsigned int id) const;
+    Q_INVOKABLE NodeEnums::NodeType GetType(unsigned int id) const;
     Q_INVOKABLE const unsigned int GetId() const;
     /*
     #id - Node id.

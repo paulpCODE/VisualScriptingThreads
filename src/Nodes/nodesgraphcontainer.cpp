@@ -50,7 +50,7 @@ void NodesGraphContainer::deleteGraph(const unsigned int id)
     qDebug("DONT EXIST GRAPH TO DELETE");
 }
 
-NodesGraph *NodesGraphContainer::GetGraph(const unsigned int id) const
+NodesGraph* NodesGraphContainer::GetGraph(const unsigned int id) const
 {
     for(auto &i : m_graphsList) {
         if(i->GetId() == id) {

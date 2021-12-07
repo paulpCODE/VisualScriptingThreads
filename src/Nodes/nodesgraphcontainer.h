@@ -24,10 +24,10 @@ public:
 
     const QList<NodesGraph*> *GraphsList() const;
     void executeGraph(const unsigned int id);
-public slots:
-    const unsigned int addGraph();
-    void deleteGraph(const unsigned int id);
-    NodesGraph* GetGraph(const unsigned int id) const;
+
+    Q_INVOKABLE const unsigned int addGraph();
+    Q_INVOKABLE void deleteGraph(const unsigned int id);
+    Q_INVOKABLE NodesGraph* GetGraph(const unsigned int id) const;
 };
 
 #endif // NODESGRAPHCONTAINER_H

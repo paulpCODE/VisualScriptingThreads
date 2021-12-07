@@ -91,67 +91,71 @@ Window {
                 }
             }
         }
-
-    }
-    Control{
-        id: newVariableRect
-        background: Rectangle{
-            border.color: "black"
-            border.width: 3
-        }
-        padding: 10
-        x:400
-        y: 200
-        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
-        width: 200
-        height: 150
-
-        property string receivedNewName:""
-        property string receivedNewValue:""
-
-        Text {
-            id: title
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            text: "Input data to create new variable "
-        }
-        TextField{
-            id: newName
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            // property alias inputVarName:
-            anchors.top: title.bottom
-            anchors.topMargin: 10
-            placeholderText: "new Name"
-            onEditingFinished: {
-                newVariableRect.receivedNewName = newName.text
+        Control{
+            id: newVariableRect
+            background: Rectangle{
+                border.color: "black"
+                border.width: 3
             }
-        }
-        TextField{
-            id: newValue
-            // property alias inputVarName:
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.top: newName.bottom
-            anchors.topMargin: 10
-            placeholderText: "new Value"
-            validator: IntValidator {bottom: 0; top: 2147483647}
-            onEditingFinished: {
-                newVariableRect.receivedNewValue = newValue.text
+            padding: 10
+            x:400
+            y: 200
+            //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
+            width: 200
+            height: 150
+
+            property string receivedNewName:""
+            property string receivedNewValue:""
+
+            Text {
+                id: title
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                text: "Input data to create new variable "
             }
-        }
-        Button{
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.top: newValue.bottom
-            anchors.topMargin: 10
-            text: "create new var"
-            onClicked:{
-                if(newVariableRect.receivedNewName!==""){
-                    globalVariablesContainer.changeGlobalVariable("a",newVariableRect.receivedNewName,newVariableRect.receivedNewValue)
+            TextField{
+                id: newName
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                // property alias inputVarName:
+                anchors.top: title.bottom
+                anchors.topMargin: 10
+                placeholderText: "new Name"
+                onEditingFinished: {
+                    newVariableRect.receivedNewName = newName.text
+                }
+            }
+            TextField{
+                id: newValue
+                // property alias inputVarName:
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.top: newName.bottom
+                anchors.topMargin: 10
+                placeholderText: "new Value"
+                validator: IntValidator {bottom: 0; top: 2147483647}
+                onEditingFinished: {
+                    newVariableRect.receivedNewValue = newValue.text
+                }
+            }
+            Button{
+                anchors.left: parent.left
+                anchors.leftMargin: 10
+                anchors.top: newValue.bottom
+                anchors.topMargin: 10
+                text: "create new var"
+                onClicked:{
+                    if(newVariableRect.receivedNewName!==""){
+                        globalVariablesContainer.changeGlobalVariable("a",newVariableRect.receivedNewName,newVariableRect.receivedNewValue)
+                    }
                 }
             }
         }
+    }
+    NodeMenu {
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.margins: 5
     }
 }
 
