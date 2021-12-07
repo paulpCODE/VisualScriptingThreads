@@ -9,149 +9,153 @@ Window {
     visible: true
     title: qsTr("Hello World")
 
-    ListView {
-        id: view1
-        anchors { top: parent.top; left: parent.left; bottom: parent.bottom }
-        width: parent.width / 2
-        spacing: 5
+//    ListView {
+//        id: view1
+//        anchors { top: parent.top; left: parent.left; bottom: parent.bottom }
+//        width: parent.width / 2
+//        spacing: 5
 
-        delegate: Rectangle {
-            border.color: "black"
-            border.width: 1
-            height: 30
-            width: parent.width
-            Text {
-                id: nameText
-                anchors.centerIn: parent
-                text: modelData
-            }
-        }
-        model: globalVariablesContainer.qstringlistGlobalVariableModel
-    }
-    Control{
-        background: Rectangle{
-            border.color: "black"
-            border.width: 3
-        }
+//        delegate: Rectangle {
+//            border.color: "black"
+//            border.width: 1
+//            height: 30
+//            width: parent.width
+//            Text {
+//                id: nameText
+//                anchors.centerIn: parent
+//                text: modelData
+//            }
+//        }
+//        model: globalVariablesContainer.qstringlistGlobalVariableModel
+//    }
+//    Control{
+//        background: Rectangle{
+//            border.color: "black"
+//            border.width: 3
+//        }
 
-        id: infoRect
-        padding: 10
-        property string receivedName:""
-        property string receivedValue:""
-        property alias ttext: varName.text
-        x:400
-        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
-        width: 200
-        height: 50
+//        id: infoRect
+//        padding: 10
+//        property string receivedName:""
+//        property string receivedValue:""
+//        property alias ttext: varName.text
+//        x:400
+//        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
+//        width: 200
+//        height: 50
 
-        Text {
-            id: varName
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            text:"Var name: " + infoRect.receivedName
-        }
-        Text {
-            id: varValue
-            anchors.left: varName.right
-            anchors.leftMargin: 10
-            text: "Var value: " + infoRect.receivedValue
-        }
-    }
-    Control{
-        background: Rectangle{
-            border.color: "black"
-            border.width: 3
-        }
-        padding: 10
+//        Text {
+//            id: varName
+//            anchors.left: parent.left
+//            anchors.leftMargin: 10
+//            text:"Var name: " + infoRect.receivedName
+//        }
+//        Text {
+//            id: varValue
+//            anchors.left: varName.right
+//            anchors.leftMargin: 10
+//            text: "Var value: " + infoRect.receivedValue
+//        }
+//    }
+//    Control{
+//        background: Rectangle{
+//            border.color: "black"
+//            border.width: 3
+//        }
+//        padding: 10
 
-        x: 400
-        y: 100
-        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
-        width: 200
-        height: 100
+//        x: 400
+//        y: 100
+//        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
+//        width: 200
+//        height: 100
 
-        Text {
-            id: tex
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            text: "Enter Variable Name "
-        }
-        TextField{
-            id: textInput
-            // property alias inputVarName:
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.top: tex.bottom
-            anchors.topMargin: 10
-            placeholderText: "input Name"
-            onEditingFinished: {
-                var cppGlobalVariable = globalVariablesContainer.globalVariableByName(text)
-                if(cppGlobalVariable !== null){
-                    infoRect.receivedName = cppGlobalVariable.name
-                    infoRect.receivedValue = cppGlobalVariable.value
-                }
-            }
-        }
-    }
-    Control{
-        id: newVariableRect
-        background: Rectangle{
-            border.color: "black"
-            border.width: 3
-        }
-        padding: 10
-        x:400
-        y: 200
-        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
-        width: 200
-        height: 150
+//        Text {
+//            id: tex
+//            anchors.left: parent.left
+//            anchors.leftMargin: 10
+//            text: "Enter Variable Name "
+//        }
+//        TextField{
+//            id: textInput
+//            // property alias inputVarName:
+//            anchors.left: parent.left
+//            anchors.leftMargin: 10
+//            anchors.top: tex.bottom
+//            anchors.topMargin: 10
+//            placeholderText: "input Name"
+//            onEditingFinished: {
+//                var cppGlobalVariable = globalVariablesContainer.globalVariableByName(text)
+//                if(cppGlobalVariable !== null){
+//                    infoRect.receivedName = cppGlobalVariable.name
+//                    infoRect.receivedValue = cppGlobalVariable.value
+//                }
+//            }
+//        }
+//    }
+//    Control{
+//        id: newVariableRect
+//        background: Rectangle{
+//            border.color: "black"
+//            border.width: 3
+//        }
+//        padding: 10
+//        x:400
+//        y: 200
+//        //anchors:{ top: parent.top; left: parent.right; bottom: parent.bottom }
+//        width: 200
+//        height: 150
 
-        property string receivedNewName:""
-        property string receivedNewValue:""
+//        property string receivedNewName:""
+//        property string receivedNewValue:""
 
-        Text {
-            id: title
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            text: "Input data to create new variable "
-        }
-        TextField{
-            id: newName
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            // property alias inputVarName:
-            anchors.top: title.bottom
-            anchors.topMargin: 10
-            placeholderText: "new Name"
-            onEditingFinished: {
-                newVariableRect.receivedNewName = newName.text
-            }
-        }
-        TextField{
-            id: newValue
-            // property alias inputVarName:
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.top: newName.bottom
-            anchors.topMargin: 10
-            placeholderText: "new Value"
-            validator: IntValidator {bottom: 0; top: 2147483647}
-            onEditingFinished: {
-                newVariableRect.receivedNewValue = newValue.text
-            }
-        }
-        Button{
-            anchors.left: parent.left
-            anchors.leftMargin: 10
-            anchors.top: newValue.bottom
-            anchors.topMargin: 10
-            text: "create new var"
-            onClicked:{
-                if(newVariableRect.receivedNewName!==""){
-                    globalVariablesContainer.changeGlobalVariable("a",newVariableRect.receivedNewName,newVariableRect.receivedNewValue)
-                }
-            }
-        }
+//        Text {
+//            id: title
+//            anchors.left: parent.left
+//            anchors.leftMargin: 10
+//            text: "Input data to create new variable "
+//        }
+//        TextField{
+//            id: newName
+//            anchors.left: parent.left
+//            anchors.leftMargin: 10
+//            // property alias inputVarName:
+//            anchors.top: title.bottom
+//            anchors.topMargin: 10
+//            placeholderText: "new Name"
+//            onEditingFinished: {
+//                newVariableRect.receivedNewName = newName.text
+//            }
+//        }
+//        TextField{
+//            id: newValue
+//            // property alias inputVarName:
+//            anchors.left: parent.left
+//            anchors.leftMargin: 10
+//            anchors.top: newName.bottom
+//            anchors.topMargin: 10
+//            placeholderText: "new Value"
+//            validator: IntValidator {bottom: 0; top: 2147483647}
+//            onEditingFinished: {
+//                newVariableRect.receivedNewValue = newValue.text
+//            }
+//        }
+//        Button{
+//            anchors.left: parent.left
+//            anchors.leftMargin: 10
+//            anchors.top: newValue.bottom
+//            anchors.topMargin: 10
+//            text: "create new var"
+//            onClicked:{
+//                if(newVariableRect.receivedNewName!==""){
+//                    globalVariablesContainer.changeGlobalVariable("a",newVariableRect.receivedNewName,newVariableRect.receivedNewValue)
+//                }
+//            }
+//        }
+//    }
+    GraphEditor {
+        id: grapheditor
+        anchors.fill: parent
     }
 
     NodeMenu {
@@ -179,15 +183,15 @@ Window {
         operationText: "="
     }
 
-    GlobalVariablesMenu{
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.margins: 50
-    }
-    GlobalVariablesSettings{
-        x:200
-        y:200
-        height: 200
-    }
+//    GlobalVariablesMenu{
+//        anchors.top: parent.top
+//        anchors.left: parent.left
+//        anchors.margins: 50
+//    }
+//    GlobalVariablesSettings{
+//        x:200
+//        y:200
+//        height: 200
+//    }
 }
 

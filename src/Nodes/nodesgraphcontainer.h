@@ -37,6 +37,7 @@ public:
     Q_INVOKABLE void disconnectNode(const unsigned int graphid, unsigned int id, bool totrue = true);
     Q_INVOKABLE void SetNodeData(const unsigned int graphid, const unsigned int id, const QString& leftOperand, const QString& rightOperand);
     Q_INVOKABLE void SetStartNodeId(const unsigned int graphid, const unsigned int id);
+    Q_INVOKABLE const unsigned int getConnectedNodeId(const unsigned int graphid, const unsigned int id, bool totrue = true) const;
 signals:
     void noLongerUsingGlobalVariable(const QString & variableName);
     void usingNewGlobalVariable(const QString & variableName);

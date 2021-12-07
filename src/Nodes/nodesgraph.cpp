@@ -163,3 +163,12 @@ void NodesGraph::SetStartNodeId(const unsigned int id)
 {
     m_startNodeId = id;
 }
+
+const unsigned int NodesGraph::GetConnectedNodeId(const unsigned int id, bool totrue)
+{
+    if(m_nodes.contains(id)) {
+        return m_nodes[id]->GetConnection()->GetConnectedNodeId(totrue);
+    }
+    qDebug("DONT EXIST NODE TO RETURN ID");
+    return 0;
+}

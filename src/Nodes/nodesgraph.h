@@ -78,6 +78,7 @@ public:
     Sets start node id. From this node will start the graph execution process(execution() function)
     */
     void SetStartNodeId(const unsigned int id);
+    const unsigned int GetConnectedNodeId(const unsigned int id, bool totrue = true);
 };
 
 #endif // NODESGRAPH_H

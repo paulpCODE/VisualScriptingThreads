@@ -94,3 +94,8 @@ void NodesGraphContainer::SetStartNodeId(const unsigned int graphid, const unsig
 {
     GetGraph(graphid)->SetStartNodeId(id);
 }
+
+const unsigned int NodesGraphContainer::getConnectedNodeId(const unsigned int graphid, const unsigned int id, bool totrue) const
+{
+    return GetGraph(graphid)->GetConnectedNodeId(id, totrue);
+}
