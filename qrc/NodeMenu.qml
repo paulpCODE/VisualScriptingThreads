@@ -40,6 +40,10 @@ Item {
         anchors.rightMargin: 5
         text: "+"
         onClicked: {
+            if(grapheditor.componentsMap.size === 0) {
+                NGFunc.instantiateBeginNode()
+            }
+
             NGFunc.createNode()
         }
     }

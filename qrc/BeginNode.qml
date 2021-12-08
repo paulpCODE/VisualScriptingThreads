@@ -52,14 +52,14 @@ Item {
                     console.log(access)
                     if(access) {
                         isconnected = true
-                        startnodeid = idtoconnect
-                        updateCanvas()
+                        startnodeid = parseInt(idtoconnect)
+                        NGFunc.updateCanvas()
                     }
                 } else {
                     nodesGraphContainer.setStartNodeId(nodesGraphsSettings.currentEditingGraphId, 0)
                     isconnected = false
                     startnodeid = 0
-                    updateCanvas()
+                    NGFunc.updateCanvas()
                 }
             }
         }

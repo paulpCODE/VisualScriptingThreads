@@ -6,7 +6,6 @@ Item {
     id:mainitem
     property alias canvas: grapheditorcanvas
     property alias scrollf: scroll
-    readonly property alias beginnode: begin
     property var graphsMap: new Map()
     property var componentsMap: new Map()
 
@@ -25,10 +24,8 @@ Item {
             height: parent.height
         }
 
-        BeginNode {
-            id: begin
-            x:200
-            y:40
+        Component.onCompleted: {
+            NGFunc.instantiateBeginNode()
         }
 
 
@@ -45,7 +42,6 @@ Item {
                 rectx = node1.x + 64
             }
         } else {
-            console.log(node1.width)
             rectx = node1.x + node1.rwidth/2
         }
 
@@ -65,36 +61,42 @@ Item {
         ctx.stroke()
         ctx.closePath()
     }
-    function paint_connection_begin(id) {
+//    function paint_connection_begin(id) {
 
-        var node = componentsMap.get(id)
-        var rectx = begin.x + begin.rwidth / 2
-        var recty = begin.y + begin.rheight
-        var rectx2 = node.x + node.rwidth/2
-        var recty2 = node.y
+//        var node = componentsMap.get(id)
+//        var rectx = begin.x + begin.rwidth / 2
+//        var recty = begin.y + begin.rheight
+//        var rectx2 = node.x + node.rwidth/2
+//        var recty2 = node.y
 
-        var ctx = grapheditorcanvas.getContext("2d")
-        ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
-        ctx.lineWidth = 1
-        ctx.beginPath()
-        //ctx.moveTo(node1.x, node1.y)
-        //ctx.arc(node1.x, node1.y, 5, 0, 2*Math.PI, true)
-        ctx.moveTo(rectx, recty)
-        ctx.bezierCurveTo(rectx, recty, rectx, recty + 30, (rectx + rectx2) / 2, (recty + recty2) / 2)
-        ctx.bezierCurveTo((rectx + rectx2) / 2, (recty + recty2) / 2, rectx2, recty2 - 30, rectx2, recty2)
-        ctx.stroke()
-        ctx.closePath()
-    }
+//        var ctx = grapheditorcanvas.getContext("2d")
+//        ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
+//        ctx.lineWidth = 1
+//        ctx.beginPath()
+//        //ctx.moveTo(node1.x, node1.y)
+//        //ctx.arc(node1.x, node1.y, 5, 0, 2*Math.PI, true)
+//        ctx.moveTo(rectx, recty)
+//        ctx.bezierCurveTo(rectx, recty, rectx, recty + 30, (rectx + rectx2) / 2, (recty + recty2) / 2)
+//        ctx.bezierCurveTo((rectx + rectx2) / 2, (recty + recty2) / 2, rectx2, recty2 - 30, rectx2, recty2)
+//        ctx.stroke()
+//        ctx.closePath()
+//    }
     function updateCanvas() {
         grapheditorcanvas.requestPaint()
         var ctx = grapheditorcanvas.getContext("2d")
         ctx.reset()
 
-        if(begin.isconnected) {
-            paint_connection_begin(begin.startnodeid)
+        if(componentsMap.has(0)) {
+            if(componentsMap.get(0).isconnected) {
+                paint_connection(0, componentsMap.get(0).startnodeid)
+            }
         }
 
         for(let nodeid of componentsMap.keys()) {
+            if(nodeid === 0) {
+                continue
+            }
+
             var nodecomponent = componentsMap.get(nodeid)
             if(nodecomponent.isifnode === true) {
                 var falsenodeid = nodesGraphContainer.getConnectedNodeId(nodesGraphsSettings.currentEditingGraphId, parseInt(nodeid), false)
