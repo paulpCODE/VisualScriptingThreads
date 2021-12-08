@@ -144,7 +144,7 @@ Item {
             id: cb1
             width: 80
             height: 20
-            model: globalVariablesContainer.qstringlistGlobalVariableModel
+            model: globalVariablesContainer.simpleVariablesNamesModel
             anchors.left: {
                 if(isprintorinput) {
                     return operation.right
@@ -175,12 +175,14 @@ Item {
             id: cb2
             width: 80
             height: 20
-            model: globalVariablesContainer.qstringlistGlobalVariableModel
+            model: globalVariablesContainer.simpleVariablesNamesModel
             anchors.left: operation.right
             anchors.verticalCenter: parent.verticalCenter
             visible: cb2visible
             onCurrentIndexChanged: {
-                NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), cb2.currentIndex.toString())
+                if(visible) {
+                    NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), cb2.currentIndex.toString())
+                }
             }
         }
 
@@ -201,7 +203,9 @@ Item {
             }
             validator: IntValidator {bottom: 0; top: 2147483647}
             onTextChanged: {
-                NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), textfield.text.toString())
+                if(visible) {
+                    NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), textfield.text.toString())
+                }
             }
         }
         Text {
