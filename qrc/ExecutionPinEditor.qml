@@ -5,6 +5,8 @@ Item {
     id:mainitem
     property bool reverce: false
     property bool isconnected: false
+    property alias connectButton: connectToNodeIDButton
+    property alias idtoconnect: connectToNodeIDField.text
 
     Rectangle {
         id:pinrec
@@ -54,13 +56,7 @@ Item {
             }
         }
         anchors.margins: 2
-        onClicked: {
-            if(isconnected) {
-                isconnected = false
-            } else {
-                isconnected = true
-            }
-        }
+
     }
 
     states: [

@@ -25,6 +25,8 @@ int main(int argc, char *argv[])
     qmlRegisterUncreatableType<NodesGraphContainer>("vstApp",1,0,"NodesGraphContainer",
                                                          "Type cannot be created in QML");
     qmlRegisterType<NodesGraph>("vstApp", 1,0, "NodesGraph");
+    qmlRegisterUncreatableType<NodeEnums>("vstApp",1,0,"NodeEnums",
+                                            "Type cannot be created in QML");
 
 
 
@@ -40,8 +42,6 @@ int main(int argc, char *argv[])
                                 vstApp.gigaManager->globalVariablesContainer);
     engine.rootContext()->setContextProperty("nodesGraphContainer",
                                 vstApp.gigaManager->nodesGraphContainer);
-    engine.rootContext()->setContextProperty("nodeEnums",
-                                new NodeEnums());
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

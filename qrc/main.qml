@@ -58,6 +58,16 @@ Window {
         anchors.left: parent.left
         anchors.margins: 5
     }
+    Button {
+        width: 20
+        height: 20
+        text: "C"
+        anchors.left: parent.left
+        anchors.verticalCenter: parent.verticalCenter
+        onClicked: {
+            grapheditor.clearCanvas()
+        }
+    }
 
 
     //    Component.onCompleted: {
@@ -70,13 +80,5 @@ Window {
 
     //        objcomp1.a = "ALPHA"
     //    }
-
-    Node {
-        x:100
-        y:100
-        operationText: "="
-    }
-
-
 }
 
