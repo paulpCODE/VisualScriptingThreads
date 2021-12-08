@@ -37,11 +37,13 @@ int main(int argc, char *argv[])
 
     QQmlApplicationEngine engine;
 
-
+    engine.rootContext()->setContextProperty("threadManager",
+                                vstApp.gigaManager->threadManager);
     engine.rootContext()->setContextProperty("globalVariablesContainer",
                                 vstApp.gigaManager->globalVariablesContainer);
     engine.rootContext()->setContextProperty("nodesGraphContainer",
                                 vstApp.gigaManager->nodesGraphContainer);
+
 
     const QUrl url(QStringLiteral("qrc:/main.qml"));
     QObject::connect(&engine, &QQmlApplicationEngine::objectCreated,

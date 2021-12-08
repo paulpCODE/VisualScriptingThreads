@@ -25,13 +25,13 @@ public slots:
     //add thread (from qml QFUNCTION?)
     void addThread(int threadsToAdd);
     void popBackThread();
-    //expose number of threads in qml (from qml QFUNCTION?)
-    int threadCount() const;
 
     void asignNodesGraphToThread(int nodesGraphId, int threadId);
-    void updateQstringlistThreadsModel();
-    void runAllThread();
+    void runAllThreads();
 
+    //expose number of threads in qml (from qml QFUNCTION?)
+    int threadCount() const;
+    void updateQstringlistThreadsModel();
 private:
     QList<QPair<QThread*,ThreadWorker*>> threadsWithWorkers;
     GlobalVariablesContainer * m_gvcptr;

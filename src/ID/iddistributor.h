@@ -1,10 +1,10 @@
 #ifndef IDDISTRIBUTOR_H
 #define IDDISTRIBUTOR_H
 
-#include <QVector>
+//#include <QVector>
+#include <vector>
 
-
-
+using std::vector;
 
 class IdDistributor
 {
@@ -12,9 +12,10 @@ private:
     // Maximum of ids which may created.
     const unsigned int ID_LIMIT;
     // true - free. false - busy
-    QVector<bool> m_ids;
+    vector<bool> m_ids;
 public:
     IdDistributor(const unsigned int idLimit);
+    IdDistributor(const IdDistributor& right);
     IdDistributor& operator=(const IdDistributor& right);
     /*
     Returns free id. WARNING: You can call this function only one time for each id.

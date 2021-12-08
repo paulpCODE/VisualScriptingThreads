@@ -12,5 +12,7 @@
         <file>NodeTopPannel.qml</file>
         <file>NodesGraphMenu.qml</file>
         <file>NodesGraphsSettings.qml</file>
+        <file>ThreadsSettings.qml</file>
+        <file>ThreadsMenu.qml</file>
     </qresource>
 </RCC>

@@ -4,37 +4,37 @@ import QtQuick.Controls 2.12
 import vstApp 1.0
 Item {
     height: 600
-    width: 350
+    width: 400
     Rectangle {
-        id:listOfGraphsHeader
+        id:listOfThreadsHeader
         anchors.left: parent.left
         anchors.top: parent.top
         color: "#C0C0C0"
         border.color: "black"
         border.width: 1
         height: 30
-        width: listOfGraphs.width
+        width: listOfThreads.width
         Text {
             id: headerText
             anchors.centerIn: parent
-            text: "Graphs"
+            text: "Threads"
         }
     }
     ListView{
-        id: listOfGraphs
-        anchors.top: listOfGraphsHeader.bottom
+        id: listOfThreads
+        anchors.top: listOfThreadsHeader.bottom
         anchors.right: functionsArea.left
         width: parent.width - functionsArea.width
         height: functionsArea.height
         flickableDirection: Flickable.VerticalFlick
         clip: true
-        model: nodesGraphContainer.qstringListNodesGraphContainerModel
+        model: threadManager.qstringlistThreadsModel
 
         delegate:  Rectangle {
             border.color: "black"
             border.width: 1
             height: 30
-            width: listOfGraphs.width
+            width: listOfThreads.width
             Text {
                 id: nameText
                 anchors.centerIn: parent
@@ -72,12 +72,12 @@ Item {
         anchors.right: parent.right
         width: 200
         ScrollBar.vertical: ScrollBar { }
-        contentHeight: addGraphRect.height + deleteGraphrect.height + renameGraphrect.height
+        contentHeight: addGraphRect.height + deleteGraphrect.height + asignRect.height
         Rectangle{
             id:addGraphRect
-            property string nameToCreate: ""
+            property int amountToCreate: 1
             width: parent.width
-            height: titleaddGraphRect.height + nameToAdd.height + addGraphButton.height  + addGraphButton10.height + 25
+            height: titleaddGraphRect.height + amountOfThreads.height + addGraphButton.height + 25
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: parent.top
             anchors.topMargin: 1
@@ -93,50 +93,41 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideRight
-                text: qsTr("Add graph")
+                text: qsTr("Add Threads")
             }
 
-
             TextField{
-                id: nameToAdd
+                id: amountOfThreads
                 anchors.top: titleaddGraphRect.bottom
                 anchors.horizontalCenter:parent.horizontalCenter
                 anchors.topMargin: 5
-                placeholderText: "Name of new graph"
+                width: parent.width - 10
+                placeholderText: "How many threads to add"
+                validator: IntValidator {bottom: 0; top: 100}
                 onEditingFinished: {
-                    addGraphRect.nameToCreate = nameToAdd.text
+                    if (amountOfThreads.text!==""){
+                        addGraphRect.amountToCreate = amountOfThreads.text
+                    }
                 }
             }
 
             Button{
                 id: addGraphButton
-                anchors.top: nameToAdd.bottom
+                anchors.top: amountOfThreads.bottom
                 anchors.horizontalCenter:parent.horizontalCenter
                 anchors.topMargin: 5
                 width: parent.width
-                text: "Add graph"
+                text: "Add thread(s)"
                 onClicked:{
-                    nodesGraphContainer.addGraph(addGraphRect.nameToCreate);
-                }
-            }
-            Button{
-                id: addGraphButton10
-                anchors.top: addGraphButton.bottom
-                anchors.horizontalCenter:parent.horizontalCenter
-                anchors.topMargin: 5
-                width: parent.width
-                text: "Add 10 graphs"
-                onClicked:{
-                    for(var i =0;i<10;i++){
-                        nodesGraphContainer.addGraph(addGraphRect.nameToCreate);
-                    }
+                    threadManager.addThread(addGraphRect.amountToCreate);
                 }
             }
         }
         Rectangle{
             id:deleteGraphrect
+            property int numberToDelete: 1
             width: parent.width
-            height: titleDeleteGraphrect.height + graphtoDeleteMenu.height + deleteGraphButton.height + 30
+            height: titleDeleteGraphrect.height + amountOfThreadsToDelete.height + deleteGraphButton.height + 30
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: addGraphRect.bottom
             anchors.topMargin: 1
@@ -152,36 +143,42 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideRight
-                text: qsTr("Choose graph to delete")
+                text: qsTr("Delete Threads")
             }
 
-
-            NodesGraphMenu{
-                id: graphtoDeleteMenu
+            TextField{
+                id: amountOfThreadsToDelete
                 anchors.top: titleDeleteGraphrect.bottom
-                width: parent.width - 10
                 anchors.horizontalCenter:parent.horizontalCenter
-                anchors.topMargin: 10
-
+                anchors.topMargin: 5
+                width: parent.width - 10
+                placeholderText: "How many threads to delete"
+                validator: IntValidator {bottom: 0; top: 100}
+                onEditingFinished: {
+                    if (amountOfThreadsToDelete.text!==""){
+                        deleteGraphrect.numberToDelete = amountOfThreadsToDelete.text
+                    }
+                }
             }
+
             Button{
                 id: deleteGraphButton
-                anchors.top: graphtoDeleteMenu.bottom
+                anchors.top: amountOfThreadsToDelete.bottom
                 anchors.horizontalCenter:parent.horizontalCenter
                 anchors.topMargin: 10
                 width: parent.width
-                text: "delete choosen graph"
+                text: "delete thread(s)"
                 onClicked:{
-                    var id = nodesGraphContainer.getGraphIdByModelIndex(graphtoDeleteMenu.currentIndex)
-                    nodesGraphContainer.deleteGraph(id) ;
+                    for(var i =0;i<deleteGraphrect.numberToDelete;i++){
+                        threadManager.popBackThread();
+                    }
                 }
             }
         }
         Rectangle{
-            id:renameGraphrect
-            property string renameName: ""
+            id:asignRect
             width: parent.width
-            height: titleRenameGraphrect.height + graphtoRenameMenu.height + nameToRename.height + renameGraphButton.height +35
+            height: titleRenameGraphrect.height + graphtoRenameMenu.height + titleRenameGraphrect1.height + threadsMenu.height + renameGraphButton.height +40
             anchors.horizontalCenter: parent.horizontalCenter
             anchors.top: deleteGraphrect.bottom
             anchors.topMargin: 1
@@ -197,10 +194,8 @@ Item {
                 verticalAlignment: Text.AlignVCenter
                 horizontalAlignment: Text.AlignHCenter
                 elide: Text.ElideRight
-                text: qsTr("Choose graph to rename")
+                text: qsTr("Asign graph :")
             }
-
-
             NodesGraphMenu{
                 id: graphtoRenameMenu
                 anchors.top: titleRenameGraphrect.bottom
@@ -208,32 +203,35 @@ Item {
                 anchors.horizontalCenter:parent.horizontalCenter
                 anchors.topMargin: 10
             }
-
-            TextField{
-                id: nameToRename
+            Text {
+                id: titleRenameGraphrect1
                 anchors.top: graphtoRenameMenu.bottom
                 anchors.horizontalCenter:parent.horizontalCenter
                 anchors.topMargin: 5
-                placeholderText: "new name of graph"
-                onEditingFinished: {
-                    renameGraphrect.renameName = nameToRename.text
-                }
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                elide: Text.ElideRight
+                text: qsTr("to thread :")
+            }
+            ThreadsMenu{
+                id: threadsMenu
+                anchors.top: titleRenameGraphrect1.bottom
+                width: parent.width - 10
+                anchors.horizontalCenter:parent.horizontalCenter
+                anchors.topMargin: 10
             }
             Button{
                 id: renameGraphButton
-                anchors.top: nameToRename.bottom
+                anchors.top: threadsMenu.bottom
                 anchors.horizontalCenter:parent.horizontalCenter
                 anchors.topMargin: 10
                 width: parent.width
-                text: "rename choosen graph"
+                text: "asign graph to thread"
                 onClicked:{
                     var id = nodesGraphContainer.getGraphIdByModelIndex(graphtoRenameMenu.currentIndex)
-                    nodesGraphContainer.renameGraphById(id,renameGraphrect.renameName) ;
+                    threadManager.asignNodesGraphToThread(id,threadsMenu.currentIndex);
                 }
             }
         }
-
     }
 }
-
-
