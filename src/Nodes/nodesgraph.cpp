@@ -76,12 +76,14 @@ void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
 
 void NodesGraph::deepCopy(const NodesGraph& copyTarget)
 {
-    if(this->GetId() != copyTarget.GetId()) {
-        qDebug("IDS OF GRAPHS NOT EQUAL IN deepCopy METHOD");
-        return;
-    }
+    //if(this->GetId() != copyTarget.GetId()) {
+    //    qDebug("IDS OF GRAPHS NOT EQUAL IN deepCopy METHOD");
+    //    return;
+    //}
     //to copy: IdDistributor, m_nodes
-    *(this->ID) = *(copyTarget.ID); // maybe not GOOD, because * return rvalue?
+    this->ID = nullptr;
+    this->ID = new IdDistributor(*copyTarget.ID);
+//    *(this->ID) = *(copyTarget.ID); // maybe not GOOD, because * return rvalue?
     this->m_nodes.clear();
     for(auto &i : copyTarget.m_nodes) {
         NodeData * nd = new NodeData(*i);

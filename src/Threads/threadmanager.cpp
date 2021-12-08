@@ -15,12 +15,15 @@ void ThreadManager::addThread(int threadsToAdd)
     }
     for(int i =0 ;i<threadsToAdd;i++){
         threadsWithWorkers.push_back(qMakePair(new QThread,new ThreadWorker));
+        updateQstringlistThreadsModel();
     }
 }
-
+// i don't know wether the pointer is still valid or not
 void ThreadManager::popBackThread()
 {
     if(threadsWithWorkers.size()!=0){
+        threadsWithWorkers.back().first->deleteLater();
+        threadsWithWorkers.back().second->deleteLater();
         threadsWithWorkers.pop_back();
         updateQstringlistThreadsModel();
     }
@@ -33,6 +36,7 @@ int ThreadManager::threadCount() const
 
 void ThreadManager::asignNodesGraphToThread(int nodesGraphId, int threadId)
 {
+    threadsWithWorkers[threadId].second->graphInstance = new NodesGraph(nodesGraphId);
     threadsWithWorkers[threadId].second->graphInstance->deepCopy(*m_nodesGraphContainer->GetGraph(nodesGraphId));
     //NodesGraphContainer::asign( |Lvalue| newThreadWorker->graphInstance ,
     //                              |Rvalue|NodesGraphContainer.GetGraph(nodesGraphId) )
@@ -69,7 +73,7 @@ void ThreadManager::updateQstringlistThreadsModel()
     emit qstringlistThreadsModelChanged();
 }
 
-void ThreadManager::runAllThread()
+void ThreadManager::runAllThreads()
 {
     for(const auto &i:threadsWithWorkers){
         i.first->start();

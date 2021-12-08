@@ -46,6 +46,35 @@ Window {
         anchors.bottom:parent.bottom
         visible: false
     }
+    Button{
+        id:toggleThreadsSettings
+        anchors.right: toggleNodesGraphSettings.left
+        anchors.top: parent.top
+        z: grapheditor.z + 5
+        onPressed: {
+            threadsSettings.visible?threadsSettings.visible=false:threadsSettings.visible=true
+        }
+        text: threadsSettings.visible?"hide threads \n settings ":"show threads \n settings "
+    }
+    ThreadsSettings{
+        id:threadsSettings
+        z: grapheditor.z + 5
+        anchors.right:
+        {
+            if(nodesGraphsSettings.visible){
+                nodesGraphsSettings.left
+            }
+            else if(globalVariablesSettings.visible){
+                globalVariablesSettings.left
+            }
+            else{
+                parent.right
+            }
+        }
+        anchors.top: toggleThreadsSettings.bottom
+        anchors.bottom:parent.bottom
+        visible: false
+    }
 
     GraphEditor {
         id: grapheditor

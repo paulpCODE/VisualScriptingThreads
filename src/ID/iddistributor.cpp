@@ -3,18 +3,30 @@
 IdDistributor::IdDistributor(const unsigned int idLimit) : ID_LIMIT(idLimit)
 {}
 
+IdDistributor::IdDistributor(const IdDistributor &right) : ID_LIMIT(right.ID_LIMIT)
+{
+//        this->m_ids.clear();
+//        for(int i = 0; i < right.m_ids.size(); i++) {
+//            this->m_ids.push_back(right.m_ids[i]);
+//        }
+        this->m_ids = right.m_ids;
+}
+
+
 IdDistributor &IdDistributor::operator=(const IdDistributor &right)
 {
     this->m_ids.clear();
     for(int i = 0; i < right.m_ids.size(); i++) {
         this->m_ids.push_back(right.m_ids[i]);
     }
+    //this->m_ids = right.m_ids;
     return *this;
 }
 
+
 unsigned int IdDistributor::getFreeId()
 {
-    if(m_ids.isEmpty()) {
+    if(m_ids.empty()) {
         addNew();
         return 1;
     }
