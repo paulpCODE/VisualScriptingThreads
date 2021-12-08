@@ -56,7 +56,7 @@ Item {
                         updateCanvas()
                     }
                 } else {
-                    nodesGraphContainer.setStartNodeId(1, 0)
+                    nodesGraphContainer.setStartNodeId(nodesGraphsSettings.currentEditingGraphId, 0)
                     isconnected = false
                     startnodeid = 0
                     updateCanvas()

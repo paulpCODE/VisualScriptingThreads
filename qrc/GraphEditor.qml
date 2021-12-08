@@ -7,6 +7,7 @@ Item {
     property alias canvas: grapheditorcanvas
     property alias scrollf: scroll
     readonly property alias beginnode: begin
+    property var graphsMap: new Map()
     property var componentsMap: new Map()
 
     Flickable {
@@ -96,13 +97,13 @@ Item {
         for(let nodeid of componentsMap.keys()) {
             var nodecomponent = componentsMap.get(nodeid)
             if(nodecomponent.isifnode === true) {
-                var falsenodeid = nodesGraphContainer.getConnectedNodeId(1, parseInt(nodeid), false)
+                var falsenodeid = nodesGraphContainer.getConnectedNodeId(nodesGraphsSettings.currentEditingGraphId, parseInt(nodeid), false)
                 if(falsenodeid !== 0) {
                     console.log("FALSE: " + falsenodeid)
                     paint_connection(nodeid, falsenodeid, false, nodecomponent.isifnode)
                 }
             }
-            var truenodeid = nodesGraphContainer.getConnectedNodeId(1, parseInt(nodeid), true)
+            var truenodeid = nodesGraphContainer.getConnectedNodeId(nodesGraphsSettings.currentEditingGraphId, parseInt(nodeid), true)
             if(truenodeid !== 0) {
                 console.log("TRUE ID: " + truenodeid)
                 paint_connection(nodeid, truenodeid, true, nodecomponent.isifnode)
@@ -116,6 +117,7 @@ Item {
         ctx.reset()
         ctx.clearRect(Qt.rect(0,0,grapheditorcanvas.width, grapheditorcanvas.height))
     }
+
 }
 
 
