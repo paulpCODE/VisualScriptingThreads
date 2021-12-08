@@ -117,6 +117,7 @@ void NodesGraph::deepCopy(const NodesGraph& copyTarget)
     //    return;
     //}
     //to copy: IdDistributor, m_nodes
+    this->m_startNodeId = copyTarget.m_startNodeId;
     this->ID = nullptr;
     this->ID = new IdDistributor(*copyTarget.ID);
 //    *(this->ID) = *(copyTarget.ID); // maybe not GOOD, because * return rvalue?
