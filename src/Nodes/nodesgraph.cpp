@@ -1,8 +1,10 @@
 #include "nodesgraph.h"
 
-NodesGraph::NodesGraph(const unsigned int id) : NODESLIMIT(100), m_id(id), m_startNodeId(0)
+
+NodesGraph::NodesGraph(const unsigned int id,const QString &graphName) : NODESLIMIT(100), m_id(id), m_startNodeId(0)
 {
     ID = new IdDistributor(NODESLIMIT);
+    m_graphName = graphName;
 }
 
 NodesGraph::~NodesGraph()
@@ -177,7 +179,7 @@ QPair<QString, QString> NodesGraph::GetNodeOperandsData(const unsigned int id) c
 
 QString NodesGraph::convertToQString()
 {
-     return QString(m_graphName + "|id : " +  QString::number(m_id));
+     return QString( m_graphName  +  QString::number(m_id));
 }
 
 void NodesGraph::SetStartNodeId(const unsigned int id)

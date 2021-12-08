@@ -8,6 +8,7 @@ NodesGraphContainer::NodesGraphContainer(GlobalVariablesContainer * const gvcptr
     connect(this,&NodesGraphContainer::usingNewGlobalVariable,m_gvcptr,&GlobalVariablesContainer::increaseUsageCounter);
     connect(this,&NodesGraphContainer::noLongerUsingGlobalVariable,m_gvcptr,&GlobalVariablesContainer::decreaseUsageCounter);
     connect(this,&NodesGraphContainer::nodesGraphContainerDataChanged,this,&NodesGraphContainer::updateQstringListNodesGraphContainerModel);
+
 }
 
 NodesGraphContainer::~NodesGraphContainer()
@@ -53,6 +54,24 @@ const unsigned int NodesGraphContainer::addGraph()
     return idForGraph;
 }
 
+const unsigned int NodesGraphContainer::addGraph(const QString &graphName)
+{
+    unsigned int idForGraph = ID->getFreeId();
+    if(idForGraph == 0) {
+        qDebug("GRAPHS LIMIT!");
+        return idForGraph;
+    }
+    if(graphName==""){
+        m_graphsList.push_back(new NodesGraph(idForGraph));
+    }
+    else{
+        m_graphsList.push_back(new NodesGraph(idForGraph,graphName));
+    }
+
+    emit nodesGraphContainerDataChanged();
+    return idForGraph;
+}
+
 void NodesGraphContainer::deleteGraph(const unsigned int id)
 { 
     QList<NodesGraph*>::iterator it = m_graphsList.begin();
@@ -60,7 +79,9 @@ void NodesGraphContainer::deleteGraph(const unsigned int id)
     {
         if ((*it)->GetId() == id  )
         {
+            ID->releaseID(id);
             it = m_graphsList.erase(it);
+
             emit nodesGraphContainerDataChanged();
             return;
         }

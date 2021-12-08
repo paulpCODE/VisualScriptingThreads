@@ -15,15 +15,34 @@ Window {
         anchors.top: parent.top
         z: grapheditor.z + 5
         onPressed: {
-            globalVariablesSettings.visible==true?globalVariablesSettings.visible=false:globalVariablesSettings.visible=true
+            globalVariablesSettings.visible?globalVariablesSettings.visible=false:globalVariablesSettings.visible=true
         }
-        text: globalVariablesSettings.visible==true?"hide variables \n redactor ":"show variables \n redactor "
+        text: globalVariablesSettings.visible?"hide variables \n settings ":"show variables \n settings "
     }
     GlobalVariablesSettings{
         id:globalVariablesSettings
         z: grapheditor.z + 5
         anchors.right: parent.right
         anchors.top: toggleVariablesSettings.bottom
+        anchors.bottom:parent.bottom
+        visible: false
+    }
+
+    Button{
+        id:toggleNodesGraphSettings
+        anchors.right: toggleVariablesSettings.left
+        anchors.top: parent.top
+        z: grapheditor.z + 5
+        onPressed: {
+            nodesGraphsSettings.visible?nodesGraphsSettings.visible=false:nodesGraphsSettings.visible=true
+        }
+        text: nodesGraphsSettings.visible?"hide graphs \n settings ":"show graphs \n settings "
+    }
+    NodesGraphsSettings{
+        id:nodesGraphsSettings
+        z: grapheditor.z + 5
+        anchors.right:globalVariablesSettings.visible? globalVariablesSettings.left:parent.right
+        anchors.top: toggleNodesGraphSettings.bottom
         anchors.bottom:parent.bottom
         visible: false
     }
@@ -57,6 +76,7 @@ Window {
         y:100
         operationText: "="
     }
+
 
 }
 

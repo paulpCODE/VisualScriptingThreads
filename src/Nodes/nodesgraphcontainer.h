@@ -31,6 +31,7 @@ public:
     void executeGraph(const unsigned int id);
 
     Q_INVOKABLE const unsigned int addGraph();
+    Q_INVOKABLE const unsigned int addGraph(const QString& graphName);
     Q_INVOKABLE void deleteGraph(const unsigned int id);
     Q_INVOKABLE NodesGraph* GetGraph(const unsigned int id) const;
 

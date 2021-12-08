@@ -43,8 +43,8 @@ Item {
             }
         }
         ScrollBar.vertical: ScrollBar {
-               active: true
-               }
+            active: true
+        }
 
 
     }

@@ -26,7 +26,8 @@ private:
     QString m_graphName;
 
 public:
-    NodesGraph(const unsigned int id);
+    NodesGraph(const unsigned int id,const QString &graphName="_graphName_");
+
     ~NodesGraph();
 
     /*

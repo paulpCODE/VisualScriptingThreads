@@ -51,3 +51,16 @@ void ThreadManager::asignNodesGraphToThread(int nodesGraphId, int threadId)
 
 
 
+
+const QStringList &ThreadManager::qstringlistThreadsModel() const
+{
+    return m_qstringlistThreadsModel;
+}
+
+void ThreadManager::setQstringlistThreadsModel(const QStringList &newQstringlistThreadsModel)
+{
+    if (m_qstringlistThreadsModel == newQstringlistThreadsModel)
+        return;
+    m_qstringlistThreadsModel = newQstringlistThreadsModel;
+    emit qstringlistThreadsModelChanged();
+}

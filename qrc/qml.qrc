@@ -10,5 +10,7 @@
         <file>Image/pin.png</file>
         <file>ExecutionPinEditor.qml</file>
         <file>NodeTopPannel.qml</file>
+        <file>NodesGraphMenu.qml</file>
+        <file>NodesGraphsSettings.qml</file>
     </qresource>
 </RCC>
