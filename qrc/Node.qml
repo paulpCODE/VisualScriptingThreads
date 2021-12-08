@@ -164,10 +164,10 @@ Item {
             anchors.verticalCenter: parent.verticalCenter
             onCurrentIndexChanged: {
                 if(cb2visible) {
-                    NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), cb2.currentIndex.toString())
+                    NGFunc.setNodeData(nodeindex, globalVariablesContainer.globalVariableNameByIndex(cb1), globalVariablesContainer.globalVariableNameByIndex(cb2))
                     return
                 }
-                NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), textfield.text.toString())
+                NGFunc.setNodeData(nodeindex, globalVariablesContainer.globalVariableNameByIndex(cb1), textfield.text.toString())
             }
         }
 
@@ -181,7 +181,7 @@ Item {
             visible: cb2visible
             onCurrentIndexChanged: {
                 if(visible) {
-                    NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), cb2.currentIndex.toString())
+                    NGFunc.setNodeData(nodeindex, globalVariablesContainer.globalVariableNameByIndex(cb1),  globalVariablesContainer.globalVariableNameByIndex(cb2))
                 }
             }
         }
@@ -204,7 +204,7 @@ Item {
             validator: IntValidator {bottom: 0; top: 2147483647}
             onTextChanged: {
                 if(visible) {
-                    NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), textfield.text.toString())
+                    NGFunc.setNodeData(nodeindex, globalVariablesContainer.globalVariableNameByIndex(cb1), textfield.text.toString())
                 }
             }
         }

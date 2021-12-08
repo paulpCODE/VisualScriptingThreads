@@ -96,7 +96,8 @@ function disconnectNode(id, totrue) {
 }
 
 function setNodeData(id, leftOpetand, rightOperand) {
-    nodesGraphContainer.setNodeData(1, id, leftOpetand, rightOperand)
+    console.log(leftOpetand + rightOperand)
+    nodesGraphContainer.setNodeData(nodesGraphsSettings.currentEditingGraphId, id, leftOpetand, rightOperand)
 }
 
 function setStartNodeId(id) {
@@ -105,6 +106,6 @@ function setStartNodeId(id) {
         return false
     }
 
-    nodesGraphContainer.setStartNodeId(1, parseInt(id))
+    nodesGraphContainer.setStartNodeId(nodesGraphsSettings.currentEditingGraphId, parseInt(id))
     return true
 }

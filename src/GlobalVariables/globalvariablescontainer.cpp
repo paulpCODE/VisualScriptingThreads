@@ -5,16 +5,16 @@ GlobalVariablesContainer::GlobalVariablesContainer(QObject *parent) : QObject(pa
     //for test purposes. change this later
 
 
+    connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateQstringlistGlobalVariableModel);
+    connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateSimpleVariablesNamesModel);
+
 
     createGlobalVariable(QStringLiteral("a"),1);
     createGlobalVariable(QStringLiteral("b"),1);
     createGlobalVariable(QStringLiteral("c"),3);
 
     //for test purposes. change this later
-    updateQstringlistGlobalVariableModel();
-
-    connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateQstringlistGlobalVariableModel);
-    connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateSimpleVariablesNamesModel);
+ //   updateQstringlistGlobalVariableModel();
 
 }
 
@@ -181,7 +181,9 @@ void GlobalVariablesContainer::updateSimpleVariablesNamesModel()
     for(const auto &i: m_globalVariables){
         newList.push_back(i->name());
     }
-    setSimpleVariablesNamesModel(newList);
+    m_simpleVariablesNamesModel = newList;
+    emit simpleVariablesNamesModelChanged();
+   // setSimpleVariablesNamesModel(newList);
 }
 
 
