@@ -1,13 +1,11 @@
 #include "threadworker.h"
 
-ThreadWorker::ThreadWorker(int graphInstanceId) :
-    graphInstance(new NodesGraph(graphInstanceId))
+ThreadWorker::ThreadWorker() : graphInstance(nullptr)
 {
 
 }
 
-void ThreadWorker::executeCurrentNodesGraph()
+void ThreadWorker::executeCurrentNodesGraph(GlobalVariablesContainer * glvcptr)
 {
-    //graphinstance->execute current node function
-    //change curent node
+    graphInstance->execute(glvcptr);
 }

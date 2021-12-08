@@ -5,7 +5,7 @@ GigaManager::GigaManager()
 {
     globalVariablesContainer = new GlobalVariablesContainer();
     nodesGraphContainer = new NodesGraphContainer(globalVariablesContainer);
-    threadManager = new ThreadManager(nodesGraphContainer);
+    threadManager = new ThreadManager(nodesGraphContainer,globalVariablesContainer);
 }
 
 GigaManager::~GigaManager(){

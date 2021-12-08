@@ -1,52 +1,79 @@
 #include "threadmanager.h"
 #include <QDebug>
 
-ThreadManager::ThreadManager(NodesGraphContainer *  nodesGraphContainer)
-    :m_nodesGraphContainer(nodesGraphContainer)
+ThreadManager::ThreadManager(NodesGraphContainer *  nodesGraphContainer, GlobalVariablesContainer* gvcptr)
+    :m_nodesGraphContainer(nodesGraphContainer),m_gvcptr(gvcptr)
 {
 
 }
 
 void ThreadManager::addThread(int threadsToAdd)
 {
-    if(m_threads.size()>100){
+    if(threadsWithWorkers.size()>100){
         qDebug()<<"Can't add new thread, max limit exceeded \n";
         return;
     }
     for(int i =0 ;i<threadsToAdd;i++){
-        m_threads.push_back(new QThread());
+        threadsWithWorkers.push_back(qMakePair(new QThread,new ThreadWorker));
     }
 }
 
 void ThreadManager::popBackThread()
 {
-    if(m_threads.size()!=0){
-        m_threads.pop_back();
+    if(threadsWithWorkers.size()!=0){
+        threadsWithWorkers.pop_back();
+        updateQstringlistThreadsModel();
     }
 }
 
 int ThreadManager::threadCount() const
 {
-    return m_threads.size();
+    return threadsWithWorkers.size();
 }
 
 void ThreadManager::asignNodesGraphToThread(int nodesGraphId, int threadId)
 {
-    ThreadWorker *newThreadWorker = new ThreadWorker(nodesGraphId);
+    threadsWithWorkers[threadId].second->graphInstance->deepCopy(*m_nodesGraphContainer->GetGraph(nodesGraphId));
     //NodesGraphContainer::asign( |Lvalue| newThreadWorker->graphInstance ,
     //                              |Rvalue|NodesGraphContainer.GetGraph(nodesGraphId) )
     // need deep copy
-    newThreadWorker->graphInstance->deepCopy(
-                 *m_nodesGraphContainer->GetGraph(nodesGraphId));
 
     //TEST
-        if(newThreadWorker->graphInstance == m_nodesGraphContainer->GetGraph(nodesGraphId) ){
-            qDebug()<<"fake copy constructor not working properly \n" ;
+    if(threadsWithWorkers[threadId].second->graphInstance == m_nodesGraphContainer->GetGraph(nodesGraphId) ){
+        qDebug()<<"fake copy constructor not working properly \n";
+    }
+    //TEST
+    updateQstringlistThreadsModel();
+
+    //assigning worker to thread
+    threadsWithWorkers[threadId].second->moveToThread(threadsWithWorkers[threadId].first);
+
+    connect(this,&ThreadManager::runExecuteOnEachThread,
+            threadsWithWorkers[threadId].second,&ThreadWorker::executeCurrentNodesGraph,Qt::QueuedConnection);
+
+}
+
+void ThreadManager::updateQstringlistThreadsModel()
+{
+    QStringList newList;
+    for(int i =0;i<threadsWithWorkers.size();i++){
+        if(!threadsWithWorkers[i].second->graphInstance){
+            newList.push_back("_thread_"+QString::number(i)+ " is free") ;
         }
-    //TEST
+        else{
+            newList.push_back("_thread_"+QString::number(i)+ " owns " +
+                              threadsWithWorkers[i].second->graphInstance->graphName());
+        }
+    }
+    m_qstringlistThreadsModel = newList;
+    emit qstringlistThreadsModelChanged();
+}
 
-    m_threadWorkers.push_back(newThreadWorker);
-
+void ThreadManager::runAllThread()
+{
+    for(const auto &i:threadsWithWorkers){
+        i.first->start();
+    }
 }
 
 

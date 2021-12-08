@@ -11,31 +11,30 @@ class ThreadManager: public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList qstringlistThreadsModel READ qstringlistThreadsModel WRITE setQstringlistThreadsModel NOTIFY qstringlistThreadsModelChanged)
-    //#TODO
-
-    //add to threadId NodesGraph instance by it's id
-    // id distributor
 
 public:
-    ThreadManager( NodesGraphContainer * nodesGraphContainer );
+    ThreadManager( NodesGraphContainer * nodesGraphContainer,GlobalVariablesContainer * gvcptr);
 
     const QStringList &qstringlistThreadsModel() const;
     void setQstringlistThreadsModel(const QStringList &newQstringlistThreadsModel);
 signals:
     void qstringlistThreadsModelChanged();
+    void runExecuteOnEachThread(GlobalVariablesContainer * glvcptr);
+
 public slots:
     //add thread (from qml QFUNCTION?)
     void addThread(int threadsToAdd);
     void popBackThread();
     //expose number of threads in qml (from qml QFUNCTION?)
     int threadCount() const;
-    void asignNodesGraphToThread(int nodesGraphId, int threadId);
 
+    void asignNodesGraphToThread(int nodesGraphId, int threadId);
+    void updateQstringlistThreadsModel();
+    void runAllThread();
 
 private:
-    QVector<QThread*> m_threads;
-    QVector<ThreadWorker*> m_threadWorkers;
-
+    QList<QPair<QThread*,ThreadWorker*>> threadsWithWorkers;
+    GlobalVariablesContainer * m_gvcptr;
     NodesGraphContainer * m_nodesGraphContainer;
     QStringList m_qstringlistThreadsModel;
 };

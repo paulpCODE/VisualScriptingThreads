@@ -9,18 +9,18 @@ class ThreadWorker : public QObject
 {
     Q_OBJECT
 public:
-    //NodesGraph seup after constructor? or by params don't know
-    ThreadWorker(int graphInstanceId);
+    ThreadWorker();
 
     NodesGraph *graphInstance;
-    //NodeData* currentGraphNode   id or pointer?
-signals:
 
+
+    //NodeData* currentGraphNode   id or pointer?
 public slots:
     // main responsibility of class
     // inside it move to next node
-    void executeCurrentNodesGraph();
-    //
+    void executeCurrentNodesGraph(GlobalVariablesContainer * glvcptr);
+
+
 
 };
 
