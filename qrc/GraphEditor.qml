@@ -6,6 +6,7 @@ Item {
     id:mainitem
     property alias canvas: grapheditorcanvas
     property alias scrollf: scroll
+    readonly property alias beginnode: begin
     property var componentsMap: new Map()
 
     Flickable {
@@ -21,11 +22,12 @@ Item {
             id: grapheditorcanvas
             width: parent.width
             height: parent.height
-            Node {
-                x:100
-                y:100
-                operationText: "="
-            }
+        }
+
+        BeginNode {
+            id: begin
+            x:200
+            y:40
         }
 
 
@@ -62,10 +64,34 @@ Item {
         ctx.stroke()
         ctx.closePath()
     }
+    function paint_connection_begin(id) {
+
+        var node = componentsMap.get(id)
+        var rectx = begin.x + begin.rwidth / 2
+        var recty = begin.y + begin.rheight
+        var rectx2 = node.x + node.rwidth/2
+        var recty2 = node.y
+
+        var ctx = grapheditorcanvas.getContext("2d")
+        ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
+        ctx.lineWidth = 1
+        ctx.beginPath()
+        //ctx.moveTo(node1.x, node1.y)
+        //ctx.arc(node1.x, node1.y, 5, 0, 2*Math.PI, true)
+        ctx.moveTo(rectx, recty)
+        ctx.bezierCurveTo(rectx, recty, rectx, recty + 30, (rectx + rectx2) / 2, (recty + recty2) / 2)
+        ctx.bezierCurveTo((rectx + rectx2) / 2, (recty + recty2) / 2, rectx2, recty2 - 30, rectx2, recty2)
+        ctx.stroke()
+        ctx.closePath()
+    }
     function updateCanvas() {
         grapheditorcanvas.requestPaint()
         var ctx = grapheditorcanvas.getContext("2d")
         ctx.reset()
+
+        if(begin.isconnected) {
+            paint_connection_begin(begin.startnodeid)
+        }
 
         for(let nodeid of componentsMap.keys()) {
             var nodecomponent = componentsMap.get(nodeid)
@@ -82,6 +108,7 @@ Item {
                 paint_connection(nodeid, truenodeid, true, nodecomponent.isifnode)
             }
         }
+
     }
     function clearCanvas() {
         grapheditorcanvas.requestPaint()

@@ -96,9 +96,15 @@ function disconnectNode(id, totrue) {
 }
 
 function setNodeData(id, leftOpetand, rightOperand) {
-
+    nodesGraphContainer.setNodeData(1, id, leftOpetand, rightOperand)
 }
 
 function setStartNodeId(id) {
+    if(!grapheditor.componentsMap.has(parseInt(id))) {
+        console.log("connection failed")
+        return false
+    }
 
+    nodesGraphContainer.setStartNodeId(1, parseInt(id))
+    return true
 }

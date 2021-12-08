@@ -38,6 +38,7 @@ Item {
         }
 
         anchors.margins: 2
+        validator: IntValidator {bottom: 1; top: 100}
     }
     Button {
         id: connectToNodeIDButton

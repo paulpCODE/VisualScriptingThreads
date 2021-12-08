@@ -41,9 +41,9 @@ public:
     Q_INVOKABLE void deleteNode(const unsigned int graphid, unsigned int id);
     Q_INVOKABLE void connectNodes(const unsigned int graphid, unsigned int idfrom, unsigned int idto, bool totrue = true);
     Q_INVOKABLE void disconnectNode(const unsigned int graphid, unsigned int id, bool totrue = true);
-    Q_INVOKABLE void SetNodeData(const unsigned int graphid, const unsigned int id, const QString& leftOperand, const QString& rightOperand);
+    Q_INVOKABLE void setNodeData(const unsigned int graphid, const unsigned int id, const QString& leftOperand, const QString& rightOperand);
     Q_INVOKABLE QPair<QString,QString> GetNodeOperandsData(const unsigned int graphid, const unsigned int id);
-    Q_INVOKABLE void SetStartNodeId(const unsigned int graphid, const unsigned int id);
+    Q_INVOKABLE void setStartNodeId(const unsigned int graphid, const unsigned int id);
     Q_INVOKABLE void renameGraphById(const unsigned int graphid, const QString& newName);
     //If need to access graphid by choosing current index in qml graphmenu
     Q_INVOKABLE int getGraphIdByModelIndex(const unsigned int modelIndex) const;
@@ -52,6 +52,7 @@ public:
     void setQstringListNodesGraphContainerModel(const QStringList &newQstringListNodesGraphContainerModel);
 
     Q_INVOKABLE const unsigned int getConnectedNodeId(const unsigned int graphid, const unsigned int id, bool totrue = true) const;
+    Q_INVOKABLE NodeEnums::NodeType getNodeTypeById(const unsigned int graphid, const unsigned int id) const;
 signals:
     void noLongerUsingGlobalVariable(const QString & variableName);
     void usingNewGlobalVariable(const QString & variableName);

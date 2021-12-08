@@ -14,5 +14,6 @@
         <file>NodesGraphsSettings.qml</file>
         <file>ThreadsSettings.qml</file>
         <file>ThreadsMenu.qml</file>
+        <file>BeginNode.qml</file>
     </qresource>
 </RCC>

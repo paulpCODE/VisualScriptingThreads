@@ -144,7 +144,7 @@ Item {
             id: cb1
             width: 80
             height: 20
-            model: ["BANANA", "MONKE"]
+            model: globalVariablesContainer.qstringlistGlobalVariableModel
             anchors.left: {
                 if(isprintorinput) {
                     return operation.right
@@ -162,19 +162,30 @@ Item {
                 return 10
             }
             anchors.verticalCenter: parent.verticalCenter
+            onCurrentIndexChanged: {
+                if(cb2visible) {
+                    NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), cb2.currentIndex.toString())
+                    return
+                }
+                NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), textfield.text.toString())
+            }
         }
 
         ComboBox {
             id: cb2
             width: 80
             height: 20
-            model: ["BANANA", "MONKE"]
+            model: globalVariablesContainer.qstringlistGlobalVariableModel
             anchors.left: operation.right
             anchors.verticalCenter: parent.verticalCenter
             visible: cb2visible
+            onCurrentIndexChanged: {
+                NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), cb2.currentIndex.toString())
+            }
         }
 
         TextField {
+            id: textfield
             width: 80
             height: 20
             anchors.left: operation.right
@@ -187,6 +198,10 @@ Item {
                     return false
                 }
                 return true
+            }
+            validator: IntValidator {bottom: 0; top: 2147483647}
+            onTextChanged: {
+                NGFunc.setNodeData(nodeindex, cb1.currentIndex.toString(), textfield.text.toString())
             }
         }
         Text {
