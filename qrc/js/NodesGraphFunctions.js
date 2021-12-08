@@ -109,3 +109,30 @@ function setStartNodeId(id) {
     nodesGraphContainer.setStartNodeId(nodesGraphsSettings.currentEditingGraphId, parseInt(id))
     return true
 }
+
+function switchGraph(graphid) {
+    if(grapheditor.graphsMap.has(graphid)) {
+        if(grapheditor.graphsMap.get(graphid).size !== 0) {
+            grapheditor.componentsMap = new Map(grapheditor.graphsMap.get(graphid))
+            for(let object of grapheditor.componentsMap.values()) {
+                object.visible = true
+            }
+            grapheditor.updateCanvas()
+            return
+        }
+    }
+    grapheditor.componentsMap.clear()
+
+}
+
+function addGraphToMap(graphid) {
+    for(let object of grapheditor.componentsMap.values()) {
+        object.visible = false
+    }
+    if(grapheditor.graphsMap.has(graphid)) {
+        grapheditor.graphsMap.delete(graphid)
+    }
+
+    grapheditor.graphsMap.set(nodesGraphsSettings.currentEditingGraphId, new Map(grapheditor.componentsMap))
+    grapheditor.clearCanvas()
+}

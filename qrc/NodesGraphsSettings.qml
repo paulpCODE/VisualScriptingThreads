@@ -2,11 +2,17 @@ import QtQuick 2.0
 import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import vstApp 1.0
+import "js/NodesGraphFunctions.js" as NGFunc
 Item {
     id:mainrect
     property int currentEditingGraphId:1
     height: 600
     width: 350
+
+    onCurrentEditingGraphIdChanged: {
+        NGFunc.switchGraph(currentEditingGraphId)
+    }
+
     Rectangle {
         id:listOfGraphsHeader
         anchors.left: parent.left
@@ -109,6 +115,7 @@ Item {
                 width: parent.width
                 text: "Change graph to edit"
                 onClicked:{
+                    NGFunc.addGraphToMap(currentEditingGraphId)
                     var id = nodesGraphContainer.getGraphIdByModelIndex(graphtoEditMenu.currentIndex)
                     mainrect.currentEditingGraphId = id;
                 }
