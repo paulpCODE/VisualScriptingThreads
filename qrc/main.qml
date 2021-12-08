@@ -75,6 +75,17 @@ Window {
         anchors.bottom:parent.bottom
         visible: false
     }
+    Button{
+        id:executeThreads
+        anchors.right: toggleThreadsSettings.left
+        anchors.top: parent.top
+        height: toggleThreadsSettings.height
+        z: grapheditor.z + 5
+        onPressed: {
+            threadManager.runAllThreads();
+        }
+        text: "Execute code in threads"
+    }
 
 
 
@@ -90,16 +101,7 @@ Window {
         anchors.left: parent.left
         anchors.margins: 5
     }
-    Button {
-        width: 20
-        height: 20
-        text: "C"
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        onClicked: {
-            grapheditor.clearCanvas()
-        }
-    }
+
 
 
     //    Component.onCompleted: {

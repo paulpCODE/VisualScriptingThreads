@@ -77,6 +77,7 @@ void ThreadManager::runAllThreads()
 {
     for(const auto &i:threadsWithWorkers){
         i.first->start();
+        emit runExecuteOnEachThread(m_gvcptr);
     }
 }
 
