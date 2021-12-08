@@ -13,6 +13,12 @@ Item {
 
     readonly property alias rwidth: node.width
     readonly property alias rheight: node.height
+    readonly property bool isconnected: {
+        if(truepin.isconnected || pintofalse.isconnected) {
+            return true
+        }
+        return false
+    }
 
     Rectangle {
         id:node
@@ -36,9 +42,17 @@ Item {
             anchors.left: parent.left
             anchors.right: parent.right
             nodeidText: nodeindex
+            pdeletebutton.z: mousearea.z + 1
+            pdeletebutton.onClicked: {
+                NGFunc.deleteNode(nodeindex)
+            }
+
             MouseArea {
                 id: mousearea
-                anchors.fill: parent
+                width: parent.width - 20
+                anchors.left: parent.left
+                anchors.top: parent.top
+                anchors.bottom: parent.bottom
                 drag.axis: Drag.XAndYAxis
                 drag.target: mainitem
                 drag.minimumX: 0

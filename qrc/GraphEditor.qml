@@ -52,8 +52,7 @@ Item {
 
         var ctx = grapheditorcanvas.getContext("2d")
         ctx.strokeStyle = Qt.rgba(0, 0, 0, 1)
-        ctx.lineWidth = 2
-        grapheditorcanvas.requestPaint()
+        ctx.lineWidth = 1
         ctx.beginPath()
         //ctx.moveTo(node1.x, node1.y)
         //ctx.arc(node1.x, node1.y, 5, 0, 2*Math.PI, true)
@@ -62,10 +61,9 @@ Item {
         ctx.bezierCurveTo((rectx + rectx2) / 2, (recty + recty2) / 2, rectx2, recty2 - 30, rectx2, recty2)
         ctx.stroke()
         ctx.closePath()
-        rectx = 0
-        recty = 0
     }
     function updateCanvas() {
+        grapheditorcanvas.requestPaint()
         var ctx = grapheditorcanvas.getContext("2d")
         ctx.reset()
 
@@ -83,11 +81,14 @@ Item {
                 console.log("TRUE ID: " + truenodeid)
                 paint_connection(nodeid, truenodeid, true, nodecomponent.isifnode)
             }
-
-
         }
     }
-
+    function clearCanvas() {
+        grapheditorcanvas.requestPaint()
+        var ctx = grapheditorcanvas.getContext("2d")
+        ctx.reset()
+        ctx.clearRect(Qt.rect(0,0,grapheditorcanvas.width, grapheditorcanvas.height))
+    }
 }
 
 
