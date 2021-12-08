@@ -144,7 +144,7 @@ function instantiateBeginNode() {
 
     var component = Qt.createComponent("../BeginNode.qml")
     if(component.status === QtQml.Component.Ready)
-        var objcomp = component.createObject(grapheditor.scrollf.contentItem, {x: 200, y:20})
+        var objcomp = component.createObject(grapheditor.scrollf.contentItem, {x: 300, y:100})
 
     grapheditor.componentsMap.set(0, objcomp)
 }
