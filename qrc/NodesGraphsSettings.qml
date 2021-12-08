@@ -3,6 +3,8 @@ import QtQuick.Layouts 1.12
 import QtQuick.Controls 2.12
 import vstApp 1.0
 Item {
+    id:mainrect
+    property int currentEditingGraphId:1
     height: 600
     width: 350
     Rectangle {
@@ -74,12 +76,51 @@ Item {
         ScrollBar.vertical: ScrollBar { }
         contentHeight: addGraphRect.height + deleteGraphrect.height + renameGraphrect.height
         Rectangle{
+            id:curEditGraphRect
+            width: parent.width
+            height: titleEditGraphrect.height + graphtoEditMenu.height + changeEditGraphRect.height + 30
+            anchors.horizontalCenter: parent.horizontalCenter
+            anchors.top: parent.top
+            anchors.topMargin: 1
+            border.color: "black"
+            border.width: 1
+            Text {
+                id: titleEditGraphrect
+                anchors.top: parent.top
+                anchors.horizontalCenter:parent.horizontalCenter
+                anchors.topMargin: 5
+                verticalAlignment: Text.AlignVCenter
+                horizontalAlignment: Text.AlignHCenter
+                elide: Text.ElideRight
+                text: qsTr("You are now \m editing graph: ")
+            }
+            NodesGraphMenu{
+                id: graphtoEditMenu
+                anchors.top: titleEditGraphrect.bottom
+                width: parent.width - 10
+                anchors.horizontalCenter:parent.horizontalCenter
+                anchors.topMargin: 10
+            }
+            Button{
+                id: changeEditGraphRect
+                anchors.top: graphtoEditMenu.bottom
+                anchors.horizontalCenter:parent.horizontalCenter
+                anchors.topMargin: 10
+                width: parent.width
+                text: "Change graph to edit"
+                onClicked:{
+                    var id = nodesGraphContainer.getGraphIdByModelIndex(graphtoEditMenu.currentIndex)
+                    mainrect.currentEditingGraphId = id;
+                }
+            }
+        }
+        Rectangle{
             id:addGraphRect
             property string nameToCreate: ""
             width: parent.width
             height: titleaddGraphRect.height + nameToAdd.height + addGraphButton.height  + addGraphButton10.height + 25
             anchors.horizontalCenter: parent.horizontalCenter
-            anchors.top: parent.top
+            anchors.top: curEditGraphRect.bottom
             anchors.topMargin: 1
             border.color: "black"
             border.width: 1

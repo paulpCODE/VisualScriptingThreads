@@ -14,6 +14,7 @@ GlobalVariablesContainer::GlobalVariablesContainer(QObject *parent) : QObject(pa
     updateQstringlistGlobalVariableModel();
 
     connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateQstringlistGlobalVariableModel);
+    connect(this,&GlobalVariablesContainer::globalVariablesDataChanged,this,&GlobalVariablesContainer::updateSimpleVariablesNamesModel);
 
 }
 
@@ -174,6 +175,15 @@ void GlobalVariablesContainer::updateQstringlistGlobalVariableModel()
     emit qstringlistGlobalVariableModelChanged();
 }
 
+void GlobalVariablesContainer::updateSimpleVariablesNamesModel()
+{
+    QStringList newList;
+    for(const auto &i: m_globalVariables){
+        newList.push_back(i->name());
+    }
+    setSimpleVariablesNamesModel(newList);
+}
+
 
 
 const QStringList &GlobalVariablesContainer::qstringlistGlobalVariableModel() const
@@ -187,4 +197,17 @@ void GlobalVariablesContainer::setQstringlistGlobalVariableModel(const QStringLi
         return;
     m_qstringlistGlobalVariableModel = newQstringlistGlobalVariableModel;
     emit qstringlistGlobalVariableModelChanged();
+}
+
+const QStringList &GlobalVariablesContainer::simpleVariablesNamesModel() const
+{
+    return m_simpleVariablesNamesModel;
+}
+
+void GlobalVariablesContainer::setSimpleVariablesNamesModel(const QStringList &newSimpleVariablesNamesModel)
+{
+    if (m_simpleVariablesNamesModel == newSimpleVariablesNamesModel)
+        return;
+    m_simpleVariablesNamesModel = newSimpleVariablesNamesModel;
+    emit simpleVariablesNamesModelChanged();
 }

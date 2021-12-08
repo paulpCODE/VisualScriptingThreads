@@ -10,10 +10,14 @@ class GlobalVariablesContainer : public QObject
 {
     Q_OBJECT
     Q_PROPERTY(QStringList qstringlistGlobalVariableModel READ qstringlistGlobalVariableModel WRITE setQstringlistGlobalVariableModel NOTIFY qstringlistGlobalVariableModelChanged)
+    Q_PROPERTY(QStringList simpleVariablesNamesModel READ simpleVariablesNamesModel WRITE setSimpleVariablesNamesModel NOTIFY simpleVariablesNamesModelChanged)
 public:
     explicit GlobalVariablesContainer(QObject *parent = nullptr);
     const QStringList &qstringlistGlobalVariableModel() const;
     void setQstringlistGlobalVariableModel(const QStringList &newQstringlistGlobalVariableModel);
+
+    const QStringList &simpleVariablesNamesModel() const;
+    void setSimpleVariablesNamesModel(const QStringList &newSimpleVariablesNamesModel);
 
 public slots:
     // FROM QMl
@@ -31,14 +35,18 @@ public slots:
     //Get Variable Name By index from qstringlistmodel
     QString globalVariableNameByIndex(int index);
     void updateQstringlistGlobalVariableModel();
+    void updateSimpleVariablesNamesModel();
 signals:
     void qstringlistGlobalVariableModelChanged();
     void globalVariablesDataChanged();
+    void simpleVariablesNamesModelChanged();
+
 private:
 
    QList<GlobalVariable *> m_globalVariables;
 
    QStringList m_qstringlistGlobalVariableModel;
+   QStringList m_simpleVariablesNamesModel;
 };
 
 #endif // GLOBALVARIABLESCONTAINER_H
