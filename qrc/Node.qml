@@ -1,6 +1,7 @@
 import QtQuick 2.0
 import vstApp 1.0
 import QtQuick.Controls 2.15
+import "js/NodesGraphFunctions.js" as NGFunc
 
 Item {
     id: mainitem
@@ -9,6 +10,9 @@ Item {
     property bool isifnode: false
     property bool isprintorinput: false
     property bool cb2visible: false
+
+    readonly property alias rwidth: node.width
+    readonly property alias rheight: node.height
 
     Rectangle {
         id:node
@@ -38,9 +42,12 @@ Item {
                 drag.axis: Drag.XAndYAxis
                 drag.target: mainitem
                 drag.minimumX: 0
-                drag.maximumX: mainitem.parent.width
+                drag.maximumX: grapheditor.canvas.width - node.width
                 drag.minimumY: 0
-                drag.maximumY: mainitem.parent.height
+                drag.maximumY: grapheditor.canvas.height - node.height
+                onPositionChanged: {
+                    grapheditor.updateCanvas()
+                }
             }
         }
 
@@ -70,6 +77,18 @@ Item {
                     return 2
                 }
             }
+
+            connectButton.onClicked: {
+                if(!isconnected) {
+                    var access = NGFunc.connectNodes(nodeindex, idtoconnect, true)
+                    if(access) {
+                        isconnected = true
+                    }
+                } else {
+                    NGFunc.disconnectNode(nodeindex, true)
+                    isconnected = false
+                }
+            }
         }
         ExecutionPinEditor {
             id: pintofalse
@@ -86,6 +105,18 @@ Item {
                     return true
                 }
                 return false
+            }
+            connectButton.onClicked: {
+                if(!isconnected) {
+                    var access = NGFunc.connectNodes(nodeindex, idtoconnect, false)
+                    if(access) {
+                        isconnected = true
+                    }
+                }
+                else {
+                    NGFunc.disconnectNode(nodeindex, false)
+                    isconnected = false
+                }
             }
         }
 
@@ -176,4 +207,5 @@ Item {
             font.pixelSize: 20
         }
     }
+
 }

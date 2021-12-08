@@ -52,11 +52,5 @@ Window {
     //        objcomp1.a = "ALPHA"
     //    }
 
-    Node {
-        x:100
-        y:100
-        operationText: "="
-    }
-
 }
 

@@ -27,7 +27,7 @@ void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
     executableId = m_startNodeId;
 
     while (true) {
-        const NodeData executableNode(*m_nodes.take(executableId));
+        const NodeData executableNode(*m_nodes[executableId]);
         const QString leftOperand = executableNode.GetData().first;
         const QString rightOperand = executableNode.GetData().second;
         switch (executableNode.GetType()) {
@@ -95,7 +95,6 @@ const unsigned int NodesGraph::createNode(const NodeEnums::NodeType &type)
         return idForNode;
     }
     m_nodes.insert(idForNode, new NodeData(idForNode, type));
-
     return idForNode;
 }
 
@@ -128,7 +127,7 @@ void NodesGraph::deleteNode(unsigned int id)
 void NodesGraph::connectNodes(unsigned int idfrom, unsigned int idto, bool totrue)
 {
     if(m_nodes.contains(idfrom) && m_nodes.contains(idto)) {
-        m_nodes.take(idfrom)->GetConnection()->makeConnection(idto, totrue);
+        m_nodes[idfrom]->GetConnection()->makeConnection(idto, totrue);
         return;
     }
     qDebug("DONT EXIST NODE TO CONNECT");
@@ -137,7 +136,7 @@ void NodesGraph::connectNodes(unsigned int idfrom, unsigned int idto, bool totru
 void NodesGraph::disconnectNode(unsigned int id, bool totrue)
 {
     if(m_nodes.contains(id)) {
-        m_nodes.take(id)->GetConnection()->deleteConnection(id, totrue);
+        m_nodes[id]->GetConnection()->deleteConnection(id, totrue);
         return;
     }
     qDebug("DONT EXIST NODE TO DISCONNECT");
@@ -160,7 +159,7 @@ const unsigned int NodesGraph::GetId() const
 void NodesGraph::SetNodeData(const unsigned int id, const QString &leftOperand, const QString &rightOperand)
 {
     if(m_nodes.contains(id)) {
-        m_nodes.take(id)->SetData(leftOperand, rightOperand);
+        m_nodes[id]->SetData(leftOperand, rightOperand);
         return;
     }
     qDebug("DONT EXIST NODE TO SET DATA");
