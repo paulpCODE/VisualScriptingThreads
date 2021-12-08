@@ -90,27 +90,5 @@ Window {
         anchors.left: parent.left
         anchors.margins: 5
     }
-    Button {
-        width: 20
-        height: 20
-        text: "C"
-        anchors.left: parent.left
-        anchors.verticalCenter: parent.verticalCenter
-        onClicked: {
-            grapheditor.clearCanvas()
-        }
-    }
-
-
-    //    Component.onCompleted: {
-    //        var component = Qt.createComponent("GraphEditor.qml")
-    //        if(component.status === Component.Ready)
-    //            var objcomp1 = component.createObject(mainwindow, {x: 100, y:100})
-    //        var component2 = Qt.createComponent("GraphEditor.qml")
-    //        if(component2.status === Component.Ready)
-    //            var objcomp2 = component.createObject(mainwindow, {x: 300, y:300})
-
-    //        objcomp1.a = "ALPHA"
-    //    }
 }
 

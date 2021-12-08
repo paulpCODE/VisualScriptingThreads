@@ -122,7 +122,7 @@ function switchGraph(graphid) {
         }
     }
     grapheditor.componentsMap.clear()
-
+    instantiateBeginNode()
 }
 
 function addGraphToMap(graphid) {
@@ -135,4 +135,20 @@ function addGraphToMap(graphid) {
 
     grapheditor.graphsMap.set(nodesGraphsSettings.currentEditingGraphId, new Map(grapheditor.componentsMap))
     grapheditor.clearCanvas()
+}
+
+function instantiateBeginNode() {
+    if(grapheditor.componentsMap.has(0)) {
+        return
+    }
+
+    var component = Qt.createComponent("../BeginNode.qml")
+    if(component.status === QtQml.Component.Ready)
+        var objcomp = component.createObject(grapheditor.scrollf.contentItem, {x: 200, y:20})
+
+    grapheditor.componentsMap.set(0, objcomp)
+}
+
+function updateCanvas() {
+    grapheditor.updateCanvas()
 }
