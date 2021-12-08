@@ -76,6 +76,9 @@ Window {
         visible: false
     }
 
+
+
+
     GraphEditor {
         id: grapheditor
         anchors.fill: parent
