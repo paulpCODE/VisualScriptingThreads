@@ -134,7 +134,7 @@ void NodesGraphContainer::disconnectNode(const unsigned int graphid, unsigned in
     GetGraph(graphid)->disconnectNode(id, totrue);
 }
 
-void NodesGraphContainer::SetNodeData(const unsigned int graphid, const unsigned int id, const QString &leftOperand, const QString &rightOperand)
+void NodesGraphContainer::setNodeData(const unsigned int graphid, const unsigned int id, const QString &leftOperand, const QString &rightOperand)
 {
     NodeEnums::NodeType currentNodeType =  GetGraph(graphid)->GetType(id);
     // left operand is global var
@@ -185,7 +185,7 @@ QPair<QString,QString> NodesGraphContainer::GetNodeOperandsData(const unsigned i
     return GetGraph(graphid)->GetNodeOperandsData(id);
 }
 
-void NodesGraphContainer::SetStartNodeId(const unsigned int graphid, const unsigned int id)
+void NodesGraphContainer::setStartNodeId(const unsigned int graphid, const unsigned int id)
 {
     GetGraph(graphid)->SetStartNodeId(id);
 }
@@ -217,4 +217,9 @@ void NodesGraphContainer::setQstringListNodesGraphContainerModel(const QStringLi
 const unsigned int NodesGraphContainer::getConnectedNodeId(const unsigned int graphid, const unsigned int id, bool totrue) const
 {
     return GetGraph(graphid)->GetConnectedNodeId(id, totrue);
+}
+
+NodeEnums::NodeType NodesGraphContainer::getNodeTypeById(const unsigned int graphid, const unsigned int id) const
+{
+    return GetGraph(graphid)->GetType(id);
 }
