@@ -10,7 +10,7 @@ function createNode() {
         var objcomp = component.createObject(grapheditor.scrollf.contentItem, {x: grapheditor.scrollf.contentX + 100, y:grapheditor.scrollf.contentY + 100})
     switch(nodemenu.currentIndex)  {
     case 0:
-        nodeIndex = nodesGraphContainer.createNode(1, App.NodeEnums.GlobalAssignGlobal)
+        nodeIndex = nodesGraphContainer.createNode(nodesGraphsSettings.currentEditingGraphId, App.NodeEnums.GlobalAssignGlobal)
 
         objcomp.nodeindex = nodeIndex
         objcomp.operationText = "="
@@ -20,7 +20,7 @@ function createNode() {
         grapheditor.componentsMap.set(nodeIndex, objcomp)
         break
     case 1:
-        nodeIndex = nodesGraphContainer.createNode(1, App.NodeEnums.GlobalAssignConst)
+        nodeIndex = nodesGraphContainer.createNode(nodesGraphsSettings.currentEditingGraphId, App.NodeEnums.GlobalAssignConst)
 
         objcomp.nodeindex = nodeIndex
         objcomp.operationText = "="
@@ -28,7 +28,7 @@ function createNode() {
         grapheditor.componentsMap.set(nodeIndex, objcomp)
         break
     case 2:
-        nodeIndex = nodesGraphContainer.createNode(1, App.NodeEnums.InputGlobal)
+        nodeIndex = nodesGraphContainer.createNode(nodesGraphsSettings.currentEditingGraphId, App.NodeEnums.InputGlobal)
 
         objcomp.nodeindex = nodeIndex
         objcomp.isprintorinput = true
@@ -37,7 +37,7 @@ function createNode() {
         grapheditor.componentsMap.set(nodeIndex, objcomp)
         break
     case 3:
-        nodeIndex = nodesGraphContainer.createNode(1, App.NodeEnums.PrintGlobal)
+        nodeIndex = nodesGraphContainer.createNode(nodesGraphsSettings.currentEditingGraphId, App.NodeEnums.PrintGlobal)
 
         objcomp.nodeindex = nodeIndex
         objcomp.isprintorinput = true
@@ -46,7 +46,7 @@ function createNode() {
         grapheditor.componentsMap.set(nodeIndex, objcomp)
         break
     case 4:
-        nodeIndex = nodesGraphContainer.createNode(1, App.NodeEnums.IfGlobalEqualGlobal)
+        nodeIndex = nodesGraphContainer.createNode(nodesGraphsSettings.currentEditingGraphId, App.NodeEnums.IfGlobalEqualGlobal)
 
         objcomp.nodeindex = nodeIndex
         objcomp.isifnode = true
@@ -55,7 +55,7 @@ function createNode() {
         grapheditor.componentsMap.set(nodeIndex, objcomp)
         break
     case 5:
-        nodeIndex = nodesGraphContainer.createNode(1, App.NodeEnums.IfGlobalLessGlobal)
+        nodeIndex = nodesGraphContainer.createNode(nodesGraphsSettings.currentEditingGraphId, App.NodeEnums.IfGlobalLessGlobal)
 
         objcomp.nodeindex = nodeIndex
         objcomp.isifnode = true
@@ -70,7 +70,7 @@ function deleteNode(id) {
     grapheditor.componentsMap.get(id).destroy()
     grapheditor.componentsMap.delete(id)
 
-    nodesGraphContainer.deleteNode(1, parseInt(id))
+    nodesGraphContainer.deleteNode(nodesGraphsSettings.currentEditingGraphId, parseInt(id))
 
     grapheditor.clearCanvas()
     grapheditor.updateCanvas()
@@ -82,14 +82,14 @@ function connectNodes(id1, id2, totrue) {
         return false
     }
 
-    nodesGraphContainer.connectNodes(1, parseInt(id1), parseInt(id2), totrue)
+    nodesGraphContainer.connectNodes(nodesGraphsSettings.currentEditingGraphId, parseInt(id1), parseInt(id2), totrue)
     console.log(id1 + " connected to " + id2)
     grapheditor.updateCanvas()
     return true
 }
 
 function disconnectNode(id, totrue) {
-    nodesGraphContainer.disconnectNode(1, parseInt(id), totrue)
+    nodesGraphContainer.disconnectNode(nodesGraphsSettings.currentEditingGraphId, parseInt(id), totrue)
     console.log(id + " disconnected")
     grapheditor.clearCanvas()
     grapheditor.updateCanvas()
