@@ -67,7 +67,13 @@ function createNode() {
 }
 
 function deleteNode(id) {
+    grapheditor.componentsMap.get(id).destroy()
+    grapheditor.componentsMap.delete(id)
 
+    nodesGraphContainer.deleteNode(1, parseInt(id))
+
+    grapheditor.clearCanvas()
+    grapheditor.updateCanvas()
 }
 
 function connectNodes(id1, id2, totrue) {
@@ -85,6 +91,7 @@ function connectNodes(id1, id2, totrue) {
 function disconnectNode(id, totrue) {
     nodesGraphContainer.disconnectNode(1, parseInt(id), totrue)
     console.log(id + " disconnected")
+    grapheditor.clearCanvas()
     grapheditor.updateCanvas()
 }
 
