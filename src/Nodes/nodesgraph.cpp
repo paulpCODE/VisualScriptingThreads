@@ -1,5 +1,5 @@
 #include "nodesgraph.h"
-
+#include <iostream>
 
 NodesGraph::NodesGraph(const unsigned int id,const QString &graphName) : NODESLIMIT(100), m_id(id), m_startNodeId(0)
 {
@@ -29,40 +29,76 @@ void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
     executableId = m_startNodeId;
 
     while (true) {
+
         const NodeData executableNode(*m_nodes[executableId]);
         const QString leftOperand = executableNode.GetData().first;
-        const QString rightOperand = executableNode.GetData().second;
+        const QString rightOperand = executableNode.GetData().second; 
+        int input;
+
         switch (executableNode.GetType()) {
         case NodeEnums::NodeType::GlobalAssignGlobal:
             //mutex lock
+            gvcptr->globalVariableByName(leftOperand)->mutex->lock();
+            gvcptr->globalVariableByName(rightOperand)->mutex->lock();
+
             gvcptr->globalVariableByName(leftOperand)->setValue(gvcptr->globalVariableByName(rightOperand)->value());
+
+            gvcptr->globalVariableByName(rightOperand)->mutex->unlock();
+            gvcptr->globalVariableByName(leftOperand)->mutex->unlock();
             break;
         case NodeEnums::NodeType::GlobalAssignConst:
+
             //mutex lock
+            gvcptr->globalVariableByName(leftOperand)->mutex->lock();
+
             gvcptr->globalVariableByName(leftOperand)->setValue(rightOperand.toInt());
+
+            gvcptr->globalVariableByName(leftOperand)->mutex->unlock();
             break;
         case NodeEnums::NodeType::InputGlobal:
             // #TODO
+            gvcptr->globalVariableByName(leftOperand)->mutex->lock();
+
+            std::cout<<"Enter new Value for "<<leftOperand.toStdString()<<":";
+            std::cin>> input;
+            gvcptr->globalVariableByName(leftOperand)->setValue(input);
+
+            gvcptr->globalVariableByName(leftOperand)->mutex->unlock();
             break;
         case NodeEnums::NodeType::PrintGlobal:
             //mutex lock
+            gvcptr->globalVariableByName(leftOperand)->mutex->lock();
+
             qDebug() << gvcptr->globalVariableByName(leftOperand) << ": " << gvcptr->globalVariableByName(leftOperand)->value();
+
+            gvcptr->globalVariableByName(leftOperand)->mutex->unlock();
             break;
         case NodeEnums::NodeType::IfGlobalEqualGlobal:
             //mutex lock
+            gvcptr->globalVariableByName(leftOperand)->mutex->lock();
+            gvcptr->globalVariableByName(rightOperand)->mutex->lock();
+
             if(gvcptr->globalVariableByName(leftOperand)->value() == rightOperand.toInt()) {
                 totrue = true;
             } else {
                 totrue = false;
             }
+
+            gvcptr->globalVariableByName(rightOperand)->mutex->unlock();
+            gvcptr->globalVariableByName(leftOperand)->mutex->unlock();
             break;
         case NodeEnums::NodeType::IfGlobalLessGlobal:
+            gvcptr->globalVariableByName(leftOperand)->mutex->lock();
+            gvcptr->globalVariableByName(rightOperand)->mutex->lock();
+
             //mutex lock
             if(gvcptr->globalVariableByName(leftOperand)->value() < rightOperand.toInt()) {
                 totrue = true;
             } else  {
                 totrue = false;
             }
+            gvcptr->globalVariableByName(rightOperand)->mutex->unlock();
+            gvcptr->globalVariableByName(leftOperand)->mutex->unlock();
             break;
         }
         if(executableNode.GetConnection()->GetConnectedNodeId(totrue) == 0) {
