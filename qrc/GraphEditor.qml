@@ -101,13 +101,11 @@ Item {
             if(nodecomponent.isifnode === true) {
                 var falsenodeid = nodesGraphContainer.getConnectedNodeId(nodesGraphsSettings.currentEditingGraphId, parseInt(nodeid), false)
                 if(falsenodeid !== 0) {
-                    console.log("FALSE: " + falsenodeid)
                     paint_connection(nodeid, falsenodeid, false, nodecomponent.isifnode)
                 }
             }
             var truenodeid = nodesGraphContainer.getConnectedNodeId(nodesGraphsSettings.currentEditingGraphId, parseInt(nodeid), true)
             if(truenodeid !== 0) {
-                console.log("TRUE ID: " + truenodeid)
                 paint_connection(nodeid, truenodeid, true, nodecomponent.isifnode)
             }
         }

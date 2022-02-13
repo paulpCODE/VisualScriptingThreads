@@ -69,7 +69,7 @@ void NodesGraph::execute(GlobalVariablesContainer * const gvcptr)
             //mutex lock
             gvcptr->globalVariableByName(leftOperand)->mutex->lock();
 
-            qDebug() << gvcptr->globalVariableByName(leftOperand) << ": " << gvcptr->globalVariableByName(leftOperand)->value();
+            qDebug() << gvcptr->globalVariableByName(leftOperand)->name() << ": " << gvcptr->globalVariableByName(leftOperand)->value();
 
             gvcptr->globalVariableByName(leftOperand)->mutex->unlock();
             break;
